@@ -1,24 +1,41 @@
-# README
+## Mental health coaching
+#### Prerequisites
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The setups steps expect following tools installed on the system.
 
-Things you may want to cover:
+- Github
+- Ruby [3.0.0p0](https://www.ruby-lang.org/en/)
+- Rails [6.1.4.1](https://guides.rubyonrails.org/getting_started.html)
 
-* Ruby version
+##### 1. Check out the repository
 
-* System dependencies
+```bash
+git clone https://github.com/konstantinkonstantinovich/Task-2.git
+```
 
-* Configuration
+##### 2. Install gems
 
-* Database creation
+Going to the `mental_health_coaching` folder run the following command
 
-* Database initialization
+```bash
+bundler install
+```
 
-* How to run the test suite
+##### 3. Create and setup the database
 
-* Services (job queues, cache servers, search engines, etc.)
+Run the following commands to create and migrate the database.
 
-* Deployment instructions
+```ruby
+rake db:create
+rake db:migrate
+```
 
-* ...
+##### 4. Start the Rails server
+
+You can start the rails server using the command given below.
+
+```ruby
+rails server
+```
+
+And now you can visit the site with the URL http://localhost:3000
