@@ -1,6 +1,4 @@
 class Problem < ApplicationRecord
-  has_many :user_problems
-  has_many :users, through: :user_problems
-  has_many :coach_problems
-  has_many :coach, through: :coach_problems
+  has_and_belongs_to_many :users
+  has_and_belongs_to_many :coaches
 end

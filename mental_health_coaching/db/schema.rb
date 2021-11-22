@@ -15,11 +15,9 @@ ActiveRecord::Schema.define(version: 2021_11_22_194516) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "coach_problems", force: :cascade do |t|
+  create_table "coach_problems", id: false, force: :cascade do |t|
     t.bigint "coach_id"
     t.bigint "problem_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["coach_id"], name: "index_coach_problems_on_coach_id"
     t.index ["problem_id"], name: "index_coach_problems_on_problem_id"
   end
@@ -64,11 +62,9 @@ ActiveRecord::Schema.define(version: 2021_11_22_194516) do
     t.index ["coach_id"], name: "index_social_networks_on_coach_id"
   end
 
-  create_table "user_problems", force: :cascade do |t|
+  create_table "user_problems", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "problem_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
     t.index ["problem_id"], name: "index_user_problems_on_problem_id"
     t.index ["user_id"], name: "index_user_problems_on_user_id"
   end
