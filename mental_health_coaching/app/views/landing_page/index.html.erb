@@ -22,9 +22,10 @@
         <a class="nav-link nav-link-style" href="#content-coaches">Coaches</a>
       </div>
     </div>
-    <form class="d-flex">
-      <button class="btn btn-sing-in" type="submit">SING IN</button>
-    </form>
+    <div class="d-flex">
+      <!-- <button class="btn btn-sing-in" type="submit">SING IN</button> -->
+      <%= link_to "SING IN", "/", class: "btn btn-sing-in" %>
+    </div>
   </div>
 </nav>
 <div class="content">
@@ -32,7 +33,8 @@
     <div class="col-6">
       <div class="text">Coaching WEB platform</div>
       <div class="text-after">where coaches help users to deal with anxiety and depression</div>
-      <button class="btn btn-join-us">JOIN US</button>
+      <!-- <button class="btn btn-join-us">JOIN US</button> -->
+      <%= link_to "JOIN US", "/", class: "btn btn-join-us" %>
     </div>
     <div class="col-6">
       <img src="<%= asset_path('sydney-sims-fZ2hMpHIrbI-unsplash.jpg') %>">
@@ -221,7 +223,8 @@
     <div class="about-techniques">Do you want to let go of your worries and fears?</div>
     <br>
     <div class="center">
-      <button class="btn btn-join-us-center">JOIN US</button>
+      <!-- <button class="btn btn-join-us-center">JOIN US</button> -->
+      <%= link_to "JOIN US", "/", class: "btn btn-join-us-center" %>
     </div>
   </div>
 </a>
@@ -391,7 +394,8 @@
     <div class="about-techniques"> Do you have experience and skills in psychotherapy?</div>
     <br>
     <div class="center">
-      <button class="btn btn-join-us-center">BECOME COACH</button>
+      <!-- <button class="btn btn-join-us-center">BECOME COACH</button> -->
+      <%= link_to "BECOME COACH", "/", class: "btn btn-join-us-center" %>
     </div>
   </div>
 </a>
