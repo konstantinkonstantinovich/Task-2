@@ -1,0 +1,124 @@
+
+.conteiner {
+    width: 100%;
+    margin: 0px;
+    padding-left: 83px;
+    padding-right: 83px;
+    padding-top: 130px;
+    padding-bottom: 83px;
+    background: white;
+}
+
+
+.create {
+  text-align: center;
+  font-size: 34px;
+  color: #000000DE;
+}
+
+.sign_in {
+  color: #000000DE;
+  font-size: 15px;
+  text-align: center;
+}
+
+.ask {
+  display: inline-block;
+  padding: 5px;
+}
+
+.link {
+  padding: 5px;
+  display: inline-block;
+}
+
+.custom {
+  text-decoration: none;
+  font-weight:bold;
+  color: #000000DE;
+}
+
+.sign_for {
+  margin: 0 auto;
+  width: 28%;
+  color: #000000DE;
+  border: 1px solid #6C757D;
+  border-radius: 5px;
+  background: #E9ECEF;
+  text-align: center;
+}
+
+.sign-with {
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+}
+
+.with {
+  display: inline-block;
+  font-size: 14px;
+  color: #000000DE;
+  padding-right: 10px;
+}
+
+.badge-with {
+  display: inline-block;
+  font-size: 26px;
+}
+.link_for {
+  display: inline-block;
+  width: 49.3%;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.link_for:active {
+  background: #6C757D;
+  color: #FFFFFF;
+}
+
+.marge-top {
+  margin-top: 20px;
+}
+
+.active {
+  background: #6C757D;
+  color: #FFFFFF;
+}
+
+.form-registration {
+  margin: 0px auto;
+
+  width: 28%;
+  padding-top: 20px;
+}
+
+.labels {
+  font-size: 16px;
+  padding: 5px;
+}
+
+.field {
+
+  width: 100%;
+  border: 1px solid #000000C7;
+  border-radius: 5px;
+  padding: 12px;
+  color: #707070;
+  /* opacity: 0.6; */
+  font-size: 20px;
+}
+
+
+.btn-sing-up {
+  font-family: Roboto, Ligth;
+  color: #FFFFFF;
+  border-color: rgba(173, 181, 189, 1);
+  background: #212529;
+  width: 100%;
+
+}
+
+.font {
+  font-size: 16px;
+}

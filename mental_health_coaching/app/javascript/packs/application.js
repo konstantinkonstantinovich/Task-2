@@ -10,6 +10,7 @@ import "channels"
 import "bootstrap"
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
+require("controllers")
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

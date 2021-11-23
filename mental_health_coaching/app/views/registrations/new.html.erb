@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Sing Up</title>
+    <%= stylesheet_link_tag 'registrations.css' %>
+    <%= stylesheet_link_tag 'landing.css' %>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg nav_background fixed-top">
+      <div class="container-fluid pad">
+        <a class="navbar-brand logo logo-button" href="#">Logo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+    <div class="conteiner">
+      <h4 class="create">Create account</h4>
+      <div class="sign_in">
+        <div class="ask">Already have an account?</div>
+        <div class="link"><a href="/" class="custom">sign in</a></div>
+      </div>
+      <div class="sign_for marge-top">
+        <div class="link_for active">USER</div>
+        <div class="link_for">COACH</div>
+      </div>
+      <%= form_with model: @user, class: "form-registration", url: sign_up_path do |f| %>
+        <p>
+          <%= f.label 'Full name', class: "labels" %><br>
+          <%= f.text_field :name, class: "field"%>
+        </p>
+        <p>
+          <%= f.label 'Email', class: "labels" %><br>
+          <%= f.text_field :email, class: "field" %>
+        </p>
+        <p>
+          <%= f.label 'Password', class: "labels" %><br>
+          <%= f.password_field :password, class: "field" %>
+        </p>
+        <p>
+          <%= f.label 'Сonfirm Password', class: "labels" %><br>
+          <%= f.password_field :password_confirmation, class: "field"%>
+        </p>
+
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label font" for="flexCheckDefault">
+            I've read and agree with <strong>Terms of Services</strong> and our <strong>Privacy Policy</strong>
+          </label>
+        </div>
+
+        <!-- <p class="marge-top">I've read and agree with Terms of Services and our Privacy Policy</p> -->
+        <%= f.submit 'SIGN UP', class: "btn btn-sing-up marge-top"%>
+        <div class="sign-with">
+          <div class="with">
+            or Sign in with
+          </div>
+          <div class="badge-with">
+            <i class="bi bi-facebook"></i>
+            <i class="bi bi-google"></i>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <footer>
+      <div class="footer-main">
+        © 2021 All rights reserved
+      </div>
+      <div class="footer-menu">
+        Terms
+      </div>
+      <div class="footer-menu">
+        Privacy
+      </div>
+      <div class="footer-menu">
+        Security
+      </div>
+    </footer>
+  </body>
+</html>
