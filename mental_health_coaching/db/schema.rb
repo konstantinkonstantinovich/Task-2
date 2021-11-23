@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_194516) do
     t.string "name"
     t.integer "age"
     t.string "email"
-    t.string "password"
+    t.string "password_digest"
     t.integer "gender"
     t.text "about"
     t.text "avatar"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 2021_11_22_194516) do
     t.integer "gender"
     t.text "about"
     t.text "avatar"
-    t.string "password"
+    t.string "password_digest"
     t.bigint "coach_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

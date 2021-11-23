@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.integer :gender
       t.text :about
       t.text :avatar
-      t.string :password
+      t.string :password_digest
       t.references :coach, null: true, foreign_key: true
 
       t.timestamps

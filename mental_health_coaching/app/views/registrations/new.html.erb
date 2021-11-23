@@ -35,14 +35,20 @@
           <%= f.label 'Email', class: "labels" %><br>
           <%= f.text_field :email, class: "field" %>
         </p>
-        <p>
+
+        <div data-controller="password-toggle">
           <%= f.label 'Password', class: "labels" %><br>
-          <%= f.password_field :password, class: "field" %>
-        </p>
-        <p>
+          <%= f.password_field :password, class: "field unhide", autocomplete: "current-password", "data-target": "password-toggle.unhide" %>
+          <span data-action="click->password-toggle#password" class="password-field-icon-1 position far bi bi-eye-slash"></span>
+        </div>
+        <br>
+
+        <div data-controller="password-toggle">
           <%= f.label 'Сonfirm Password', class: "labels" %><br>
-          <%= f.password_field :password_confirmation, class: "field"%>
-        </p>
+          <%= f.password_field :password, class: "field unhide", autocomplete: "current-password", "data-target": "password-toggle.unhide" %>
+          <span data-action="click->password-toggle#password" class="password-field-icon-1 position far bi bi-eye-slash"></span>
+        </div>
+        <br>
 
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
