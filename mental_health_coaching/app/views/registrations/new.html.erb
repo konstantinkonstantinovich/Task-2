@@ -28,24 +28,24 @@
       </div>
       <%= form_with model: @user, class: "form-registration", url: sign_up_path do |f| %>
         <p>
-          <%= f.label 'Full name', class: "labels" %><br>
+          <%= f.label 'name', class: "labels" %><br>
           <%= f.text_field :name, class: "field"%>
         </p>
         <p>
-          <%= f.label 'Email', class: "labels" %><br>
+          <%= f.label 'email', class: "labels" %><br>
           <%= f.text_field :email, class: "field" %>
         </p>
 
         <div data-controller="password-toggle">
-          <%= f.label 'Password', class: "labels" %><br>
+          <%= f.label 'password', class: "labels" %><br>
           <%= f.password_field :password, class: "field unhide", autocomplete: "current-password", "data-target": "password-toggle.unhide" %>
           <span data-action="click->password-toggle#password" class="password-field-icon-1 position far bi bi-eye-slash"></span>
         </div>
         <br>
 
         <div data-controller="password-toggle">
-          <%= f.label 'Сonfirm Password', class: "labels" %><br>
-          <%= f.password_field :password, class: "field unhide", autocomplete: "current-password", "data-target": "password-toggle.unhide" %>
+          <%= f.label 'password_confirmation', class: "labels" %><br>
+          <%= f.password_field :password_confirmation, class: "field unhide", autocomplete: "current-password", "data-target": "password-toggle.unhide" %>
           <span data-action="click->password-toggle#password" class="password-field-icon-1 position far bi bi-eye-slash"></span>
         </div>
         <br>
