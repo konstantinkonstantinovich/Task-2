@@ -9,7 +9,7 @@ class RegistrationsController < ApplicationController
     if @user.save
       $msg = "#{rand(9)}"+"#{rand(9)}"+"#{rand(9)}"+"#{rand(9)}"
       UserMailer.new_registration_email(@user, $msg).deliver_now
-      session[:user_id] = @user.id
+      session[:email] = @user.email
       redirect_to send_mail_path
     else
       render :new
@@ -17,19 +17,26 @@ class RegistrationsController < ApplicationController
   end
 
   def edit
-    @user = User.find_by(id: session[:user_id]) if session[:user_id]
+    @user = User.find_by(email: session[:email]) if session[:email]
   end
 
   def update
-    @user = User.find_by(id: session[:user_id]) if session[:user_id]
+    @user = User.find_by(email: session[:email]) if session[:email]
     if params[:user][:varify_email] == $msg
       @user.varify_email = params[:user][:varify_email]
-      @user.save
+      session[:user_id] = @user.id if @user.save
       redirect_to root_path, notice: "Successfully created account"
     else
       render :edit
     end
 
+  end
+
+  def resend
+    @user = User.find_by(email: session[:email]) if session[:email]
+    $msg = "#{rand(9)}"+"#{rand(9)}"+"#{rand(9)}"+"#{rand(9)}"
+    UserMailer.new_registration_email(@user, $msg).deliver_now
+    render :edit
   end
 
   private

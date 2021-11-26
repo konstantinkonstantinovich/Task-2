@@ -157,8 +157,13 @@
 
 .verify-text {
   text-align: center;
-  margin: 0;
+  margin: 0 auto;
   font-size: 16px;
+  color: #000000DE;
+}
+
+.resend-link {
+  text-decoration: none;
   color: #000000DE;
 }
 
@@ -171,6 +176,7 @@
 .input-code {
   outline: none;
   border: none;
+  text-align: center;
   border-bottom: 1px solid gray;
   color: #000000DE;
 
