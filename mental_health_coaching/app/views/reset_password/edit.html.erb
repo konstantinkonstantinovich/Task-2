@@ -5,6 +5,7 @@
     <title>Sing Up</title>
     <%= stylesheet_link_tag 'registrations.css' %>
     <%= stylesheet_link_tag 'landing.css' %>
+    <%= stylesheet_link_tag 'reset_password.css' %>
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
   </head>
   <body>
@@ -17,6 +18,25 @@
       </div>
     </nav>
     <div class="conteiner">
+        <h4 class="reset-title">Create new password</h4>
+        <p class="help-text">Your new password must contain at least 8 characters,</p>
+        <p class="help-text">include a number and lowercase letter</p>
+        <%= form_with model: @user, class: "form-registration", url: reset_password_edit_path(token: params[:token]) do |f| %>
+          <div class="form-group" data-controller="password-toggle">
+            <%= f.label :password, class: "labels" %>
+            <%= f.password_field :password, class: "field unhide", autocomplete: "current-password", "data-target": "password-toggle.unhide" %>
+            <span data-action="click->password-toggle#password" class="password-field-icon-1 position far bi bi-eye-slash"></span>
+          </div>
+          <br>
+
+          <div class="form-group" data-controller="password-toggle">
+            <%= f.label :password_confirmation, class: "labels" %>
+              <%= f.password_field :password_confirmation, class: "field unhide", autocomplete: "current-password", "data-target": "password-toggle.unhide" %>
+              <span data-action="click->password-toggle#password" class="password-field-icon-1 position far bi bi-eye-slash"></span>
+          </div>
+          <br>
+          <%= f.submit 'SAVE CHANGES', class: "btn btn-sing-up marge-top" %>
+        <% end %>
 
     </div>
 
