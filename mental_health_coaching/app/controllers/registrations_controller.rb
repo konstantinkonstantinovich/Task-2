@@ -25,7 +25,7 @@ class RegistrationsController < ApplicationController
     if params[:user][:varify_email] == $msg
       @user.varify_email = params[:user][:varify_email]
       session[:user_id] = @user.id if @user.save
-      redirect_to root_path, notice: "Successfully created account"
+      redirect_to user_page_path, notice: "Successfully created account"
     else
       render :edit
     end
