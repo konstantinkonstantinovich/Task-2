@@ -220,6 +220,7 @@ DEPENDENCIES
   dotenv-rails
   jbuilder (~> 2.7)
   listen (~> 3.3)
+  mail
   pg
   pry
   puma (~> 5.0)

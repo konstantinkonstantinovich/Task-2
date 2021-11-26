@@ -6,7 +6,7 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :email
       t.integer :gender
       t.text :about
-      t.integer :varify_email
+      t.text :varify_email
       t.text :avatar
       t.string :password_digest
       t.references :coach, null: true, foreign_key: true

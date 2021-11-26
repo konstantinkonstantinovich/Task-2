@@ -2,5 +2,6 @@ Rails.application.routes.draw do
   root "landing_page#index"
   get '/sign_up', to: 'registrations#new'
   post '/sign_up', to: 'registrations#create'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get '/sign_up/varify', to: 'registrations#edit', as: 'send_mail'
+  patch '/sign_up/varify', to: 'registrations#update'
 end

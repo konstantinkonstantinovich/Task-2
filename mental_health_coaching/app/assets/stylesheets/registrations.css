@@ -96,6 +96,7 @@
 .labels {
   font-size: 16px;
   padding: 5px;
+  line-break: normal;
 }
 
 .field {
@@ -130,4 +131,47 @@
   color: #495057;
   font-size: 20px;
   padding: 12px;
+}
+
+.link-back {
+  font-size: 20px;
+  text-decoration: none;
+  color: #000000DE;
+}
+
+.mail-icon {
+  padding-top: 60px;
+  padding-bottom: 15px;
+  text-align: center;
+  color: #212529;
+  font-size: 50px;
+}
+
+.verify {
+  margin: 0;
+  color: #000000DE;
+  font-size: 34px;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.verify-text {
+  text-align: center;
+  margin: 0;
+  font-size: 16px;
+  color: #000000DE;
+}
+
+.input-block {
+  margin: 0 auto;
+  width: 60%;
+  text-align: center;
+}
+
+.input-code {
+  outline: none;
+  border: none;
+  border-bottom: 1px solid gray;
+  color: #000000DE;
+
 }

@@ -137,7 +137,7 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.string "email"
     t.integer "gender"
     t.text "about"
-    t.integer "varify_email"
+    t.text "varify_email"
     t.text "avatar"
     t.string "password_digest"
     t.bigint "coach_id"
