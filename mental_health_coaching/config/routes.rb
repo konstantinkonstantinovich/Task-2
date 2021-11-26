@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'reset_password/new'
+  get 'reset_password/create'
+  get 'reset_password/edit'
+  get 'reset_password/update'
   root "landing_page#index"
 
   # registration user controller
@@ -15,4 +19,10 @@ Rails.application.routes.draw do
 
   # user contoller
   get '/user/:id', to: 'user#show', as: 'user_page'
+
+  # reset password contoller
+  get '/reset_password/new', to: 'reset_password#new'
+  post '/reset_password/new', to: 'reset_password#create'
+  get '/reset_password/edit', to: 'reset_password#edit'
+  patch '/reset_password/edit', to: 'reset_password#update'
 end

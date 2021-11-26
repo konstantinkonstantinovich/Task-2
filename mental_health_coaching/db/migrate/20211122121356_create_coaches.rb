@@ -5,6 +5,7 @@ class CreateCoaches < ActiveRecord::Migration[6.1]
           t.integer :age
           t.string :email
           t.string :password_digest
+          t.string :varify_email
           t.integer :gender
           t.text :about
           t.text :avatar

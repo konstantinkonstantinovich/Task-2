@@ -29,6 +29,7 @@
 
 
       <%= form_with model: @user, class: "form-registration", url: sign_up_path do |f| %>
+      
         <% invalid = @user.errors.include?(:name) %>
 
         <div class="form-group">

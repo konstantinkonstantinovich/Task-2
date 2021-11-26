@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Sing Up</title>
+    <%= stylesheet_link_tag 'registrations.css' %>
+    <%= stylesheet_link_tag 'landing.css' %>
+    <%= stylesheet_link_tag 'reset_password.css' %>
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg nav_background fixed-top">
+      <div class="container-fluid pad">
+        <a class="navbar-brand logo logo-button" href="#">Logo</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="conteiner">
+      <h6>
+        <%= link_to "Go back", sign_in_path, class: "bi bi-chevron-left link-back" %>
+      </h6>
+      <h4 class="reset-title">Reset password</h4>
+      <p class="help-text">Enter the e-mail associated with your account</p>
+      <p class="help-text">and we'll send an e-mail with instructions to reset your password.</p>
+      <%= form_with class: "form-registration", url: reset_password_new_path do |f| %>
+        <div class="form-group">
+          <%= f.label 'Email:', class: "labels" %>
+          <%= f.text_field :email, class: "field form-control" %>
+        </div>
+        <%= f.submit 'SEND', class: "btn btn-sing-up marge-top" %>
+      <% end %>
+    </div>
+
+
+    <footer>
+      <div class="footer-main">
+        © 2021 All rights reserved
+      </div>
+      <div class="footer-menu">
+        Terms
+      </div>
+      <div class="footer-menu">
+        Privacy
+      </div>
+      <div class="footer-menu">
+        Security
+      </div>
+    </footer>
+  </body>
+</html>

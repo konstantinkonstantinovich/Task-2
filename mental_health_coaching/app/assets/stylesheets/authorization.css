@@ -42,3 +42,10 @@
   color: #000000DE;
   text-decoration: none;
 }
+
+.alert {
+  text-align: center;
+  color: red;
+  opacity: 0.7;
+  margin: 0;
+}

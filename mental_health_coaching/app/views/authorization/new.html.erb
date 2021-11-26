@@ -23,11 +23,21 @@
         <div class="ask">Don't have an account?</div>
         <div class="link"><%= link_to 'Sign up', sign_up_path, class: "custom"%></div>
       </div>
+
+      <% if alert %>
+        <p class="alert"><%= alert%></p>
+      <% end %>
+
       <%= form_with class: "form-authorization", url: sign_in_path do |f| %>
 
         <div class="form-group">
           <%= f.label 'Email', class: "labels" %>
-          <%= f.text_field :email, class: "field form-control" %>
+          <%= f.text_field :email, class: "field form-control #{'is-invalid' if flash[:email]}" %>
+          <% if flash[:email] %>
+            <div class="invalid-feedback d-block">
+              <%= flash[:email] %>.
+            </div>
+          <% end %>
         </div>
         <br>
 
@@ -45,7 +55,7 @@
             <label class="form-check-label font" for="flexCheckDefault"> Remember me</label>
           </div>
           <div class="forgot-password-block">
-            <strong><%= link_to 'Forgot password?', root_path, class: "forgot-password-link"%></strong>
+            <strong><%= link_to 'Forgot password?', reset_password_new_path, class: "forgot-password-link"%></strong>
           </div>
         </div>
 
