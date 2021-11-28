@@ -13,6 +13,8 @@ Rails.application.routes.draw do
   # registration coach controller
   get '/become_coach', to: 'registration_coaches#new'
   post '/become_coach', to: 'registration_coaches#create'
+  get '/become_coach/update', to: 'registration_coaches#edit'
+  patch '/become_coach/update', to: 'registration_coaches#update'
 
 
   # authorization user controller

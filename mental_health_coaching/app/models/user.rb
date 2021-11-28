@@ -17,6 +17,8 @@ class User < ApplicationRecord
   has_many :recommendations
   has_many :techniques, through: :recommendations
 
+  has_one_attached :avatar
+
   has_secure_password
 
   validates :avatar, presence: false

@@ -66,6 +66,8 @@ GEM
     bindex (0.8.1)
     bootsnap (1.9.1)
       msgpack (~> 1.0)
+    bootstrap-tagsinput-rails (0.4.2.1)
+      railties (>= 3.1)
     builder (3.2.4)
     byebug (11.1.3)
     capybara (3.36.0)
@@ -215,6 +217,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt
   bootsnap (>= 1.4.4)
+  bootstrap-tagsinput-rails
   byebug
   capybara (>= 3.26)
   dotenv-rails
