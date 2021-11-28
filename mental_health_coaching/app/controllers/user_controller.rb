@@ -1,5 +1,9 @@
 class UserController < ApplicationController
+  before_action :require_user_logged_in!
+
   def show
-    @user = User.find_by_id(session[:user_id])
+    puts request.params
+    @user = Current.user
   end
+
 end

@@ -26,12 +26,7 @@
       </div>
       <h4 class="wait-title">Check your e-mail</h4>
       <p class="help-text">We have sent a password recover instructions to your e-mail</p>
-      <% if @user %>
-          <p class="help-text"><strong><%= @user.email %></strong></p>
-      <% else %>
-          <p class="help-text"><strong><%= @coach.email %></strong></p>
-      <% end %>
-
+      <p class="help-text"><strong><%= @coach.email %></strong></p>
       <p class="lb">fefe</p>
       <br>
       <p class="verify-text">Did not receive the e-mail? Check your spam filter or</p>

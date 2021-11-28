@@ -19,8 +19,8 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-link nav-link-style" aria-current="page" href="#content-two">Dashboard</a>
-          <a class="nav-link nav-link-style" href="#content-techniques">My techniques</a>
-          <a class="nav-link nav-link-style" href="#content-coaches">Coaches</a>
+          <a class="nav-link nav-link-style" href="#content-techniques">My users</a>
+          <a class="nav-link nav-link-style" href="#content-coaches">Library</a>
         </div>
       </div>
       <div class="d-flex">
@@ -37,14 +37,14 @@
         <div class="me-3">
            <img src="<%= asset_path('sydney-sims-fZ2hMpHIrbI-unsplash.jpg') %>" class="rounded-circle size-image">
         </div>
-        <%= button_to 'LOG OUT', logout_path, method: :delete, class: "btn btn-sing-in" %>
+        <%= button_to 'LOG OUT', logout_coach_path, method: :delete, class: "btn btn-sing-in" %>
       </div>
     </div>
   </nav>
 
   <div class="content-techniques">
 
-    <%= @user.name %>
+    <%= @coach.name %>
 
   </div>
 

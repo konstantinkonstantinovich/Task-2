@@ -20,22 +20,21 @@
       <h4 class="create">Create account</h4>
       <div class="sign_in">
         <div class="ask">Already have an account?</div>
-        <div class="link"><%= link_to 'Sign in', sign_in_path, class: "custom"%></div>
+        <div class="link"><%= link_to 'Sign in', sign_in_coach_path, class: "custom"%></div>
       </div>
 
 
 
-      <%= form_with model: @user, class: "form-registration", url: sign_up_path do |f| %>
+      <%= form_with model: @coach, class: "form-registration", url: become_coach_path do |f| %>
         <div class="sign_for marge-top">
-          <div class="link_for active">USER</div>
-          <!-- <div class="link_for">COACH</div> -->
-          <%= link_to 'COACH', become_coach_path, class: 'link_for' %>
+          <%= link_to "USER", sign_up_path, class: "link_for" %>
+          <div class="link_for active">COACH</div>
         </div>
         <br>
         <% if alert %>
           <p class="alert"><%= alert%></p>
         <% end %>
-        <% invalid = @user.errors.include?(:name) %>
+        <% invalid = @coach.errors.include?(:name) %>
 
         <div class="form-group">
           <%= f.label :name, class: "labels" %>
@@ -49,7 +48,7 @@
           <% end %>
         </div>
         <br>
-        <% invalid = @user.errors.include?(:email) %>
+        <% invalid = @coach.errors.include?(:email) %>
 
         <div class="form-group">
           <%= f.label :email, class: "labels" %>
@@ -64,7 +63,7 @@
         </div>
         <br>
 
-        <% invalid = @user.errors.include?(:password) %>
+        <% invalid = @coach.errors.include?(:password) %>
 
         <div class="form-group" data-controller="password-toggle">
           <%= f.label :password, class: "labels" %>
@@ -80,7 +79,7 @@
         </div>
         <br>
 
-        <% invalid = @user.errors.include?(:password_confirmation) %>
+        <% invalid = @coach.errors.include?(:password_confirmation) %>
 
         <div class="form-group" data-controller="password-toggle">
           <%= f.label :password_confirmation, class: "labels" %>
@@ -97,7 +96,7 @@
         <br>
 
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="user[agree]">
+          <input class="form-check-input" type="checkbox" id="flexCheckDefault" name="coach[agree]">
           <label class="form-check-label font" for="flexCheckDefault">
             I've read and agree with <strong>Terms of Services</strong> and our <strong>Privacy Policy</strong>
           </label>

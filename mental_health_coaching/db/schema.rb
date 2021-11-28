@@ -15,13 +15,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "coach_problems", id: false, force: :cascade do |t|
-    t.bigint "coach_id"
-    t.bigint "problem_id"
-    t.index ["coach_id"], name: "index_coach_problems_on_coach_id"
-    t.index ["problem_id"], name: "index_coach_problems_on_problem_id"
-  end
-
   create_table "coaches", force: :cascade do |t|
     t.string "name"
     t.integer "age"
@@ -63,6 +56,27 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "problems_coaches", id: false, force: :cascade do |t|
+    t.bigint "coach_id"
+    t.bigint "problem_id"
+    t.index ["coach_id"], name: "index_problems_coaches_on_coach_id"
+    t.index ["problem_id"], name: "index_problems_coaches_on_problem_id"
+  end
+
+  create_table "problems_techniques", id: false, force: :cascade do |t|
+    t.bigint "technique_id"
+    t.bigint "problem_id"
+    t.index ["problem_id"], name: "index_problems_techniques_on_problem_id"
+    t.index ["technique_id"], name: "index_problems_techniques_on_technique_id"
+  end
+
+  create_table "problems_users", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "problem_id"
+    t.index ["problem_id"], name: "index_problems_users_on_problem_id"
+    t.index ["user_id"], name: "index_problems_users_on_user_id"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -107,13 +121,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.index ["techniques_id"], name: "index_steps_on_techniques_id"
   end
 
-  create_table "technique_problems", id: false, force: :cascade do |t|
-    t.bigint "technique_id"
-    t.bigint "problem_id"
-    t.index ["problem_id"], name: "index_technique_problems_on_problem_id"
-    t.index ["technique_id"], name: "index_technique_problems_on_technique_id"
-  end
-
   create_table "techniques", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -123,13 +130,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.string "duration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "user_problems", id: false, force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "problem_id"
-    t.index ["problem_id"], name: "index_user_problems_on_problem_id"
-    t.index ["user_id"], name: "index_user_problems_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
