@@ -27,7 +27,6 @@ class RegistrationCoachesController < ApplicationController
   def update
     @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
     @problems = Problem.all
-    puts params[:avatar]
     if @coach.update(update_params)
       socail_network = SocialNetwork.create(name: params[:coach][:social_networks], coach_id: @coach.id)
       params[:coach][:problems].each do |problem|
@@ -37,7 +36,6 @@ class RegistrationCoachesController < ApplicationController
           end
         end
       end
-      @coach.save
       redirect_to coach_page_path(@coach.id)
     else
       render :edit
