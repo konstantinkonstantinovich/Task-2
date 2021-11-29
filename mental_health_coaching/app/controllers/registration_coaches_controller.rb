@@ -26,13 +26,32 @@ class RegistrationCoachesController < ApplicationController
 
   def update
     @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
-    puts params[:coach]
+    @problems = Problem.all
+    puts params[:avatar]
+    if @coach.update(update_params)
+      socail_network = SocialNetwork.create(name: params[:coach][:social_networks], coach_id: @coach.id)
+      params[:coach][:problems].each do |problem|
+        @problems.each do |data|
+          if problem == data[:name]
+            @coach.problems << data
+          end
+        end
+      end
+      @coach.save
+      redirect_to coach_page_path(@coach.id)
+    else
+      render :edit
+    end
   end
 
   private
 
   def coach_params
     params.require(:coach).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def update_params
+    params.require(:coach).permit(:avatar, :age, :gender, :education, :experience, :licenses)
   end
 
 end

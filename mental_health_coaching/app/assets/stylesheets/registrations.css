@@ -66,13 +66,12 @@
   font-size: 26px;
 }
 .link_for {
-  color: #000000DE;
-  text-decoration: none;
   display: inline-block;
   width: 49.4%;
+  padding: 10px;
   font-size: 14px;
-   position: relative;
-   margin: 0px;
+  text-decoration: none;
+  color: #000000DE;
 }
 
 .marge-top {
@@ -252,4 +251,64 @@ input[class="male"]:focus + p {
 
 .margin-none {
   margin-bottom: 0px;
+}
+
+.link_for_gender {
+  color: #000000DE;
+  text-decoration: none;
+  display: inline-block;
+  width: 49.4%;
+  font-size: 14px;
+   position: relative;
+   margin: 0px;
+}
+
+.sign_for_gender {
+  margin: 0 auto;
+  width: 100%;
+  color: #000000DE;
+  border: 1px solid #6C757D;
+  border-radius: 5px;
+  background: #E9ECEF;
+  text-align: center;
+}
+
+.after-input {
+  margin: 0px;
+  color: #00000099;
+  font-size: 12px;
+  padding-left: 10px;
+  padding-top: 4px;
+}
+
+
+.add-block {
+  width: 100%;
+  padding-top: 7px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border: none;
+  outline: none;
+  background: white;
+  text-align: left;
+}
+
+.add-block img {
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  background-color: white;
+
+  position: absolute;
+}
+
+.add-block label {
+  width: 60%;
+  margin-left: 12%;
+  padding: 5px;
+  color: #000000DE;
+  opacity: 0.6;
+  font-size: 16px;
+  font-weight: bold;
+
 }

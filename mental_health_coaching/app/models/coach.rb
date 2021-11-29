@@ -17,7 +17,6 @@ class Coach < ApplicationRecord
 
   has_secure_password
 
-  validates :avatar, presence: false
   validates :age, presence: false
   validates :abouts, presence: false
   validates :gender, presence: false

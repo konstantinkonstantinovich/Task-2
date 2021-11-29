@@ -26,16 +26,21 @@
       <div class="d-flex">
         <div class="envelope-block"><i class="bi bi-envelope"></i></div>
 
-        <div class="bell-block dropdown">
-          <i class="bi bi-bell" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false"></i>
+        <div class="bell-block">
+          <i class="bi bi-bell" ></i>
+
+        </div>
+        <div class="me-3 dropdown">
+          <% if @coach.avatar.attached? %>
+            <img src="<%= url_for(@coach.avatar) %>" class= "rounded-circle size-image" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+          <% else %>
+            <img src="<%= asset_path('sydney-sims-fZ2hMpHIrbI-unsplash.jpg') %>" class="rounded-circle size-image" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+          <% end %>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="#">Edit Personal Information</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Change Password</a></li>
           </ul>
-        </div>
-        <div class="me-3">
-           <img src="<%= asset_path('sydney-sims-fZ2hMpHIrbI-unsplash.jpg') %>" class="rounded-circle size-image">
         </div>
         <%= button_to 'LOG OUT', logout_coach_path, method: :delete, class: "btn btn-sing-in" %>
       </div>
@@ -45,6 +50,7 @@
   <div class="content-techniques">
 
     <%= @coach.name %>
+
 
   </div>
 

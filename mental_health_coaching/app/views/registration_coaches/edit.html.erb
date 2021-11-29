@@ -25,7 +25,7 @@
       <p class="help-text">Please, share some personal information about you so that we can</p>
       <p class="help-text">personalize your onboarding experience</p>
 
-      <%= form_with model: @coach, class: "form-registration", url: become_coach_update_path do |f| %>
+      <%= form_with multipart: true, model: @coach, class: "form-registration", url: become_coach_update_path do |f| %>
         <div class="image-input">
           <img class="rounded-circle" id="output" src="<%= asset_path('png-clipart-graphy-camera-camera-rectangle-photography.png') %>"/>
           <label for="avatar">
@@ -51,31 +51,76 @@
         <br>
 
         <label class="labels">Gender</label>
-        <div class="sign_for">
-              <label class="link_for male" for="male">
-                <input type="radio" class="female" name="coach[gender]" id="male">
+        <div class="sign_for_gender">
+              <label class="link_for_gender male" for="male">
+                <input type="radio" class="female" name="coach[gender]" id="male" value="male">
                 <p class="margin-none">MALE</p>
               </label>
 
 
-              <label class="link_for female" for="female">
-                <input type="radio" class="female" name="coach[gender]" id="female" checked>
+              <label class="link_for_gender female" for="female">
+                <input type="radio" class="female" name="coach[gender]" id="female" value="female" checked>
                 <p class="margin-none">FEMALE</p>
               </label>
         </div>
         <br>
         <div class="form-group">
           <label class="labels" for="tags">Areas of expertise</label>
-          <select class="form-control select2-multi" name="coach[problems]" multiple="multiple">
+          <select class="form-control select2-multi" name="coach[problems][]" multiple="multiple">
             <% @problems.each do |data|%>
-                <option name="coach[problems]"value="<%= data[:name] %>"><%= data[:name] %></option>
+                <option value="<%= data[:name]%>"><%= data[:name] %></option>
             <% end %>
           </select>
         </div>
-
+        <br>
         <script>
             $('.select2-multi').select2();
         </script>
+        <div class="form-group">
+          <%= f.label 'Education', class: "labels" %>
+          <%= f.text_field :education, class: "field form-control" %>
+          <p class="after-input">Name of educational institution, specialty, degree</p>
+        </div>
+        <div class="add-block">
+          <img class="rounded-circle" src="<%= asset_path('add_button.png') %>">
+          <label>Add another</label>
+        </div>
+        <br>
+
+        <div class="form-group">
+          <%= f.label 'Work experience', class: "labels" %>
+          <%= f.text_field :experience, class: "field form-control" %>
+          <p class="after-input">Position, company, work experience</p>
+        </div>
+        <div class="add-block">
+          <img class="rounded-circle" src="<%= asset_path('add_button.png') %>">
+          <label>Add another</label>
+        </div>
+        <br>
+
+
+        <div class="form-group">
+          <%= f.label 'Licenses and certificates', class: "labels" %>
+          <%= f.text_field :licenses, class: "field form-control" %>
+          <p class="after-input">Name, issuer, date of issue</p>
+        </div>
+        <div class="add-block">
+          <img class="rounded-circle" src="<%= asset_path('add_button.png') %>">
+          <label>Add another</label>
+        </div>
+        <br>
+
+
+        <div class="form-group">
+          <%= f.label 'Link on social networks', class: "labels" %>
+          <%= f.text_field :social_networks, class: "field form-control" %>
+          <p class="after-input">Link on social networks</p>
+        </div>
+        <div class="add-block">
+          <img class="rounded-circle" src="<%= asset_path('add_button.png') %>">
+          <label>Add another</label>
+        </div>
+        <br>
 
         <%= f.submit 'GET STARTED', class: "btn btn-sing-up marge-top"%>
       <% end %>

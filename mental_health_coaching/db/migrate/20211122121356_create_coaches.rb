@@ -8,7 +8,6 @@ class CreateCoaches < ActiveRecord::Migration[6.1]
           t.string :varify_email
           t.integer :gender
           t.text :about
-          t.text :avatar
           t.text :experience
           t.text :licenses
           t.text :education

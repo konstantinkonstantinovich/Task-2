@@ -10,10 +10,38 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_25_112232) do
+ActiveRecord::Schema.define(version: 2021_11_29_105506) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "coaches", force: :cascade do |t|
     t.string "name"
@@ -23,12 +51,18 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.string "varify_email"
     t.integer "gender"
     t.text "about"
-    t.text "avatar"
     t.text "experience"
     t.text "licenses"
     t.text "education"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "coaches_problems", id: false, force: :cascade do |t|
+    t.bigint "coach_id"
+    t.bigint "problem_id"
+    t.index ["coach_id"], name: "index_coaches_problems_on_coach_id"
+    t.index ["problem_id"], name: "index_coaches_problems_on_problem_id"
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -56,27 +90,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "problems_coaches", id: false, force: :cascade do |t|
-    t.bigint "coach_id"
-    t.bigint "problem_id"
-    t.index ["coach_id"], name: "index_problems_coaches_on_coach_id"
-    t.index ["problem_id"], name: "index_problems_coaches_on_problem_id"
-  end
-
-  create_table "problems_techniques", id: false, force: :cascade do |t|
-    t.bigint "technique_id"
-    t.bigint "problem_id"
-    t.index ["problem_id"], name: "index_problems_techniques_on_problem_id"
-    t.index ["technique_id"], name: "index_problems_techniques_on_technique_id"
-  end
-
-  create_table "problems_users", id: false, force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "problem_id"
-    t.index ["problem_id"], name: "index_problems_users_on_problem_id"
-    t.index ["user_id"], name: "index_problems_users_on_user_id"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -132,6 +145,13 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "techniques_problems", id: false, force: :cascade do |t|
+    t.bigint "technique_id"
+    t.bigint "problem_id"
+    t.index ["problem_id"], name: "index_techniques_problems_on_problem_id"
+    t.index ["technique_id"], name: "index_techniques_problems_on_technique_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.integer "age"
@@ -139,7 +159,6 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.integer "gender"
     t.text "about"
     t.string "varify_email"
-    t.text "avatar"
     t.string "password_digest"
     t.bigint "coach_id"
     t.datetime "created_at", precision: 6, null: false
@@ -147,6 +166,15 @@ ActiveRecord::Schema.define(version: 2021_11_25_112232) do
     t.index ["coach_id"], name: "index_users_on_coach_id"
   end
 
+  create_table "users_problems", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "problem_id"
+    t.index ["problem_id"], name: "index_users_problems_on_problem_id"
+    t.index ["user_id"], name: "index_users_problems_on_user_id"
+  end
+
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "notifications", "coaches"
   add_foreign_key "notifications", "users"
   add_foreign_key "social_networks", "coaches"
