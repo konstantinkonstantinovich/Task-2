@@ -29,7 +29,13 @@ Rails.application.routes.draw do
 
   # user contoller
   get '/user/:id', to: 'user#show', as: 'user_page'
+
+  # coach contoller
   get '/coach/:id', to: 'coach#show', as: 'coach_page'
+  get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'
+  patch '/coach/:id/update', to: 'coach#update'
+  get '/coach/:id/password_change', to: 'coach#password_edit', as: 'password_change_coach'
+  patch '/coach/:id/password_change', to: 'coach#password_update'
 
   # reset password contoller
   get '/reset_password/new', to: 'reset_password#new'

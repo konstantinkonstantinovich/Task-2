@@ -1,0 +1,82 @@
+.personal-info {
+  color: #000000DE;
+  text-align: left;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 24px;
+}
+
+
+.content-block {
+  width: 100%;
+  margin: 0px;
+  padding: 83px;
+  background: white;
+
+}
+
+.form-update {
+  margin: 0px auto;
+  border-top: 1px solid lightgrey;
+  width: 30%;
+  padding-top: 20px;
+}
+
+.personal-block-h {
+  width: 30%;
+  margin: 0 auto;
+}
+
+
+.image-input-coach {
+  width: 100%;
+  padding: 5px;
+}
+
+.image-input-coach input {
+  display: none;
+}
+
+.image-input-coach img {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  background-color: white;
+
+  position: absolute;
+}
+
+.image-input-coach label {
+  width: 60%;
+  margin-left: 30%;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 15px;
+  padding-bottom: 10px;
+
+}
+
+.labels {
+  font-size: 16px;
+  padding: 5px;
+  line-break: normal;
+}
+
+.field {
+  width: 100%;
+  border: 1px solid #000000C7;
+  border-radius: 5px;
+  padding: 12px;
+  color: #707070;
+  /* opacity: 0.6; */
+  font-size: 20px;
+}
+
+.btn-sing-up {
+  font-family: Roboto, Ligth;
+  color: #FFFFFF;
+  border-color: rgba(173, 181, 189, 1);
+  background: #212529;
+  width: 100%;
+
+}
