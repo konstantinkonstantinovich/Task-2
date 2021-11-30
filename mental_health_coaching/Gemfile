@@ -10,6 +10,12 @@ gem 'rails', '~> 6.1.4', '>= 6.1.4.1'
 gem 'bcrypt'
 
 gem 'mail'
+
+gem 'omniauth'
+
+gem 'omniauth-rails_csrf_protection'
+
+gem 'omniauth-google-oauth2'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3', '~> 1.4'
 gem 'pg'

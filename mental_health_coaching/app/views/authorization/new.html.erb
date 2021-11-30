@@ -61,16 +61,22 @@
 
         <%= f.submit 'GET STARTED', class: "btn btn-sing-up marge-top" %>
 
-        <div class="sign-with">
-          <div class="with">
-            or Sign in with
-          </div>
-          <div class="badge-with">
-            <i class="bi bi-facebook"></i>
-            <i class="bi bi-google"></i>
-          </div>
-        </div>
+
       <% end %>
+      <div class="sign-with">
+        <div class="with">
+          or Sign in with
+        </div>
+        <div class="badge-with">
+          <!-- <i class="bi bi-google"></i> -->
+          <%= button_to '/auth/google_oauth2', class: "icon-color" do %>
+              <i class="bi bi-facebook"></i>
+              <i class="bi bi-google"></i>
+
+          <% end %>
+
+        </div>
+      </div>
 
     </div>
 

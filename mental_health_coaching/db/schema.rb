@@ -164,8 +164,9 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
     t.string "email"
     t.integer "gender"
     t.text "about"
-    t.string "varify_email"
     t.string "password_digest"
+    t.string "uid"
+    t.string "provider"
     t.bigint "coach_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
