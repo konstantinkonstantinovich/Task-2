@@ -33,8 +33,12 @@ class CoachController < ApplicationController
 
   def password_update
     @coach = Current.coach
-    if Current.coach.update(password_params)
-      redirect_to coach_page_path(Current.coach.id)
+    if BCrypt::Password.new(Current.coach.password_digest) == params[:coach][:old_password]
+      if Current.coach.update(password_params)
+        redirect_to coach_page_path(Current.coach.id)
+      else
+        render :password_edit
+      end
     else
       render :password_edit
     end
