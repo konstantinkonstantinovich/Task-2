@@ -14,10 +14,12 @@ class UserController < ApplicationController
     @user = Current.user
     @problems = Problem.all
     if @user.update(update_params)
-      params[:user][:problems].each do |problem|
-        @problems.each do |data|
-          if problem == data[:name]
-            @user.problems << data
+      if params[:user][:problems]
+        params[:user][:problems].each do |problem|
+          @problems.each do |data|
+            if problem == data[:name]
+              @user.problems << data
+            end
           end
         end
       end

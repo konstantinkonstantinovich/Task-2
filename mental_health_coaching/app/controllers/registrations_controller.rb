@@ -30,10 +30,12 @@ class RegistrationsController < ApplicationController
     @user = User.find_by(id: session[:user_id]) if session[:user_id]
     @problems = Problem.all
     if @user.update(update_params)
-      params[:user][:problems].each do |problem|
-        @problems.each do |data|
-          if problem == data[:name]
-            @user.problems << data
+      if params[:user][:problems]
+        params[:user][:problems].each do |problem|
+          @problems.each do |data|
+            if problem == data[:name]
+              @user.problems << data
+            end
           end
         end
       end
