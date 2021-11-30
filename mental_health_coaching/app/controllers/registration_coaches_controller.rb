@@ -28,7 +28,6 @@ class RegistrationCoachesController < ApplicationController
 
   def update
     @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
-    puts @coach
     @problems = Problem.all
     if @coach.update(update_params)
       socail_network = SocialNetwork.create(name: params[:coach][:social_networks], coach_id: @coach.id)

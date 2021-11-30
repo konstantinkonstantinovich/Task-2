@@ -17,6 +17,15 @@ class Coach < ApplicationRecord
 
   has_secure_password
 
+  PASSWORD_FORMAT = /\A
+    (?=.{8,})          # Must contain 8 or more characters
+    (?=.*[a-z])        # Must contain a lower case character
+    (?=.*[A-Z])        # Must contain an upper case character
+    (?=.*[[:^alnum:]]) # Must contain a symbol
+  /x
+
+  validates :password, presence: true, format: { with: PASSWORD_FORMAT }, allow_nil: true
+
   validates :age, presence: false
   validates :abouts, presence: false
   validates :gender, presence: false
