@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # registration user controller
   get '/sign_up', to: 'registrations#new'
   post '/sign_up', to: 'registrations#create'
-  get '/sign_up/verification', to: 'registrations#edit', as: 'send_mail'
+  get '/sign_up/verification', to: 'registrations#edit'
   delete 'destroy', to: 'registrations#destroy', as: 'destroy'
   patch '/sign_up/verification', to: 'registrations#update'
   get '/sign_up/verification/resend/', to: 'registrations#resend', as: 'resend'

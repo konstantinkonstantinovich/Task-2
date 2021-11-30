@@ -7,10 +7,9 @@ class RegistrationsController < ApplicationController
     @user = User.new(user_params)
     if params[:user][:agree] == "on"
       if @user.save
-        $msg = rand(1000...9999).to_s
-        UserMailer.new_registration_email(@user, $msg).deliver_now
-        session[:email] = @user.email
-        redirect_to send_mail_path
+        UserMailer.new_registration_email(@user).deliver_now
+        session[:user_id] = @user.id
+        render :create
       else
         render :new
       end
@@ -21,25 +20,32 @@ class RegistrationsController < ApplicationController
   end
 
   def edit
-    @user = User.find_by(email: session[:email]) if session[:email]
+    @problems = Problem.all
+    @user = User.find_signed!(params[:token], purpose: 'sign_up_verification')
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      redirect_to sign_in_path, alert: 'Your token has expired. Please try again.'
   end
 
   def update
-    @user = User.find_by(email: session[:email]) if session[:email]
-    if params[:user][:varify_email] == $msg
-      @user.varify_email = params[:user][:varify_email]
-      session[:user_id] = @user.id if @user.save
+    @user = User.find_by(id: session[:user_id]) if session[:user_id]
+    @problems = Problem.all
+    if @user.update(update_params)
+      params[:user][:problems].each do |problem|
+        @problems.each do |data|
+          if problem == data[:name]
+            @user.problems << data
+          end
+        end
+      end
       redirect_to user_page_path(@user.id)
     else
       render :edit
     end
-
   end
 
   def resend
-    @user = User.find_by(email: session[:email]) if session[:email]
-    $msg = rand(1000...9999).to_s
-    UserMailer.new_registration_email(@user, $msg).deliver_now
+    @user = User.find_by(id: session[:user_id]) if session[:user_id]
+    UserMailer.new_registration_email(@user).deliver_now
     render :edit
   end
 
@@ -53,5 +59,9 @@ class RegistrationsController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def update_params
+    params.require(:user).permit(:avatar_user, :age, :gender)
   end
 end
