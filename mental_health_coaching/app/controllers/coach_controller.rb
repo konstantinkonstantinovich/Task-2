@@ -47,7 +47,7 @@ class CoachController < ApplicationController
   private
 
   def update_params
-    params.require(:coach).permit(:avatar, :about, :age, :gender, :education, :experience, :licenses)
+    params.require(:coach).permit(:name, :email, :avatar, :about, :age, :gender, :education, :experience, :licenses)
   end
 
   def password_params

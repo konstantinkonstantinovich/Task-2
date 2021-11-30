@@ -5,10 +5,9 @@ class RegistrationsController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    puts params[:user][:agree]
     if params[:user][:agree] == "on"
       if @user.save
-        $msg = "#{rand(9)}"+"#{rand(9)}"+"#{rand(9)}"+"#{rand(9)}"
+        $msg = rand(1000...9999).to_s
         UserMailer.new_registration_email(@user, $msg).deliver_now
         session[:email] = @user.email
         redirect_to send_mail_path
@@ -39,7 +38,7 @@ class RegistrationsController < ApplicationController
 
   def resend
     @user = User.find_by(email: session[:email]) if session[:email]
-    $msg = "#{rand(9)}"+"#{rand(9)}"+"#{rand(9)}"+"#{rand(9)}"
+    $msg = rand(1000...9999).to_s
     UserMailer.new_registration_email(@user, $msg).deliver_now
     render :edit
   end

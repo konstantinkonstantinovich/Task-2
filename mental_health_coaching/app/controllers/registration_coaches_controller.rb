@@ -7,8 +7,9 @@ class RegistrationCoachesController < ApplicationController
     @coach = Coach.new(coach_params)
     if params[:coach][:agree] == "on"
       if @coach.save
+        CoachMailer.varify_email(@coach).deliver_now
         session[:coach_id] = @coach.id
-        redirect_to become_coach_update_path
+        render :create
       else
         render :new
       end
@@ -19,13 +20,16 @@ class RegistrationCoachesController < ApplicationController
   end
 
   def edit
-    @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
+    # @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
     @problems = Problem.all
-
+    @coach = Coach.find_signed!(params[:token], purpose: 'become_coach_update')
+    rescue ActiveSupport::MessageVerifier::InvalidSignature
+      redirect_to sign_in_path, alert: 'Your token has expired. Please try again.'
   end
 
   def update
     @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
+    puts @coach
     @problems = Problem.all
     if @coach.update(update_params)
       socail_network = SocialNetwork.create(name: params[:coach][:social_networks], coach_id: @coach.id)

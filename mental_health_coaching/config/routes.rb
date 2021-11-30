@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
   # user contoller
   get '/user/:id', to: 'user#show', as: 'user_page'
+  get '/user/:id/update', to: 'user#edit', as: 'update_profile_user'
+  patch '/user/:id/update', to: 'user#update'
 
   # coach contoller
   get '/coach/:id', to: 'coach#show', as: 'coach_page'

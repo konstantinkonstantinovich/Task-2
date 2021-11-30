@@ -41,7 +41,7 @@
           <%= f.text_field :name, class: "field form-control #{'is-invalid' if invalid}"%>
           <% if invalid %>
             <div class="invalid-feedback d-block">
-              <% @user.errors.full_messages_for(:name).each do |error_message| %>
+              <% @coach.errors.full_messages_for(:name).each do |error_message| %>
                 <%= error_message %>.
               <% end %>
             </div>
@@ -55,7 +55,7 @@
           <%= f.text_field :email, class: "field form-control #{'is-invalid' if invalid}" %>
           <% if invalid %>
             <div class="invalid-feedback d-block">
-              <% @user.errors.full_messages_for(:email).each do |error_message| %>
+              <% @coach.errors.full_messages_for(:email).each do |error_message| %>
                 <%= error_message %>.
               <% end %>
             </div>
@@ -71,7 +71,7 @@
           <span data-action="click->password-toggle#password" class="password-field-icon-1 position far bi bi-eye-slash"></span>
           <% if invalid %>
             <div class="invalid-feedback d-block">
-              <% @user.errors.full_messages_for(:password).each do |error_message| %>
+              <% @coach.errors.full_messages_for(:password).each do |error_message| %>
                 <%= error_message %>.
               <% end %>
             </div>
@@ -87,7 +87,7 @@
             <span data-action="click->password-toggle#password" class="password-field-icon-1 position far bi bi-eye-slash"></span>
           <% if invalid %>
             <div class="invalid-feedback d-block">
-              <% @user.errors.full_messages_for(:password_confirmation).each do |error_message| %>
+              <% @coach.errors.full_messages_for(:password_confirmation).each do |error_message| %>
                 <%= error_message %>.
               <% end %>
             </div>

@@ -48,7 +48,6 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
     t.integer "age"
     t.string "email"
     t.string "password_digest"
-    t.string "varify_email"
     t.integer "gender"
     t.text "about"
     t.text "experience"
@@ -90,6 +89,13 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "problems_users", id: false, force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "problem_id"
+    t.index ["problem_id"], name: "index_problems_users_on_problem_id"
+    t.index ["user_id"], name: "index_problems_users_on_user_id"
   end
 
   create_table "ratings", force: :cascade do |t|
@@ -164,13 +170,6 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["coach_id"], name: "index_users_on_coach_id"
-  end
-
-  create_table "users_problems", id: false, force: :cascade do |t|
-    t.bigint "user_id"
-    t.bigint "problem_id"
-    t.index ["problem_id"], name: "index_users_problems_on_problem_id"
-    t.index ["user_id"], name: "index_users_problems_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -6,8 +6,8 @@
   <body>
     Hi <%= @coach.email %>,<br>
     ----------------------------------<br>
-    Someone requested a password reset.<br>
+    Someone requested a verify email.
     Click the link above if you recognise the activity, link expires in 15 minutes.<br>
-    <%= link_to 'Reset Password', reset_password_coach_edit_url(token: @token) %>
+    <%= link_to 'Varify email', become_coach_update_url(token: @token) %>
   <body>
 </html>

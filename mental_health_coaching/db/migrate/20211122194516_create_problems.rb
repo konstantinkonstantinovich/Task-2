@@ -6,7 +6,7 @@ class CreateProblems < ActiveRecord::Migration[6.1]
       t.timestamps
     end
 
-    create_table :users_problems, id: false do |t|
+    create_table :problems_users, id: false do |t|
       t.belongs_to :user
       t.belongs_to :problem
 
