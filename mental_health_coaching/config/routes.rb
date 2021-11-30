@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   # registration coach controller
   get '/become_coach', to: 'registration_coaches#new'
   post '/become_coach', to: 'registration_coaches#create'
+  delete 'destroy_coach', to: 'registration_coaches#destroy', as: 'back_to_sign_up'
   get '/become_coach/update', to: 'registration_coaches#edit'
   patch '/become_coach/update', to: 'registration_coaches#update'
 

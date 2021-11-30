@@ -20,7 +20,6 @@ class RegistrationCoachesController < ApplicationController
   end
 
   def edit
-    # @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
     @problems = Problem.all
     @coach = Coach.find_signed!(params[:token], purpose: 'become_coach_update')
     rescue ActiveSupport::MessageVerifier::InvalidSignature
@@ -44,6 +43,13 @@ class RegistrationCoachesController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def destroy
+    @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
+    session[:coach_id] = nil
+    @coach.destroy
+    redirect_to become_coach_path
   end
 
   private

@@ -50,7 +50,8 @@ class RegistrationsController < ApplicationController
   end
 
   def destroy
-    @user = User.find_by(email: session[:email]) if session[:email]
+    @user = User.find_by(id: session[:user_id]) if session[:user_id]
+    session[:user_id] = nil
     @user.destroy
     redirect_to sign_up_path
   end
