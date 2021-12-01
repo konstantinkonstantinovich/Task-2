@@ -1,10 +1,6 @@
 class UserController < ApplicationController
   before_action :require_user_logged_in!
 
-  def show
-    @user = Current.user
-  end
-
   def edit
     @user = Current.user
     @problems = Problem.all
@@ -44,6 +40,11 @@ class UserController < ApplicationController
     else
       render :password_edit
     end
+  end
+
+  def dashboard
+    @user = Current.user
+    @problems = @user.problems
   end
 
   private

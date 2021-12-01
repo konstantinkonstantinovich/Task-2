@@ -1,0 +1,190 @@
+<% content_for :content do %>
+
+<div class="row">
+  <div class="col-8">
+    <div class="row">
+      <div class="col-3">
+        <div class="total-current-box">
+          <span class="size-total"><i class="bi bi-check-circle"></i> Total progress</span>
+          <div class="total-statistic">
+            <div class="big-numder">
+              10
+            </div>
+            <div class="of">
+              techniques completed
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-3">
+        <div class="total-current-box">
+          <span class="size-total"><i class="bi bi-play-circle"></i> Current progress</span>
+          <div class="total-statistic">
+            <div class="big-numder">
+              1
+            </div>
+            <div class="of">
+              techniques in process
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-3">
+        <div class="total-current-box">
+          <span class="size-total"><i class="bi bi-clock"></i> Total time</span>
+          <div class="total-statistic">
+            <div class="big-numder">
+              16
+            </div>
+            <div class="of">
+              hours for technigues
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-3">
+        <div class="total-current-box">
+          <span class="size-total"><i class="bi bi-check-circle"></i> Current time</span>
+          <div class="total-statistic">
+            <div class="big-numder">
+              2
+            </div>
+            <div class="of">
+              hours for technigues
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <div class="row-width">
+      <div class="row">
+        <div class="col-11 mt">
+          My techniques
+        </div>
+        <div class="col-1 sa">
+          See All
+        </div>
+      </div>
+
+
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-6">
+        <div class="card h-100">
+          <div class="item">
+            <span class="notify-badge">NEW</span>
+            <img src="<%= asset_path('anthony-tran-vXymirxr5ac-unsplash.jpg') %>" class="card-img-top" alt="...">
+            <span class="tag-badge">Depression</span>
+          </div>
+          <div class="card-body">
+            <h6 class="title_card">Cognitive - Behavioral Therapy</h6>
+            <p class="description">Elimination of the dependence of emotions and human behavior on his thoughts.</p>
+            <div class="age">Age: <strong>25-35 years</strong></div>
+            <div class="gender">Gender:<strong> Male, Female</strong></div>
+            <br>
+            <div class="step">Steps: <strong>4</strong></div>
+            <div class="duration">Duration: <strong>6-7 hours</strong></div>
+            <ul class="hr">
+              <li><i class="bi bi-people"></i> 235</li>
+              <li><i class="bi bi-hand-thumbs-up"></i> 124</li>
+              <li><i class="bi bi-hand-thumbs-down"></i> 12</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="col-6">
+        <div class="card h-100">
+          <div class="item">
+            <span class="notify-badge">POPULAR</span>
+            <img src="<%= asset_path('kristina-tripkovic-nwWUBsW6ud4-unsplash.jpg') %>" class="card-img-top" alt="...">
+            <span class="tag-badge">Depression</span>
+            <span class="tag-badge-second">Anxiety</span>
+          </div>
+          <div class="card-body">
+            <h6 class="title_card">Lifestyle changes</h6>
+            <p class="description">Eliminating the lack of control that makes people feel worse.</p>
+            <div class="age">Age: 35-40 years</div>
+            <div class="gender">Gender: Male, Female</div>
+            <br>
+            <div class="step">Steps: 4</div>
+            <div class="duration">Duration: 5 hours</div>
+            <ul class="hr">
+              <li><i class="bi bi-people"></i> 311</li>
+              <li><i class="bi bi-hand-thumbs-up"></i> 214</li>
+              <li><i class="bi bi-hand-thumbs-down"></i> 34</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="card">
+      <div class="body">
+        <div class="small-card">
+          <div class="image-avatar-small">
+
+            <% if @user.avatar_user.attached? %>
+              <img src="<%= url_for(@user.avatar_user) %>" class= "image-size rounded-circle ">
+            <% else %>
+              <img src="<%= asset_path('generic-user-icon-10.png') %>" class="img-fluid rounded-circle mb-3">
+            <% end %>
+          </div>
+          <div class="name-coach">
+            <span class="coach-name"><%= @user.name %></span><br>
+            <span class="status"><%= @user.email %></span>
+            <p class="coach-info-left"><%= @user.age %> years | <%= @user.gender %></p>
+            <div class="edit-prof">
+              <i class="bi bi-three-dots-vertical"></i>
+            </div>
+
+          </div>
+          <p class="tages-info">Problems</p>
+          <% if @problems %>
+            <% @problems.each do |p| %>
+              <span class="tags"><%= p[:name] %></span>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="user-coach">
+      <div class="card">
+        <div class="body body_pad">
+          <div class="small-card">
+            <div class="image-avatar-small">
+              <img src="<%= asset_path('generic-user-icon-10.png') %>" class="i-s rounded-circle">
+            </div>
+            <div class="name-user">
+              <span class="coach-name">You don't have a coach yet</span><br>
+              <div class="edit-prof">
+                <i class="bi bi-chevron-compact-right"></i>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="notification">
+      notification
+    </div>
+  </div>
+
+</div>
+
+<% end %>
+<%= render template: "user/show" %>

@@ -22,7 +22,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link nav-link-style" aria-current="page" href="#content-two">Dashboard</a>
+          <%= link_to "Dashboard", user_dashboard_page_path, class: "nav-link nav-link-style" %>
           <a class="nav-link nav-link-style" href="#content-techniques">My techniques</a>
           <a class="nav-link nav-link-style" href="#content-coaches">Coaches</a>
         </div>
@@ -38,7 +38,7 @@
           <% if @user.avatar_user.attached? %>
             <img src="<%= url_for(@user.avatar_user) %>" class= "rounded-circle size-image" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
           <% else %>
-            <img src="<%= asset_path('sydney-sims-fZ2hMpHIrbI-unsplash.jpg') %>" class="rounded-circle size-image" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle size-image" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
           <% end %>
           <ul class="dropdown-menu">
             <li><%= link_to 'Edit Personal Information', update_profile_user_path, class: "dropdown-item" %></li>

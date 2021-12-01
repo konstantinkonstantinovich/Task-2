@@ -30,12 +30,12 @@ Rails.application.routes.draw do
   delete 'logout', to: 'authorization_coach#destroy', as: 'logout_coach'
 
   # user contoller
-  get '/user/:id', to: 'user#show', as: 'user_page'
+  get '/user/:id', to: 'user#dashboard', as: 'user_page'
   get '/user/:id/update', to: 'user#edit', as: 'update_profile_user'
   patch '/user/:id/update', to: 'user#update'
   get '/user/:id/password_change', to: 'user#password_edit', as: 'password_change_user'
   patch '/user/:id/password_change', to: 'user#password_update'
-
+  get '/user/:id/dashboard', to: 'user#dashboard', as: 'user_dashboard_page'
   # coach contoller
   get '/coach/:id', to: 'coach#show', as: 'coach_page'
   get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'
