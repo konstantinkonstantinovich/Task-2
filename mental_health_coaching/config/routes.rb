@@ -37,11 +37,12 @@ Rails.application.routes.draw do
   patch '/user/:id/password_change', to: 'user#password_update'
   get '/user/:id/dashboard', to: 'user#dashboard', as: 'user_dashboard_page'
   # coach contoller
-  get '/coach/:id', to: 'coach#show', as: 'coach_page'
+  get '/coach/:id', to: 'coach#dashboard', as: 'coach_page'
   get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'
   patch '/coach/:id/update', to: 'coach#update'
   get '/coach/:id/password_change', to: 'coach#password_edit', as: 'password_change_coach'
   patch '/coach/:id/password_change', to: 'coach#password_update'
+    get '/coach/:id/dashboard', to: 'coach#dashboard', as: 'coach_dashboard_page'
 
   # reset password contoller
   get '/reset_password/new', to: 'reset_password#new'

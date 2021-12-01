@@ -19,6 +19,7 @@ class UserController < ApplicationController
           end
         end
       end
+      Notification.create(body: "You changed your profile settings", status: 1, user_id: @user.id)
       redirect_to user_page_path(@user.id)
     else
       render :edit
@@ -33,6 +34,7 @@ class UserController < ApplicationController
     @user = Current.user
     if BCrypt::Password.new(Current.user.password_digest) == params[:user][:old_password]
       if Current.user.update(password_params)
+        Notification.create(body: "You changed your password settings", status: 1, user_id: @user.id)
         redirect_to user_page_path(Current.user.id)
       else
         render :password_edit
@@ -45,6 +47,7 @@ class UserController < ApplicationController
   def dashboard
     @user = Current.user
     @problems = @user.problems
+    @notifications = @user.notifications
   end
 
   private

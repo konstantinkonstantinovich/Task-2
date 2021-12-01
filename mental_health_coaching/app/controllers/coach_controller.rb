@@ -4,6 +4,12 @@ class CoachController < ApplicationController
     @coach = Current.coach
   end
 
+  def dashboard
+    @coach = Current.coach
+    @problems = @coach.problems
+    @notifications = @coach.notifications
+  end
+
   def edit
     @coach = Current.coach
     @problems = Problem.all
@@ -23,6 +29,7 @@ class CoachController < ApplicationController
           end
         end
       end
+      Notification.create(body: "You changed your profile settings", status: 1, coach_id: @coach.id)
       redirect_to coach_page_path(@coach.id)
     else
       render :edit
@@ -37,6 +44,7 @@ class CoachController < ApplicationController
     @coach = Current.coach
     if BCrypt::Password.new(Current.coach.password_digest) == params[:coach][:old_password]
       if Current.coach.update(password_params)
+        Notification.create(body: "You changed your password settings", status: 1, coach_id: @coach.id)
         redirect_to coach_page_path(Current.coach.id)
       else
         render :password_edit

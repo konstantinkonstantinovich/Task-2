@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
     t.text "description"
     t.string "age"
     t.integer "gender"
-    t.integer "steps"
+    t.integer "total_steps"
     t.string "duration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

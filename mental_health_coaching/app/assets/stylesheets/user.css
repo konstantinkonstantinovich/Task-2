@@ -50,7 +50,6 @@
 
 .total-statistic {
   width: 100%;
-
 }
 
 .big-numder {
@@ -112,4 +111,81 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 15px;
+}
+
+.notifications-title {
+  font-size: 24px;
+  color: #000000DE;
+  border-bottom: 1px solid lightgray;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.send-me-mail {
+  font-size: 12px;
+  color: #6C757D;
+  border-bottom: 1px solid lightgray;
+  padding-top: 23px;
+  padding-bottom: 10px;
+  text-align: right;
+}
+
+.label-for-switch {
+  margin-right: 35px;
+}
+
+.notification-avatar {
+  width: 45px;
+  height: 45px;
+}
+
+.notif-avatar-block {
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 0px;
+  padding-bottom: 15px;
+}
+
+.notif-text-block {
+  padding-top: 20px;
+  margin: 0px;
+  font-size: 14px;
+  color: #000000DE;
+}
+
+.notif-hours-block {
+  padding-top: 5px;
+  font-size: 12px;
+  color: #6C757D;
+  margin: 0px;
+}
+
+.notif-tag-block {
+  padding: 23px;
+}
+
+.badge-tag {
+  background: #495057;
+  display: inline-block;
+  padding: 0.35em 0.65em;
+  font-size: 0.70em;
+  font-weight: 600;
+  line-height: 1;
+  color: #FFFFFFDE;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 9px;
+}
+
+.start-button {
+  position: absolute;
+  right: 20px;
+}
+
+.steps-passed {
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  font-size: 14px;
 }
