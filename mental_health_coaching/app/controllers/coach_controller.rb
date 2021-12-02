@@ -10,6 +10,30 @@ class CoachController < ApplicationController
     @notifications = @coach.notifications
   end
 
+  def coach_users
+    @coach = Current.coach
+    @notifications = @coach.notifications
+    @count = Invitation.where(coach_id: @coach.id, status: 0).count
+    @invitation = Invitation.where(coach_id: @coach.id)
+  end
+
+  def refuse
+    @invite = Invitation.find_by_id(params[:invite_id])
+    Notification.create(body: "You have rejected #{@invite.user.name} invite", coach_id: @invite.coach.id, status: 1)
+    Notification.create(body: "Coach #{@invite.coach.name} refused to become your coach", user_id: @invite.user.id, status: 1)
+    @invite.destroy
+    redirect_to coach_users_page_path(Current.coach.id)
+  end
+
+  def confirm
+    @invite = Invitation.find_by_id(params[:invite_id])
+    Notification.create(body: "Coach #{@invite.coach.name} agreed to become your coach", user_id: @invite.user.id, status: 1)
+    Notification.create(body: "You agreed to become a coach for a user #{@invite.user.name}", coach_id: @invite.coach.id, status: 1)
+    @invite.update(status: 1)
+
+    redirect_to coach_users_page_path(Current.coach.id)
+  end
+
   def edit
     @coach = Current.coach
     @problems = Problem.all

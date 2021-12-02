@@ -87,6 +87,13 @@ class UserController < ApplicationController
     redirect_to user_dashboard_page_path(Current.user.id)
   end
 
+  def end_cooperation
+    @invite = Invitation.find_by_id(params[:invite_id])
+    Notification.create(body: "You have ended cooperation with coach #{@invite.coach.name}", user_id: @invite.user.id, status: 1)
+    @invite.destroy
+    redirect_to user_dashboard_page_path(Current.user.id)
+  end
+
   private
 
   def update_params

@@ -40,13 +40,18 @@ Rails.application.routes.draw do
   get '/user/:id/coaches/invitation/:coach_id', to: "user#new", as: 'invitation'
   post 'user/:id/coaches/invitation/:coach_id', to: "user#send_invintation"
   delete 'cancel/:invite_id', to: 'user#cancel_invite', as: 'cancel_coach_invite'
+  delete 'end/:invite_id', to: 'user#end_cooperation', as: 'end_cooperation_coach_invite'
   # coach contoller
   get '/coach/:id', to: 'coach#dashboard', as: 'coach_page'
   get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'
   patch '/coach/:id/update', to: 'coach#update'
   get '/coach/:id/password_change', to: 'coach#password_edit', as: 'password_change_coach'
   patch '/coach/:id/password_change', to: 'coach#password_update'
-    get '/coach/:id/dashboard', to: 'coach#dashboard', as: 'coach_dashboard_page'
+  get '/coach/:id/dashboard', to: 'coach#dashboard', as: 'coach_dashboard_page'
+  get '/coach/:id/my_users', to: 'coach#coach_users', as: 'coach_users_page'
+  delete 'refuse/:invite_id', to: 'coach#refuse', as: 'refuse_user_invite'
+  patch 'confirm/:invite_id', to: 'coach#confirm', as: 'confirm_user_invite'
+
 
   # reset password contoller
   get '/reset_password/new', to: 'reset_password#new'

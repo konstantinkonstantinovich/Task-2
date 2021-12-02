@@ -22,8 +22,8 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link nav-link-style" aria-current="page" href="#content-two">Dashboard</a>
-          <a class="nav-link nav-link-style" href="#content-techniques">My users</a>
+          <%= link_to 'Dashboard', coach_dashboard_page_path, class: "nav-link nav-link-style"%>
+          <%= link_to 'My users', coach_users_page_path, class: "nav-link nav-link-style"%>
           <a class="nav-link nav-link-style" href="#content-coaches">Library</a>
         </div>
       </div>
