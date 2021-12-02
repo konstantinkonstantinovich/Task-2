@@ -51,118 +51,50 @@
     <br>
 
     <div class="row">
-      <div class="col-6">
-        <div class="card">
-          <div class="body">
-            <div class="small-card">
-              <div class="image-avatar-small">
-                <img src="<%= asset_path('download.jpg') %>" class="img-fluid rounded-circle mb-3">
-              </div>
-              <div class="name-coach">
-                <span class="coach-name">Olivia Moore</span><br>
-                <span class="status">Coach</span>
-                <p class="coach-info-left">36 years | Male</p>
-                <div class="edit-prof-coach">
-                  <i class="bi bi-envelope"></i>
-                </div>
-              </div>
-              <div class="about-user">
-                <p class="tages-info">Problems</p>
-                <span class="tags">Depression</span>
-                <span class="tags">Anxiety</span>
-                <p class="tages-info">Techniques in process</p>
-                <p class="user-t-info">Lifestyle changes</p>
-                <div class="see-detail-button">SEE DETAILS</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="card">
-          <div class="body">
-            <div class="small-card">
-              <div class="image-avatar-small">
-                <img src="<%= asset_path('download.jpg') %>" class="img-fluid rounded-circle mb-3">
-              </div>
-              <div class="name-coach">
-                <span class="coach-name">Olivia Moore</span><br>
-                <span class="status">Coach</span>
-                <p class="coach-info-left">36 years | Male</p>
-                <div class="edit-prof-coach">
-                  <i class="bi bi-envelope"></i>
-                </div>
-              </div>
-              <div class="about-user">
-                <p class="tages-info">Problems</p>
-                <span class="tags">Depression</span>
-                <span class="tags">Anxiety</span>
-                <p class="tages-info">Techniques in process</p>
-                <p class="user-t-info-complete">All techniques completed</p>
-                <div class="see-detail-button">SEE DETAILS</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <br>
+      <% if @invitation %>
+        <% @invitation.each do |value| %>
+          <% if value.status == true %>
+            <div class="col-6">
+              <br>
+              <div class="card">
+                <div class="body">
+                  <div class="small-card">
+                    <div class="image-avatar-small">
+                      <% if value.user.avatar_user.attached? %>
+                        <img src="<%= url_for(value.user.avatar_user) %>" class="rounded-circle avatar-coach-users">
+                      <% else %>
+                        <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle avatar-coach-users">
+                      <% end %>
 
-      </div>
+                    </div>
+                    <div class="name-coach">
+                      <span class="coach-name"><%= value.user.name %></span><br>
+                      <span class="status">Current user</span>
+                      <p class="coach-info-left"><%= value.user.age %> years | <%= value.user.gender %></p>
+                      <div class="edit-prof-coach">
+                        <i class="bi bi-envelope"></i>
+                      </div>
+                    </div>
+                    <div class="about-user">
+                      <p class="tages-info">Problems</p>
+                      <% value.user.problems.each do |problem|%>
+                        <span class="tags"><%= problem.name%></span>
+                      <% end %>
+                      <p class="tages-info">Techniques in process</p>
+                      <p class="user-t-info">Lifestyle changes</p>
+                      <div class="see-detail-button">SEE DETAILS</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        <p>You don't confirm any invitayions!</p>
+      <% end %>
 
-      <div class="col-6">
-        <div class="card">
-          <div class="body">
-            <div class="small-card">
-              <div class="image-avatar-small">
-                <img src="<%= asset_path('download.jpg') %>" class="img-fluid rounded-circle mb-3">
-              </div>
-              <div class="name-coach">
-                <span class="coach-name">Olivia Moore</span><br>
-                <span class="status">Coach</span>
-                <p class="coach-info-left">36 years | Male</p>
-                <div class="edit-prof-coach">
-                  <i class="bi bi-envelope"></i>
-                </div>
-              </div>
-              <div class="about-user">
-                <p class="tages-info">Problems</p>
-                <span class="tags">Depression</span>
-                <span class="tags">Anxiety</span>
-                <p class="tages-info">Techniques in process</p>
-                <p class="user-t-info">Lifestyle changes</p>
-                <div class="see-detail-button">SEE DETAILS</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <br>
-      <div class="col-6">
-        <div class="card">
-          <div class="body">
-            <div class="small-card">
-              <div class="image-avatar-small">
-                <img src="<%= asset_path('download.jpg') %>" class="img-fluid rounded-circle mb-3">
-              </div>
-              <div class="name-coach">
-                <span class="coach-name">Olivia Moore</span><br>
-                <span class="status">Coach</span>
-                <p class="coach-info-left">36 years | Male</p>
-                <div class="edit-prof-coach">
-                  <i class="bi bi-envelope"></i>
-                </div>
-              </div>
-              <div class="about-user">
-                <p class="tages-info">Problems</p>
-                <span class="tags">Depression</span>
-                <span class="tags">Anxiety</span>
-                <p class="tages-info">Techniques in process</p>
-                <p class="user-t-info-complete">All techniques completed</p>
-                <div class="see-detail-button">SEE DETAILS</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
     <div class="row-width">

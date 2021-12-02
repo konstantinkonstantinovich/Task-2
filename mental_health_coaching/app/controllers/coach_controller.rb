@@ -8,6 +8,7 @@ class CoachController < ApplicationController
     @coach = Current.coach
     @problems = @coach.problems
     @notifications = @coach.notifications
+    @invitation = Invitation.where(coach_id: @coach.id)
   end
 
   def coach_users

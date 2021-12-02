@@ -26,7 +26,7 @@
                   <p class="coach-block-cp-text"><%= @invite.coach.name %></p>
                 </div>
                 <div class="col-4">
-                  <%= button_to 'CANCEL', cancel_coach_invite_path(@invite.id), method: :delete, class:"btn btn-sing-up"%>
+                  <%= button_to 'CANCEL', cancel_coach_invite_path(@invite.id), method: :delete, class:"btn btn-sing-up",  confirm: "Are you sure you want to cancel your invitation to cooperation with this coach?"%>
                 </div>
               </div>
             <% else %>
@@ -45,7 +45,7 @@
                   <div class="col-1">
                     <div class="end-cooperation"><%= link_to raw("<i class=\"bi bi-three-dots-vertical get_down_link\"></i>"),
                                       end_cooperation_coach_invite_path(@invite.id),
-                                      method: :delete %>
+                                      method: :delete ,  confirm: "Are you sure you want to cancel your invitation to cooperation with this coach?" %>
                     </div>
                   </div>
                 </div>
