@@ -78,6 +78,14 @@
   border-bottom: 1px solid lightgray;
 }
 
+.fc-pad {
+  font-size: 24px;
+  color:#000000DE;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid lightgray;
+}
+
 .sa {
   font-size: 12px;
   color:#000000DE;
@@ -146,6 +154,10 @@
   padding-bottom: 15px;
 }
 
+.coach-block-cp {
+padding: 10px;
+}
+
 .notif-text-block {
   padding-top: 20px;
   margin: 0px;
@@ -188,4 +200,64 @@
   left: 20px;
   top: 15px;
   font-size: 14px;
+}
+
+.coach-block-cp-text {
+  font-size: 16px;
+  color: #000000DE;
+  margin: 0px;
+  padding-top: 20px;
+
+}
+
+.show-filters {
+  font-size: 14px;
+  color: #000000DE;
+  opacity: 0.5;
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+
+.filter-border {
+  padding-bottom: 10px;
+  border-bottom: 1px solid lightgray;
+}
+
+.tags-filter {
+    display: inline-block;
+    border-radius: 16px;
+    background: white;
+
+    font-size: 14px;
+    padding: 7px;
+    border: 1px solid lightgray;
+    text-align: center;
+    color: #000000DE;
+    margin-bottom: 10px;
+}
+
+.pading-tags {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.clear-button-tags {
+  outline: none;
+  display: inline-block;
+  border: none;
+  padding: 10px;
+  background: white;
+  color: #000000DE;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.get_down_link {
+  text-decoration: none;
+  color: #000000DE;
+}
+
+.waiting {
+  font-size: 12px;
+  color: #555555DE;
 }

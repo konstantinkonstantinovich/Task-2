@@ -3,6 +3,12 @@
 // a relevant structure within app/javascript and only use these pack files to reference
 // that code so it'll be compiled.
 
+//= require popper
+//= require turbolinks
+//= require bootstrap
+//= require bootstrap-modal
+//= require_tree.
+
 //= require bootstrap-tagsinput
 import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"

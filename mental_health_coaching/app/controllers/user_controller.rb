@@ -1,6 +1,14 @@
 class UserController < ApplicationController
   before_action :require_user_logged_in!
 
+  def new
+    @coach = Coach.find_by(id: params[:coach_id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   def edit
     @user = Current.user
     @problems = Problem.all
@@ -48,6 +56,35 @@ class UserController < ApplicationController
     @user = Current.user
     @problems = @user.problems
     @notifications = @user.notifications
+    @invite = Invitation.find_by(user_id: @user.id)
+  end
+
+  def coaches_page
+    @user = Current.user
+    @coahes = Coach.all
+    @problems = Problem.all
+    @invite = Invitation.find_by(user_id: @user.id)
+  end
+
+  def send_invintation
+    @user = Current.user
+    @coach = Coach.find_by_id(params[:coach_id])
+    if Invitation.find_by(user_id: @user.id) == nil
+      Invitation.create(coach_id: @coach.id, user_id: @user.id, status: 0)
+      Notification.create(body: "You have sent an invitation to coach #{@coach.name}", user_id: @user.id, status: 1)
+      Notification.create(body: "You have received an invitation to become a coach from a user #{@user.name}", coach_id: @coach.id, user_id: @user.id, status: 1)
+      redirect_to user_dashboard_page_path, notice: "You have sent an invitation to coach!"
+    else
+      flash[:alert] = "First, cancel the invitation to another coach!"
+      redirect_to user_coahes_page_path
+    end
+  end
+
+  def cancel_invite
+    @invite = Invitation.find_by_id(params[:invite_id])
+    Notification.create(body: "You have canceled an invitation to coach #{@invite.coach.name}", user_id: @invite.user.id, status: 1)
+    @invite.destroy
+    redirect_to user_dashboard_page_path(Current.user.id)
   end
 
   private

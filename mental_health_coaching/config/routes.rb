@@ -36,6 +36,10 @@ Rails.application.routes.draw do
   get '/user/:id/password_change', to: 'user#password_edit', as: 'password_change_user'
   patch '/user/:id/password_change', to: 'user#password_update'
   get '/user/:id/dashboard', to: 'user#dashboard', as: 'user_dashboard_page'
+  get '/user/:id/coaches', to: 'user#coaches_page', as: 'user_coahes_page'
+  get '/user/:id/coaches/invitation/:coach_id', to: "user#new", as: 'invitation'
+  post 'user/:id/coaches/invitation/:coach_id', to: "user#send_invintation"
+  delete 'cancel/:invite_id', to: 'user#cancel_invite', as: 'cancel_coach_invite'
   # coach contoller
   get '/coach/:id', to: 'coach#dashboard', as: 'coach_page'
   get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'

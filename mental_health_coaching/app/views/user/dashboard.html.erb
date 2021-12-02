@@ -168,18 +168,39 @@
     <div class="user-coach">
       <div class="card">
         <div class="body body_pad">
-          <div class="small-card">
-            <div class="image-avatar-small">
-              <img src="<%= asset_path('generic-user-icon-10.png') %>" class="i-s rounded-circle">
-            </div>
-            <div class="name-user">
-              <span class="coach-name">You don't have a coach yet</span><br>
-              <div class="edit-prof">
-                <i class="bi bi-chevron-compact-right"></i>
-              </div>
-            </div>
+          <% if @invite %>
+            <% if @invite.status == false %>
+                <div class="row">
+                  <div class="col-12 waiting">Waiting for confirmation</div>
+                  <div class="col-2 coach-block-cp">
+                    <% if @invite.coach.avatar.attached? %>
+                      <img src="<%= url_for(@invite.coach.avatar) %>" class= "rounded-circle notification-avatar">
+                    <% else %>
+                      <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+                    <% end %>
+                  </div>
+                  <div class="col-6">
+                    <p class="coach-block-cp-text"><%= @invite.coach.name %></p>
+                  </div>
+                  <div class="col-4">
+                    <%= button_to 'CANCEL', cancel_coach_invite_path(@invite.id), method: :delete, class:"btn btn-sing-up"%>
+                  </div>
+                </div>
+            <% end %>
+            <% else %>
+              <div class="small-card">
+                <div class="image-avatar-small">
+                  <img src="<%= asset_path('generic-user-icon-10.png') %>" class="i-s rounded-circle">
+                </div>
+                <div class="name-user">
+                  <span class="coach-name">You don't have a coach yet</span><br>
+                  <div class="edit-prof">
+                    <%= link_to '', user_coahes_page_path, class: "bi bi-chevron-compact-right get_down_link" %>
+                  </div>
+                </div>
 
-          </div>
+              </div>
+          <% end %>
         </div>
       </div>
     </div>
