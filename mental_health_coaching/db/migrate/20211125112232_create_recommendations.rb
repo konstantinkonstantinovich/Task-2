@@ -6,6 +6,7 @@ class CreateRecommendations < ActiveRecord::Migration[6.1]
       t.belongs_to :technique
       t.timestamp :started_at
       t.timestamp :ended_at
+      t.integer :status
       t.integer :step
 
       t.timestamps

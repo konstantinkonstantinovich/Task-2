@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def require_coach_logged_in!
-    redirect_to sign_in_path, alert: 'You must be signed in' if Current.coach.nil?
+    redirect_to sign_in_coach_path, alert: 'You must be signed in' if Current.coach.nil?
   end
 
 end

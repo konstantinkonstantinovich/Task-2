@@ -7,7 +7,7 @@ class CreateTechniques < ActiveRecord::Migration[6.1]
       t.integer :gender
       t.integer :total_steps
       t.string :duration
-
+      t.integer :status
       t.timestamps
     end
   end

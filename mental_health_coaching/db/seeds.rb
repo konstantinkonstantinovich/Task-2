@@ -17,7 +17,8 @@ Technique.create(
   age: "25-35",
   gender: 0,
   total_steps: 6,
-  duration: "6-7 hours"
+  duration: "6-7 hours",
+  status: 1
 )
 
 
@@ -27,7 +28,8 @@ Technique.create(
   age: "30-40",
   gender: 1,
   total_steps: 4,
-  duration: "5 hours"
+  duration: "5 hours",
+  status: 0
 )
 
 Technique.create(
@@ -36,7 +38,8 @@ Technique.create(
   age: "30-45",
   gender: 0,
   total_steps: 4,
-  duration: "5 hours"
+  duration: "5 hours",
+  status: 1
 )
 
 Technique.create(
@@ -45,5 +48,15 @@ Technique.create(
   age: "30-45",
   gender: 0,
   total_steps: 8,
-  duration: "10 hours"
+  duration: "10 hours",
+  status: 0
 )
+
+
+
+
+
+Coach.create(name: "Adam Loure", email: "mrs.admas@gmail.com", password: "1Q2w3e4!", age: 22, gender: 1)
+Coach.create(name: "Ola Marco", email: "olaola@gmail.com", password: "1Q2w3e4!", age: 25,  gender: 0)
+Coach.create(name: "James Brown", email: "james@brown.com", password: "1Q2w3e4!", age: 27, gender: 1)
+Coach.create(name: "Amelia Adamson", email: "amelia@gmail.com", password: "1Q2w3e4!", age: 23, gender: 0)

@@ -17,7 +17,7 @@ class CreateProblems < ActiveRecord::Migration[6.1]
       t.belongs_to :problem
     end
 
-    create_table :techniques_problems, id: false do |t|
+    create_table :problems_techniques, id: false do |t|
       t.belongs_to :technique
       t.belongs_to :problem
     end

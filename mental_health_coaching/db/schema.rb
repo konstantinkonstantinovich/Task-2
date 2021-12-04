@@ -91,6 +91,13 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "problems_techniques", id: false, force: :cascade do |t|
+    t.bigint "technique_id"
+    t.bigint "problem_id"
+    t.index ["problem_id"], name: "index_problems_techniques_on_problem_id"
+    t.index ["technique_id"], name: "index_problems_techniques_on_technique_id"
+  end
+
   create_table "problems_users", id: false, force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "problem_id"
@@ -115,6 +122,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
     t.bigint "technique_id"
     t.datetime "started_at"
     t.datetime "ended_at"
+    t.integer "status"
     t.integer "step"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -147,15 +155,9 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
     t.integer "gender"
     t.integer "total_steps"
     t.string "duration"
+    t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "techniques_problems", id: false, force: :cascade do |t|
-    t.bigint "technique_id"
-    t.bigint "problem_id"
-    t.index ["problem_id"], name: "index_techniques_problems_on_problem_id"
-    t.index ["technique_id"], name: "index_techniques_problems_on_technique_id"
   end
 
   create_table "users", force: :cascade do |t|

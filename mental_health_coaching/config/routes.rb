@@ -49,8 +49,10 @@ Rails.application.routes.draw do
   patch '/coach/:id/password_change', to: 'coach#password_update'
   get '/coach/:id/dashboard', to: 'coach#dashboard', as: 'coach_dashboard_page'
   get '/coach/:id/my_users', to: 'coach#coach_users', as: 'coach_users_page'
+  get '/coach/:id/library', to: 'coach#library', as: 'coach_library_page'
   delete 'refuse/:invite_id', to: 'coach#refuse', as: 'refuse_user_invite'
   patch 'confirm/:invite_id', to: 'coach#confirm', as: 'confirm_user_invite'
+
 
 
   # reset password contoller

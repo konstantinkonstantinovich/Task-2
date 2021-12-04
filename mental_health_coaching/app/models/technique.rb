@@ -11,4 +11,6 @@ class Technique < ApplicationRecord
   has_many :coaches, through: :recommendations
 
   enum gender: [ :male, :female ]
+
+  enum status: [:new, :popular], _prefix: :status
 end

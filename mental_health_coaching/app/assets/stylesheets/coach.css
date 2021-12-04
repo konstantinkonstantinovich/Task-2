@@ -215,3 +215,29 @@
   width: 63px;
   height: 63px;
 }
+
+
+.distance {
+  margin-bottom: 20px;
+}
+
+.tags-div-absolute {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  width: 100%;
+  padding: 10px;
+}
+
+.tags-in-image {
+    display: inline-block;
+    border-radius: 20px;
+    background: #FFFFFFCC;
+
+    font-size: 14px;
+    padding: 7px;
+    border: 1px solid #707070;
+    text-align: center;
+    color: #000000DE;
+    opacity: 0.9;
+}

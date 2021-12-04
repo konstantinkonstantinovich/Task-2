@@ -11,6 +11,12 @@ class CoachController < ApplicationController
     @invitation = Invitation.where(coach_id: @coach.id)
   end
 
+  def library
+    @coach = Current.coach
+    @problems = Problem.all
+    @technigues = Technique.all
+  end
+
   def coach_users
     @coach = Current.coach
     @notifications = @coach.notifications
