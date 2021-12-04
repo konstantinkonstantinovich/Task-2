@@ -109,59 +109,44 @@
     </div>
     <br>
     <div class="row">
-      <div class="col-6">
-        <div class="card h-100">
-          <div class="item">
-            <span class="notify-badge">NEW</span>
-            <img src="<%= asset_path('anthony-tran-vXymirxr5ac-unsplash.jpg') %>" class="card-img-top" alt="...">
-            <span class="steps-passed">0/6 steps passed</span>
-            <span class="tag-badge">Depression</span>
+      <% @recommendations.each do |recommendation|%>
+        <div class="col-6 distance">
+          <div class="card h-100">
+            <div class="item">
+              <span class="notify-badge"><%= recommendation.status%></span>
+              <img src="<%= asset_path('anthony-tran-vXymirxr5ac-unsplash.jpg') %>" class="card-img-top" alt="...">
+              <span class="steps-passed"><%= recommendation.step %>/6 steps passed</span>
+              <% if recommendation.technique.problems %>
+                <div class="tags-div-absolute">
+                  <% recommendation.technique.problems.each do |problem|%>
+                    <span class="tags-in-image "><%= problem.name%></span>
+                  <% end %>
+                </div>
+              <% end %>
+            </div>
+            <div class="card-body">
+              <h6 class="title_card"><%= recommendation.technique.title %></h6>
+              <p class="description"><%= recommendation.technique.description %></p>
+              <div class="age">Age: <strong><%= recommendation.technique.age %> years</strong></div>
+              <div class="gender">Gender:<strong> <%= recommendation.technique.gender %></strong></div>
+              <br>
+              <div class="step">Steps: <strong><%= recommendation.technique.total_steps %></strong></div>
+              <div class="duration">Duration: <strong><%= recommendation.technique.duration %></strong></div>
+              <ul class="hr">
+                <li><i class="bi bi-people"></i> 235</li>
+                <li><i class="bi bi-hand-thumbs-up"></i> 124</li>
+                <li><i class="bi bi-hand-thumbs-down"></i> 12</li>
+                <% if recommendation.status == 0 %>
+                  <li class="start-button">GET STARTED</li>
+                <% else %>
+                  <li class="start-button">CONTINUE</li>
+                <% end %>
+              </ul>
+            </div>
           </div>
-          <div class="card-body">
-            <h6 class="title_card">Cognitive - Behavioral Therapy</h6>
-            <p class="description">Elimination of the dependence of emotions and human behavior on his thoughts.</p>
-            <div class="age">Age: <strong>25-35 years</strong></div>
-            <div class="gender">Gender:<strong> Male, Female</strong></div>
-            <br>
-            <div class="step">Steps: <strong>4</strong></div>
-            <div class="duration">Duration: <strong>6-7 hours</strong></div>
-            <ul class="hr">
-              <li><i class="bi bi-people"></i> 235</li>
-              <li><i class="bi bi-hand-thumbs-up"></i> 124</li>
-              <li><i class="bi bi-hand-thumbs-down"></i> 12</li>
-              <li class="start-button">SEE DETAILS</li>
-            </ul>
-          </div>
-        </div>
 
-      </div>
-
-      <div class="col-6">
-        <div class="card h-100">
-          <div class="item">
-            <span class="notify-badge">POPULAR</span>
-            <img src="<%= asset_path('kristina-tripkovic-nwWUBsW6ud4-unsplash.jpg') %>" class="card-img-top" alt="...">
-            <span class="steps-passed">2/4 steps passed</span>
-            <span class="tag-badge">Depression</span>
-            <span class="tag-badge-second">Anxiety</span>
-          </div>
-          <div class="card-body">
-            <h6 class="title_card">Lifestyle changes</h6>
-            <p class="description">Eliminating the lack of control that makes people feel worse.</p>
-            <div class="age">Age: <strong>35-40 years</strong></div>
-            <div class="gender">Gender: <strong>Male, Female</strong></div>
-            <br>
-            <div class="step">Steps:<strong>4</strong></div>
-            <div class="duration">Duration:<strong> 5 hours</strong></div>
-            <ul class="hr">
-              <li><i class="bi bi-people"></i> 311</li>
-              <li><i class="bi bi-hand-thumbs-up"></i> 214</li>
-              <li><i class="bi bi-hand-thumbs-down"></i> 34</li>
-              <li class="start-button">SEE DETAILS</li>
-            </ul>
-          </div>
         </div>
-      </div>
+      <% end %>
 
     </div>
   </div>

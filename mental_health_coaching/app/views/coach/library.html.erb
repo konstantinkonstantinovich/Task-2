@@ -137,41 +137,84 @@
 
       <div class="row">
         <% @technigues.each do |technique|%>
+          <% if Recommendation.find_by(technique_id: technique.id) %>
+            <div class="col-6 distance">
+              <div class="card h-100">
+                <div class="item">
+                  <img src="<%= asset_path('kristina-tripkovic-nwWUBsW6ud4-unsplash.jpg') %>" class="card-img-top" alt="...">
+                  <% if technique.problems %>
+                    <div class="tags-div-absolute">
+                      <% technique.problems.each do |problem|%>
+                        <span class="tags-in-image "><%= problem.name%></span>
+                      <% end %>
+                    </div>
+                  <% end %>
 
-          <div class="col-6 distance">
-            <div class="card h-100">
-              <div class="item">
-                <span class="notify-badge"><%= technique.status.upcase %></span>
-                <img src="<%= asset_path('kristina-tripkovic-nwWUBsW6ud4-unsplash.jpg') %>" class="card-img-top" alt="...">
-                <% if technique.problems %>
-                  <div class="tags-div-absolute">
-                    <% technique.problems.each do |problem|%>
-                      <span class="tags-in-image "><%= problem.name%></span>
-                    <% end %>
-                  </div>
-                <% end %>
+                </div>
+                <div class="card-body">
+                  <h6 class="title_card"><%= technique.title %></h6>
 
-              </div>
-              <div class="card-body">
-                <h6 class="title_card"><%= technique.title %></h6>
-
-                <p class="description"><%= technique.description %></p>
-                <div class="age">Age: <strong><%= technique.age %> years</strong></div>
-                <div class="gender">Gender: <strong><%= technique.gender %></strong></div>
+                  <p class="description"><%= technique.description %></p>
+                  <div class="age">Age: <strong><%= technique.age %> years</strong></div>
+                  <div class="gender">Gender: <strong><%= technique.gender %></strong></div>
+                  <br>
+                  <div class="step">Steps:<strong> <%= technique.total_steps %></strong></div>
+                  <div class="duration">Duration:<strong> <%= technique.duration %></strong></div>
+                  <% if Recommendation.where(technique_id: technique.id).count <= 11 %>
+                    <div class="users-count">
+                      <%= Recommendation.where(technique_id: technique.id).count %> users
+                    </div>
+                  <% else %>
+                    <div class="users-count">11+ users</div>
+                  <% end %>
+                  <ul class="hr">
+                    <li><i class="bi bi-people"></i> 311</li>
+                    <li><i class="bi bi-hand-thumbs-up"></i> 214</li>
+                    <li><i class="bi bi-hand-thumbs-down"></i> 34</li>
+                    <li class="start-button"><%= link_to 'SEE DETAILS', technique_detail_page_path(technique_id: technique.id),class: "get_down_link" %></li>
+                  </ul>
+                </div>
                 <br>
-                <div class="step">Steps:<strong> <%= technique.total_steps %></strong></div>
-                <div class="duration">Duration:<strong> <%= technique.duration %> hours</strong></div>
-                <ul class="hr">
-                  <li><i class="bi bi-people"></i> 311</li>
-                  <li><i class="bi bi-hand-thumbs-up"></i> 214</li>
-                  <li><i class="bi bi-hand-thumbs-down"></i> 34</li>
-                  <li class="start-button"><%= link_to 'SEE DETAILS', technique_detail_page_path(technique_id: technique.id),class: "get_down_link" %></li>
-                </ul>
               </div>
-                    <br>
-            </div>
 
-          </div>
+            </div>
+          <% else %>
+            <div class="col-6 distance">
+              <div class="card h-100">
+                <div class="item">
+                  <span class="notify-badge"><%= technique.status.upcase %></span>
+                  <img src="<%= asset_path('kristina-tripkovic-nwWUBsW6ud4-unsplash.jpg') %>" class="card-img-top" alt="...">
+                  <% if technique.problems %>
+                    <div class="tags-div-absolute">
+                      <% technique.problems.each do |problem|%>
+                        <span class="tags-in-image "><%= problem.name%></span>
+                      <% end %>
+                    </div>
+                  <% end %>
+
+                </div>
+                <div class="card-body">
+                  <h6 class="title_card"><%= technique.title %></h6>
+
+                  <p class="description"><%= technique.description %></p>
+                  <div class="age">Age: <strong><%= technique.age %> years</strong></div>
+                  <div class="gender">Gender: <strong><%= technique.gender %></strong></div>
+                  <br>
+                  <div class="step">Steps:<strong> <%= technique.total_steps %></strong></div>
+                  <div class="duration">Duration:<strong> <%= technique.duration %></strong></div>
+                  <div class="no-recommended-technique">You have not recommended this technique to your users yet.</div>
+                  <ul class="hr">
+                    <li><i class="bi bi-people"></i> 311</li>
+                    <li><i class="bi bi-hand-thumbs-up"></i> 214</li>
+                    <li><i class="bi bi-hand-thumbs-down"></i> 34</li>
+                    <li class="start-button"><%= link_to 'SEE DETAILS', technique_detail_page_path(technique_id: technique.id),class: "get_down_link" %></li>
+                  </ul>
+                </div>
+                <br>
+              </div>
+
+            </div>
+          <% end %>
         <% end %>
       </div>
 

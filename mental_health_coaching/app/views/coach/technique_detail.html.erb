@@ -1,5 +1,11 @@
 <% content_for :content do %>
 
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
 <h6>
   <%= link_to "Go back", coach_library_page_path, class: "bi bi-chevron-left link-back" %>
 </h6>
@@ -82,7 +88,7 @@
               <li><i class="bi bi-people"></i> 311</li>
               <li><i class="bi bi-hand-thumbs-up"></i> 214</li>
               <li><i class="bi bi-hand-thumbs-down"></i> 34</li>
-              <li class="start-button"><%= link_to 'RECOMMEND', coach_library_page_path, class: "get_down_link" %></li>
+              <li class="start-button"><%= link_to 'RECOMMEND', recommend_to_users_page_path,  {:remote => true, 'data-bs-toggle' =>  "modal", 'data-bs-target' => '#modal-window', class: "get_down_link"}  %></li>
             </ul>
           </div>
         </div>

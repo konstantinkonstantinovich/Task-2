@@ -57,6 +57,7 @@ class UserController < ApplicationController
     @problems = @user.problems
     @notifications = @user.notifications
     @invite = Invitation.find_by(user_id: @user.id)
+    @recommendations = Recommendation.where(user_id: @user.id)
   end
 
   def coaches_page

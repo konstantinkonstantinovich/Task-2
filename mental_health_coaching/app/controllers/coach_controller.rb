@@ -9,6 +9,7 @@ class CoachController < ApplicationController
     @problems = @coach.problems
     @notifications = @coach.notifications
     @invitation = Invitation.where(coach_id: @coach.id)
+    @recommendations = Recommendation.where(coach_id: @coach.id).uniq(:technique_id)
   end
 
   def library
@@ -21,6 +22,27 @@ class CoachController < ApplicationController
     @coach = Current.coach
     @technique = Technique.find_by_id(params[:technique_id])
     @steps = Step.where(techniques_id: @technique.id)
+  end
+
+  def new
+    @coach = Current.coach
+    @users = @coach.invitations
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
+  def create
+    @coach = Current.coach
+    @technique = Technique.find_by_id(params[:technique_id])
+    users_names_list = params[:users].select! { |element| element&.size.to_i > 0 }
+    users_names_list.each do |user_name|
+      user = User.find_by(name: user_name)
+      Recommendation.create(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id, status: 0, step: 0)
+      Notification.create(body: "Coach #{@coach.name} recommended a Technique for you", user_id: user.id, status: 1)
+    end
+    redirect_to coach_users_page_path
   end
 
   def coach_users

@@ -259,3 +259,36 @@
 .pading-recoomend-card {
   margin-top: 25px;
 }
+
+
+.mb-new {
+  border-bottom: 1px solid #dee2e6;
+}
+
+.btn-send {
+  font-family: Roboto, Ligth;
+  color: #FFFFFF;
+  border-color: rgba(173, 181, 189, 1);
+  background: #212529;
+  width: 30%;
+
+}
+
+.users-count {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #000000DE;
+  margin-bottom: 10px;
+}
+
+.no-recommended-technique {
+  margin-top: 10px;
+  color: #707070;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.user-pancakes {
+  width: 30px;
+  height: 30px;
+}
