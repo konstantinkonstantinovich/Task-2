@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_105506) do
 
   create_table "steps", force: :cascade do |t|
     t.text "body"
+    t.string "title"
     t.integer "number"
     t.bigint "techniques_id", null: false
     t.datetime "created_at", precision: 6, null: false

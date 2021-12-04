@@ -193,8 +193,8 @@ padding: 10px;
 .start-button {
   position: absolute;
   right: 20px;
+  bottom: -3px;
 }
-
 .steps-passed {
   position: absolute;
   left: 20px;

@@ -241,3 +241,21 @@
     color: #000000DE;
     opacity: 0.9;
 }
+
+.step-title-card {
+  font-size: 20px;
+  color: #000000;
+  opacity: 1;
+  margin-bottom: 30px;
+}
+
+.layer {
+ overflow: scroll; /* Добавляем полосы прокрутки */
+ width: 100%; /* Ширина блока */
+ height: 600px; /* Высота блока */
+
+}
+
+.pading-recoomend-card {
+  margin-top: 25px;
+}

@@ -17,6 +17,12 @@ class CoachController < ApplicationController
     @technigues = Technique.all
   end
 
+  def technique_detail
+    @coach = Current.coach
+    @technique = Technique.find_by_id(params[:technique_id])
+    @steps = Step.where(techniques_id: @technique.id)
+  end
+
   def coach_users
     @coach = Current.coach
     @notifications = @coach.notifications
