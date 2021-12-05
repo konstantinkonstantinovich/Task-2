@@ -9,6 +9,13 @@ class UserController < ApplicationController
     end
   end
 
+  def finish
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   def edit
     @user = Current.user
     @problems = Problem.all
@@ -72,6 +79,12 @@ class UserController < ApplicationController
       @recommendation.update(status: 2)
       @step = Step.find_by(number: next_step)
     end
+  end
+
+  def restart
+    @user = Current.user
+    @recommendation = Recommendation.find_by(user_id: @user.id, technique_id: params[:technique_id]).update(step: 0, status: 0)
+    redirect_to user_technique_detail_path(technique_id: params[:technique_id], step_id: 0)
   end
 
 

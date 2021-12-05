@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  
+
   root "landing_page#index"
 
   get '/auth/:provider/callback', to: 'authorization#omniauth'
@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   delete 'cancel/:invite_id', to: 'user#cancel_invite', as: 'cancel_coach_invite'
   delete 'end/:invite_id', to: 'user#end_cooperation', as: 'end_cooperation_coach_invite'
   get '/user/:id/dashboard/:technique_id/step/:step_id', to: 'user#user_technique_detail', as: 'user_technique_detail'
-
+  patch '/user/:id/dashboard/:technique_id/step/:step_id', to: 'user#restart', as: 'restart'
   # coach contoller
   get '/coach/:id', to: 'coach#dashboard', as: 'coach_page'
   get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'

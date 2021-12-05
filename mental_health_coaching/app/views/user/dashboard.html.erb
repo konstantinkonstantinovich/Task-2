@@ -129,7 +129,7 @@
                 <% if recommendation.step == 0 %>
                   <li class="start-button"><%= link_to 'GET STARTED', user_technique_detail_path(technique_id: recommendation.technique.id, step_id: recommendation.step), class:"get_down_link"%></li>
                 <% elsif recommendation.status == 'compeleted'%>
-                  <li class="start-button">RESTART</li>
+                  <li class="start-button"><%= link_to 'RESTART', restart_path(technique_id: recommendation.technique.id, step_id: recommendation.step), method: :patch, class:"get_down_link"%></li>
                 <% else %>
                   <li class="start-button"><%= link_to 'CONTINUE', user_technique_detail_path(technique_id: recommendation.technique.id, step_id: recommendation.step), class:"get_down_link"%></li>
                 <% end %>
