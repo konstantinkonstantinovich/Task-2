@@ -141,7 +141,12 @@
             <div class="col-6 distance">
               <div class="card h-100">
                 <div class="item">
-                  <img src="<%= asset_path('kristina-tripkovic-nwWUBsW6ud4-unsplash.jpg') %>" class="card-img-top" alt="...">
+                  <% if technique.photo.attached? %>
+                    <img src="<%= url_for(technique.photo) %>" class= "card-img-top" alt="...">
+                  <% else %>
+                    <img src="<%= asset_path('anthony-tran-vXymirxr5ac-unsplash.jpg') %>" class="card-img-top" alt="...">
+                  <% end %>
+          
                   <% if technique.problems %>
                     <div class="tags-div-absolute">
                       <% technique.problems.each do |problem|%>

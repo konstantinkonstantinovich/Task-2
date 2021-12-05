@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+#
 Problem.create(name: "Stress")
 Problem.create(name: "Anxiety")
 Problem.create(name: "Depression")
@@ -16,7 +16,7 @@ Technique.create(
   description: "Elimination of the dependence of emotions and human behavior on his thoughts.",
   age: "25-35",
   gender: 0,
-  total_steps: 6,
+  total_steps: 3,
   duration: "6-7 hours",
   status: 1
 )
@@ -27,7 +27,7 @@ Technique.create(
   description: "Eliminating the lack of control that makes people feel worse.",
   age: "30-40",
   gender: 1,
-  total_steps: 4,
+  total_steps: 3,
   duration: "5 hours",
   status: 0
 )
@@ -37,7 +37,7 @@ Technique.create(
   description: "Does a dysfunctional immune system cause inflammation in the body, leading to mood swings?",
   age: "30-45",
   gender: 0,
-  total_steps: 4,
+  total_steps: 3,
   duration: "5 hours",
   status: 1
 )
@@ -47,9 +47,19 @@ Technique.create(
   description: "It is necessary to complete the unfinished in the past and live in the present.",
   age: "30-45",
   gender: 0,
-  total_steps: 8,
+  total_steps: 3,
   duration: "10 hours",
   status: 0
+)
+
+Technique.create(
+  title: "Cognitive Analytical Therapy",
+  description: "A collaborative programme for looking at the way a person thinks, feels and acts, and the events and relationships that underlie these experiences.",
+  age: "30-45",
+  gender: 0,
+  total_steps: 4,
+  duration: "7 hours",
+  status: 1
 )
 
 
@@ -69,6 +79,7 @@ Step.create(
   number: 1,
   techniques_id: 1
 )
+
 
 Step.create(
   title: "What is Lifestyle changes?",
@@ -155,3 +166,37 @@ Step.create(
   number: 3,
   techniques_id: 4
 )
+
+
+Step.create(
+  title: "What is Cognitive Analytical Therapy?",
+  body: "CAT stands for Cognitive Analytic Therapy; a collaborative programme for looking at the way a person thinks, feels and acts, and the events and relationships that underlie these experiences (often from childhood or earlier in life). As its name suggests, it brings together ideas and understanding from different therapies into one user-friendly and effective therapy.
+It is a programme of therapy that is tailored to a person’s individual needs and to his or her own manageable goals for change. It is a time-limited therapy - between 4 and 24 weeks, but typically 16. It is available in many parts of the NHS. There are also private CAT therapists across the UK and overseas.
+At its heart is an empathic relationship between the client and therapist within the therapeutic boundaries, the purpose of which is to help the client make sense of their situation and to find ways of making changes for the better.",
+  number: 1,
+  techniques_id: 5
+)
+
+Step.create(
+  title: "What should you do?",
+  body: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+  number: 2,
+  techniques_id: 5
+)
+
+Step.create(
+  title: "What should you do?",
+  body: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+  number: 3,
+  techniques_id: 5
+)
+
+Step.create(
+  title: "What should you do?",
+  body: "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+  number: 4,
+  techniques_id: 5
+)
+
+
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

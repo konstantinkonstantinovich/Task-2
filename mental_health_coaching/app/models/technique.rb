@@ -12,5 +12,7 @@ class Technique < ApplicationRecord
 
   enum gender: [ :male, :female, :both ]
 
+  has_one_attached :photo
+
   enum status: [:new, :popular], _prefix: :status
 end

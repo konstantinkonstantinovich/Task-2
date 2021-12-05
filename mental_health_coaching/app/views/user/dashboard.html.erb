@@ -8,7 +8,7 @@
           <span class="size-total"><i class="bi bi-check-circle"></i> Total progress</span>
           <div class="total-statistic">
             <div class="big-numder">
-              10
+              <%= Recommendation.where(status: 'compeleted', user_id: @user.id).count%>
             </div>
             <div class="of">
               techniques completed
@@ -22,7 +22,7 @@
           <span class="size-total"><i class="bi bi-play-circle"></i> Current progress</span>
           <div class="total-statistic">
             <div class="big-numder">
-              1
+              <%= Recommendation.where(status: 'in_progress', user_id: @user.id).count%>
             </div>
             <div class="of">
               techniques in process
@@ -87,7 +87,12 @@
               <% elsif recommendation.status == 'compeleted' %>
                 <span class="notify-badge">COMPLETED</span>
               <% end %>
-              <img src="<%= asset_path('anthony-tran-vXymirxr5ac-unsplash.jpg') %>" class="card-img-top" alt="...">
+              <% if recommendation.technique.photo.attached? %>
+                <img src="<%= url_for(recommendation.technique.photo) %>" class= "card-img-top" alt="...">
+              <% else %>
+                <img src="<%= asset_path('anthony-tran-vXymirxr5ac-unsplash.jpg') %>" class="card-img-top" alt="...">
+              <% end %>
+
               <span class="steps-passed"><%= recommendation.step %>/<%= recommendation.technique.total_steps %> steps passed</span>
               <% if recommendation.technique.problems %>
                 <div class="tags-div-absolute">
@@ -126,7 +131,7 @@
                 <% elsif recommendation.status == 'compeleted'%>
                   <li class="start-button">RESTART</li>
                 <% else %>
-                  <li class="start-button">CONTINUE</li>
+                  <li class="start-button"><%= link_to 'CONTINUE', user_technique_detail_path(technique_id: recommendation.technique.id, step_id: recommendation.step), class:"get_down_link"%></li>
                 <% end %>
               </ul>
             </div>
