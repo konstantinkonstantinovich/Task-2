@@ -28,7 +28,7 @@
 <!--
       <p class="coach-info">I know how to help you overcome Depression and Anxiety. I know modern techniques that
         work.</p> -->
-      <p class="coach-info"><%= @coach.age %> years | <%= @coach.gender %> | 27 users</p>
+      <p class="coach-info"><%= @coach.age %> years | <%= @coach.gender %> | <%= Invitation.where(coach_id: @coach.id).count%> users</p>
       <p class="tages-info">Areas of Expertise</p>
       <% @coach.problems.each do |coach_problem|%>
         <span class="tags"><%= coach_problem.name %></span>

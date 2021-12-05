@@ -82,9 +82,13 @@
         <div class="col-6 distance">
           <div class="card h-100">
             <div class="item">
-              <span class="notify-badge"><%= recommendation.status%></span>
+              <% if recommendation.status == 'recommended' %>
+                <span class="notify-badge">RECOMMENDS</span>
+              <% elsif recommendation.status == 'compeleted' %>
+                <span class="notify-badge">COMPLETED</span>
+              <% end %>
               <img src="<%= asset_path('anthony-tran-vXymirxr5ac-unsplash.jpg') %>" class="card-img-top" alt="...">
-              <span class="steps-passed"><%= recommendation.step %>/6 steps passed</span>
+              <span class="steps-passed"><%= recommendation.step %>/<%= recommendation.technique.total_steps %> steps passed</span>
               <% if recommendation.technique.problems %>
                 <div class="tags-div-absolute">
                   <% recommendation.technique.problems.each do |problem|%>
@@ -101,12 +105,26 @@
               <br>
               <div class="step">Steps: <strong><%= recommendation.technique.total_steps %></strong></div>
               <div class="duration">Duration: <strong><%= recommendation.technique.duration %></strong></div>
+              <div class="row">
+                <div class="col-2 image-coach-techinque">
+                  <% if recommendation.coach.avatar.attached? %>
+                    <img src="<%= url_for(recommendation.coach.avatar) %>" class= "rounded-circle notification-avatar">
+                  <% else %>
+                    <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+                  <% end %>
+                </div>
+                <div class="col-10 name-coach-techinque">
+                  <%= recommendation.coach.name %>
+                </div>
+              </div>
               <ul class="hr">
                 <li><i class="bi bi-people"></i> 235</li>
                 <li><i class="bi bi-hand-thumbs-up"></i> 124</li>
                 <li><i class="bi bi-hand-thumbs-down"></i> 12</li>
-                <% if recommendation.status == 0 %>
-                  <li class="start-button">GET STARTED</li>
+                <% if recommendation.step == 0 %>
+                  <li class="start-button"><%= link_to 'GET STARTED', user_technique_detail_path(technique_id: recommendation.technique.id, step_id: recommendation.step), class:"get_down_link"%></li>
+                <% elsif recommendation.status == 'compeleted'%>
+                  <li class="start-button">RESTART</li>
                 <% else %>
                   <li class="start-button">CONTINUE</li>
                 <% end %>

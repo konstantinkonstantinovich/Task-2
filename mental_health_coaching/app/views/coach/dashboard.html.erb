@@ -8,7 +8,7 @@
           <div class="size-total-coach"><i class="bi bi-people"></i></div>
           <p class="tt">Total number </p>
           <p class="tt">of users</p>
-          <p class="coach-stats">78</p>
+          <p class="coach-stats"><%= User.all.count %></p>
         </div>
 
       </div>
@@ -17,7 +17,7 @@
           <div class="size-total-coach"><i class="bi bi-person"></i></div>
           <p class="tt">Current number</p>
           <p class="tt">of users</p>
-          <p class="coach-stats">27</p>
+          <p class="coach-stats"><%= Invitation.where(coach_id: @coach.id).count%></p>
         </div>
       </div>
       <div class="col-3">
@@ -25,7 +25,7 @@
           <div class="size-total-coach"><i class="bi bi-card-list"></i></div>
           <p class="tt">Total number of</p>
           <p class="tt">techniques used</p>
-          <p class="coach-stats">32</p>
+          <p class="coach-stats"><%= Recommendation.where(coach_id: @coach.id).count%></p>
         </div>
       </div>
       <div class="col-3">
@@ -83,6 +83,7 @@
                       <p class="tages-info">Techniques in process</p>
                       <p class="user-t-info">Lifestyle changes</p>
                       <div class="see-detail-button">SEE DETAILS</div>
+
                     </div>
                   </div>
                 </div>
@@ -132,15 +133,18 @@
               <br>
               <div class="step">Steps: <strong><%= recommendation.technique.total_steps %></strong></div>
               <div class="duration">Duration: <strong><%= recommendation.technique.duration %></strong></div>
+              <% if Recommendation.where(technique_id: recommendation.technique.id, user_id: recommendation.user_id).count <= 11 %>
+                <div class="users-count">
+                  <%= Recommendation.where(technique_id: recommendation.technique.id, user_id: recommendation.user_id).count %> users
+                </div>
+              <% else %>
+                <div class="users-count">11+ users</div>
+              <% end %>
               <ul class="hr">
                 <li><i class="bi bi-people"></i> 235</li>
                 <li><i class="bi bi-hand-thumbs-up"></i> 124</li>
                 <li><i class="bi bi-hand-thumbs-down"></i> 12</li>
-                <% if recommendation.status == 0 %>
-                  <li class="start-button">GET STARTED</li>
-                <% else %>
-                  <li class="start-button">CONTINUE</li>
-                <% end %>
+                <li class="start-button"><%= link_to 'SEE DETAILS', technique_detail_page_path(technique_id: recommendation.technique.id),class: "get_down_link" %></li>
               </ul>
             </div>
           </div>

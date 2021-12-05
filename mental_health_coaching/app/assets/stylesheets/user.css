@@ -269,3 +269,31 @@ padding: 10px;
 
   text-align: center;
 }
+
+
+.mt-s-m {
+  text-align: center;
+  font-size: 14px;
+  color:#000000DE;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid lightgray;
+}
+
+.mt-steps {
+  text-align: right;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  font-size: 14px;
+  color:#000000DE;
+  opacity: 0.9;
+  border-bottom: 1px solid lightgray;
+}
+
+.image-coach-techinque {
+  padding-top: 10px;
+}
+
+.name-coach-techinque {
+  padding-top: 20px;
+}

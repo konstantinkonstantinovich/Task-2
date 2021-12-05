@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   # authorization coach controller
   get '/sign_in/coach', to: 'authorization_coach#new'
   post '/sign_in/coach', to: 'authorization_coach#create'
-  delete 'logout', to: 'authorization_coach#destroy', as: 'logout_coach'
+  delete 'logout_coach', to: 'authorization_coach#destroy', as: 'logout_coach'
 
   # user contoller
   get '/user/:id', to: 'user#dashboard', as: 'user_page'
@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   post 'user/:id/coaches/invitation/:coach_id', to: "user#send_invintation"
   delete 'cancel/:invite_id', to: 'user#cancel_invite', as: 'cancel_coach_invite'
   delete 'end/:invite_id', to: 'user#end_cooperation', as: 'end_cooperation_coach_invite'
+  get '/user/:id/dashboard/:technique_id/step/:step_id', to: 'user#user_technique_detail', as: 'user_technique_detail'
+
   # coach contoller
   get '/coach/:id', to: 'coach#dashboard', as: 'coach_page'
   get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'

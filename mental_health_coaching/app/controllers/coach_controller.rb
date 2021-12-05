@@ -9,7 +9,7 @@ class CoachController < ApplicationController
     @problems = @coach.problems
     @notifications = @coach.notifications
     @invitation = Invitation.where(coach_id: @coach.id)
-    @recommendations = Recommendation.where(coach_id: @coach.id).uniq(:technique_id)
+    @recommendations = Recommendation.where(coach_id: @coach.id)
   end
 
   def library
@@ -39,8 +39,10 @@ class CoachController < ApplicationController
     users_names_list = params[:users].select! { |element| element&.size.to_i > 0 }
     users_names_list.each do |user_name|
       user = User.find_by(name: user_name)
-      Recommendation.create(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id, status: 0, step: 0)
-      Notification.create(body: "Coach #{@coach.name} recommended a Technique for you", user_id: user.id, status: 1)
+      if Recommendation.find_by(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id) == nil
+        Recommendation.create(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id, status: 0, step: 0)
+        Notification.create(body: "Coach #{@coach.name} recommended a Technique for you", user_id: user.id, status: 1)
+      end
     end
     redirect_to coach_users_page_path
   end

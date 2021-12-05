@@ -57,8 +57,23 @@ class UserController < ApplicationController
     @problems = @user.problems
     @notifications = @user.notifications
     @invite = Invitation.find_by(user_id: @user.id)
-    @recommendations = Recommendation.where(user_id: @user.id)
+    @recommendations = Recommendation.where(user_id: @user.id).order(:status)
   end
+
+  def user_technique_detail
+    @user = Current.user
+    @technique = Technique.find_by_id(params[:technique_id])
+    @recommendation = Recommendation.find_by(user_id: @user.id, technique_id: params[:technique_id])
+    next_step = params[:step_id].to_i
+    if next_step < @technique.total_steps
+      @recommendation.update(step: next_step+1, status: 1)
+      @step = Step.find_by(number: next_step+1)
+    else
+      @recommendation.update(status: 2)
+      @step = Step.find_by(number: next_step)
+    end
+  end
+
 
   def coaches_page
     @user = Current.user

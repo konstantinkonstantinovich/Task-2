@@ -1,0 +1,118 @@
+<% content_for :content do %>
+
+<h6>
+  <%= link_to "Go back", user_dashboard_page_path, class: "bi bi-chevron-left link-back" %>
+</h6>
+<br>
+
+<div class="row">
+
+  <div class="col-8">
+    <div class="row-width">
+      <div class="row">
+        <div class="col-9 mt">
+          <%= @technique.title %>
+        </div>
+        <div class="col-3 mt-steps">
+          <%= @recommendation.step-1  %> steps completed
+        </div>
+
+
+        <div class="col-12">
+          <br>
+          <div class="card">
+            <div class="body_pad">
+              <p class="step-title-card"><%= @step.title %></p>
+              <span><%= @step.body %></span>
+              <br>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <br>
+          <div class="row">
+              <div class="col-4">
+                RESTART
+              </div>
+              <div class="col-4">
+                Step <%= @recommendation.step %> of <%= @technique.total_steps %>
+              </div>
+              <div class="col-4">
+                <%= link_to 'PASSED', user_technique_detail_path(step_id: @step.number), class:"btn btn-sing-up" %>
+
+              </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col-4">
+    <div class="row-width">
+
+      <div class="row">
+
+        <div class="col-6 mt-s-m active-page">
+          <button id="my-users">Summary</button>
+        </div>
+        <div class="col-6 mt-s-m">
+          <button id="waiting">Message</button>
+        </div>
+
+
+        <div class="col-12">
+          <br>
+            <div class="card h-100">
+              <div class="item">
+                <img src="<%= asset_path('kristina-tripkovic-nwWUBsW6ud4-unsplash.jpg') %>" class="card-img-top" alt="...">
+                <% if @technique.problems %>
+                  <div class="tags-div-absolute">
+                    <% @technique.problems.each do |problem|%>
+                      <span class="tags-in-image "><%= problem.name%></span>
+                    <% end %>
+                  </div>
+                <% end %>
+
+              </div>
+              <div class="card-body">
+                <h6 class="title_card"><%= @technique.title %></h6>
+
+                <p class="description"><%= @technique.description %></p>
+                <div class="age">Age: <strong><%= @technique.age %> years</strong></div>
+                <div class="gender">Gender: <strong><%= @technique.gender %></strong></div>
+                <br>
+                <div class="step">Steps:<strong> <%= @technique.total_steps %></strong></div>
+                <div class="duration">Duration:<strong> <%= @technique.duration %> </strong></div>
+                <div class="row">
+                  <div class="col-2 image-coach-techinque">
+                    <% if @recommendation.coach.avatar.attached? %>
+                      <img src="<%= url_for(@recommendation.coach.avatar) %>" class= "rounded-circle notification-avatar">
+                    <% else %>
+                      <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+                    <% end %>
+                  </div>
+                  <div class="col-10 name-coach-techinque">
+                    <%= @recommendation.coach.name %>
+                  </div>
+                </div>
+                <ul class="hr">
+                  <li><i class="bi bi-people"></i> 311</li>
+                  <li><i class="bi bi-hand-thumbs-up"></i> 214</li>
+                  <li><i class="bi bi-hand-thumbs-down"></i> 34</li>
+
+              </div>
+            </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+
+
+<% end %>
+<%= render template: "user/show" %>

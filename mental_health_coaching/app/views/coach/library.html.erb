@@ -137,7 +137,7 @@
 
       <div class="row">
         <% @technigues.each do |technique|%>
-          <% if Recommendation.find_by(technique_id: technique.id) %>
+          <% if Recommendation.find_by(technique_id: technique.id, coach_id: @coach.id) %>
             <div class="col-6 distance">
               <div class="card h-100">
                 <div class="item">
@@ -160,9 +160,9 @@
                   <br>
                   <div class="step">Steps:<strong> <%= technique.total_steps %></strong></div>
                   <div class="duration">Duration:<strong> <%= technique.duration %></strong></div>
-                  <% if Recommendation.where(technique_id: technique.id).count <= 11 %>
+                  <% if Recommendation.where(technique_id: technique.id, coach_id: @coach.id).count <= 11 %>
                     <div class="users-count">
-                      <%= Recommendation.where(technique_id: technique.id).count %> users
+                      <%= Recommendation.where(technique_id: technique.id, coach_id: @coach.id).count %> users
                     </div>
                   <% else %>
                     <div class="users-count">11+ users</div>
