@@ -134,9 +134,11 @@ class UserController < ApplicationController
 
   def like
     @user = Current.user
-    Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 1, dislike: 0)
-    Notification.create(body: "You like your Technique", user_id: @user.id, status: 1)
-    redirect_to user_dashboard_page_path(@user.id)
+    if Rating.find_by(technique_id: params[:technique_id], user_id: @user.id) == nil
+        Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 1, dislike: 0)
+        Notification.create(body: "You like your Technique", user_id: @user.id, status: 1)
+    end
+    redirect_to user_dashboard_page_path
   end
 
   private

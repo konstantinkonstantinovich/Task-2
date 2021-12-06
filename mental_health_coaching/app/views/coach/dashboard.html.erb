@@ -149,9 +149,9 @@
                 <div class="users-count">11+ users</div>
               <% end %>
               <ul class="hr">
-                <li><i class="bi bi-people"></i> 235</li>
-                <li><i class="bi bi-hand-thumbs-up"></i> 124</li>
-                <li><i class="bi bi-hand-thumbs-down"></i> 12</li>
+                <li><i class="bi bi-people"></i> <%= Recommendation.where(technique_id: recommendation.technique.id).count%></li>
+                <li><i class="bi bi-hand-thumbs-up"></i> <%= Rating.where(technique_id: recommendation.technique.id).sum(:like)%></li>
+                <li><i class="bi bi-hand-thumbs-down"></i> <%= Rating.where(technique_id: recommendation.technique.id).sum(:dislike)%></li>
                 <li class="start-button"><%= link_to 'SEE DETAILS', technique_detail_page_path(technique_id: recommendation.technique.id),class: "get_down_link" %></li>
               </ul>
             </div>
@@ -173,6 +173,7 @@
             <% else %>
               <img src="<%= asset_path('generic-user-icon-10.png') %>" class="image-size rounded-circle">
             <% end %>
+            <div class="check-circle-dashbord"><i class="bi bi-check-circle-fill"></i></div>
           </div>
           <div class="name-coach">
             <span class="coach-name"><%= @coach.name %></span><br>
