@@ -3,13 +3,16 @@
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-  <p>You have finished completing the technique!</p>
-  <p>Share with us your impressions and whether you like</p>
-  <p>the technique.</p>
+  <p class="modal-message">You have finished completing the technique!</p>
+  <p class="modal-message">Share with us your impressions and whether you like</p>
+  <p class="modal-message">the technique.</p>
+  <br>
 
   <p>Do you like this technique?</p>
 </div>
 <div class="modal-footer">
-   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-   <button type="button" class="btn btn-primary">Save changes</button>
+  <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">I DON'T LIKE IT</button>
+  <form method="post">
+   <%= button_to 'I LIKE IT', like_path,class: "btn btn-dark get_down_link" %>
+  </form>
  </div>

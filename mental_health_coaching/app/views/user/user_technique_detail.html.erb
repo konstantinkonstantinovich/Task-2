@@ -43,8 +43,11 @@
                 Step <%= @recommendation.step %> of <%= @technique.total_steps %>
               </div>
               <div class="col-4">
-                <%= link_to 'PASSED', user_technique_detail_path(step_id: @step.number), class:"btn btn-sing-up" %>
-
+                <% if @recommendation.step == @technique.total_steps %>
+                  <%= link_to 'PASSED', user_rate_window_path(step_id: @step.number),  {:remote => true, 'data-bs-toggle' =>  "modal", 'data-bs-target' => '#modal-window', class: "btn btn-sing-up get_down_link"}  %>
+                <% else %>
+                  <%= link_to 'PASSED', user_technique_detail_path(step_id: @step.number), class:"btn btn-sing-up" %>
+                <% end %>
               </div>
           </div>
         </div>

@@ -297,3 +297,85 @@ padding: 10px;
 .name-coach-techinque {
   padding-top: 20px;
 }
+
+
+.c-u-a {
+  width: 120px;
+  height: 120px;
+
+}
+
+.marker-status {
+  text-align: center;
+  font-size: 14px;
+  color: #000000DE;
+  border-bottom: 1px solid lightgray;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.active-marker {
+  border-bottom: 2px solid black;
+
+}
+
+#all {
+  background: white;
+  border: none;
+  outline: none;
+}
+
+#recommended {
+  background: white;
+  border: none;
+  outline: none;
+}
+
+#in-progress {
+  background: white;
+  border: none;
+  outline: none;
+}
+
+#completed {
+  background: white;
+  border: none;
+  outline: none;
+}
+
+#render-recommended {
+  display: none
+}
+
+#render-in-progress {
+  display: none
+}
+
+#render-completed {
+  display: none
+}
+
+.end-coop {
+  border: none;
+  outline: none;
+  background: white;
+  font-size: 14px;
+  margin-top: 5px;
+  width: 100%;
+  bottom: 10px;
+  text-align: center;
+  color: #000000DE;
+}
+
+.check-circle {
+  position: absolute;
+  top: 17%;
+  right: 35%;
+  font-size: 24px;
+}
+
+.modal-message {
+  font-size: 16px;
+  color: #000000DE;
+  margin: 0px;
+}

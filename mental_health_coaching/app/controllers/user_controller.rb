@@ -74,9 +74,11 @@ class UserController < ApplicationController
     next_step = params[:step_id].to_i
     if next_step < @technique.total_steps
       @recommendation.update(step: next_step+1, status: 1)
+      @recommendation.update(started_at: Time.zone.now) if @recommendation.started_at == nil
       @step = Step.find_by(number: next_step+1)
     else
       @recommendation.update(status: 2)
+      @recommendation.update(ended_at: Time.zone.now) if @recommendation.ended_at == nil
       @step = Step.find_by(number: next_step)
     end
   end
@@ -121,6 +123,20 @@ class UserController < ApplicationController
     Notification.create(body: "You have ended cooperation with coach #{@invite.coach.name}", user_id: @invite.user.id, status: 1)
     @invite.destroy
     redirect_to user_dashboard_page_path(Current.user.id)
+  end
+
+  def my_techniques
+    @user = Current.user
+    @invite = Invitation.find_by(user_id: @user.id, status: 1)
+    @recommendations = Recommendation.where(user_id: @user.id)
+  end
+
+
+  def like
+    @user = Current.user
+    Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 1, dislike: 0)
+    Notification.create(body: "You like your Technique", user_id: @user.id, status: 1)
+    redirect_to user_dashboard_page_path(@user.id)
   end
 
   private

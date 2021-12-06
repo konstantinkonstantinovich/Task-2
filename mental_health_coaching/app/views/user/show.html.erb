@@ -1,19 +1,3 @@
-
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-<head>
-  <meta charset="utf-8">
-  <title>Landing page</title>
-  <%= stylesheet_link_tag 'landing.css' %>
-    <%= stylesheet_link_tag 'coach.css' %>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
-  <link href='http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900italic,900' rel='stylesheet' type='text/css'>
-
-</head>
-
-<body>
   <nav class="navbar navbar-expand-lg nav_background fixed-top">
     <div class="container-fluid pad">
       <a class="navbar-brand logo logo-button" href="#">Logo</a>
@@ -23,7 +7,7 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <%= link_to "Dashboard", user_dashboard_page_path, class: "nav-link nav-link-style" %>
-          <a class="nav-link nav-link-style" href="#content-techniques">My techniques</a>
+          <%= link_to "My techniques", user_techniques_page_path, class: "nav-link nav-link-style" %>
           <%= link_to "Coaches", user_coahes_page_path, class: "nav-link nav-link-style" %>
         </div>
       </div>
@@ -56,21 +40,3 @@
     <%= content_for?(:content) ? yield(:content) : yield %>
 
   </div>
-
-  <footer>
-    <div class="footer-main">
-      © 2021 All rights reserved
-    </div>
-    <div class="footer-menu">
-      Terms
-    </div>
-    <div class="footer-menu">
-      Privacy
-    </div>
-    <div class="footer-menu">
-      Security
-    </div>
-  </footer>
-
-</body>
-</html
