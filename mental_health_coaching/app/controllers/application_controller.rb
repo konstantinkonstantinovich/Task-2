@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  add_flash_types :info, :error, :warning
   before_action :set_current
 
   def set_current

@@ -17,7 +17,7 @@
           <div class="size-total-coach"><i class="bi bi-person"></i></div>
           <p class="tt">Current number</p>
           <p class="tt">of users</p>
-          <p class="coach-stats"><%= Invitation.where(coach_id: @coach.id).count%></p>
+          <p class="coach-stats"><%= Invitation.where(coach_id: @coach.id, status: 1).count%></p>
         </div>
       </div>
       <div class="col-3">

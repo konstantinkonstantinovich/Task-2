@@ -36,6 +36,11 @@
   </nav>
 
   <div class="content-block">
+    <% flash.each do |type, msg| %>
+      <div class="alert alert-info">
+        <%= msg %>
+      </div>
+    <% end %>
 
     <%= content_for?(:content) ? yield(:content) : yield %>
 

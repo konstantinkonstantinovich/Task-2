@@ -13,5 +13,7 @@
 <div class="modal-footer">
   <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">I DON'T LIKE IT</button>
 
-  <div class="btn btn-dark">  <%= button_to 'I LIKE IT', class: "get_down_link" %> </div>
+
+  <%= link_to 'I LIKE IT', like_rating_path, method: :post, class: "btn btn-dark" %>
+
  </div>

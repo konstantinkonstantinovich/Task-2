@@ -379,3 +379,9 @@ padding: 10px;
   color: #000000DE;
   margin: 0px;
 }
+
+.get_down_button {
+  border: none;
+  outline: none;
+  opacity: 0;
+}

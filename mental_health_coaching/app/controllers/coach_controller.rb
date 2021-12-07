@@ -39,9 +39,11 @@ class CoachController < ApplicationController
     users_names_list = params[:users].select! { |element| element&.size.to_i > 0 }
     users_names_list.each do |user_name|
       user = User.find_by(name: user_name)
-      if Recommendation.find_by(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id) == nil
+      if Recommendation.find_by(user_id: user.id, technique_id: @technique.id) == nil
         Recommendation.create(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id, status: 0, step: 0)
         Notification.create(body: "Coach #{@coach.name} recommended a Technique for you", user_id: user.id, status: 1)
+      else
+        flash[:warning] = "User #{user_name} is alraedy passed this technique!"
       end
     end
     redirect_to coach_users_page_path
