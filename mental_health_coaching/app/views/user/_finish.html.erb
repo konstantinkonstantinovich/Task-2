@@ -11,9 +11,8 @@
   <p>Do you like this technique?</p>
 </div>
 <div class="modal-footer">
-  <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">I DON'T LIKE IT</button>
 
-
+  <%= link_to 'I DON\'T LIKE IT', dislike_rating_path, method: :patch, class: "btn btn-secondary" %>
   <%= link_to 'I LIKE IT', like_rating_path, method: :post, class: "btn btn-dark" %>
 
  </div>

@@ -82,7 +82,7 @@
                       <% end %>
                       <p class="tages-info">Techniques in process</p>
                       <p class="user-t-info">Lifestyle changes</p>
-                      <div class="see-detail-button">SEE DETAILS</div>
+                      <div class="see-detail-button"><%= link_to 'SEE DETAILS', user_detail_path(user_id: value.user.id), class: "get_down_link"%></div>
 
                     </div>
                   </div>
@@ -208,6 +208,7 @@
         </div>
       </div>
       <% if @notifications %>
+      <div class="layer">
         <% @notifications.reverse_each do |data| %>
           <div class="row">
             <div class="col-2 notif-avatar-block">
@@ -235,6 +236,7 @@
             </div>
           </div>
         <% end %>
+      </div>
       <% end %>
 
   </div>

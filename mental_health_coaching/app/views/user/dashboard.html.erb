@@ -1,5 +1,9 @@
 <% content_for :content do %>
-
+<div id="modal-window" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content"></div>
+  </div>
+</div>
 <div class="row">
   <div class="col-8">
     <div class="row">
@@ -209,24 +213,23 @@
                 </div>
                 <div class="col-1">
                   <div class="end-cooperation"><%= link_to raw("<i class=\"bi bi-three-dots-vertical get_down_link\"></i>"),
-                                    end_cooperation_coach_invite_path(@invite.id),
-                                    method: :delete %>
+                                    asking_form_path,
+                                    {:remote => true, 'data-bs-toggle' =>  "modal", 'data-bs-target' => '#modal-window'} %>
                   </div>
                 </div>
               </div>
             <% end %>
           <% else %>
-              <div class="small-card">
-                <div class="image-avatar-small">
-                  <img src="<%= asset_path('generic-user-icon-10.png') %>" class="i-s rounded-circle">
+              <div class="row">
+                <div class="col-2 coach-block-cp">
+                  <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
                 </div>
-                <div class="name-user">
-                  <span class="coach-name">You don't have a coach yet</span><br>
-                  <div class="edit-prof">
+                <div class="col-7">
+                  <p class="coach-block-cp-text">You don't have a coach yet</p>
+                </div>
+                <div class="col-3 p-in-block">
                     <%= link_to '', user_coahes_page_path, class: "bi bi-chevron-compact-right get_down_link" %>
-                  </div>
                 </div>
-
               </div>
           <% end %>
         </div>
@@ -247,6 +250,7 @@
         </div>
       </div>
       <% if @notifications %>
+        <div class="layer">
         <% @notifications.reverse_each do |data| %>
           <% if  data.coach_id && data.user_id %>
 
@@ -279,6 +283,7 @@
           <% end %>
 
         <% end %>
+        </div>
       <% end %>
 
   </div>

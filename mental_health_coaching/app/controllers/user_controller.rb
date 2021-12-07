@@ -3,6 +3,7 @@ class UserController < ApplicationController
 
   def new
     @coach = Coach.find_by(id: params[:coach_id])
+    @invite = Invitation.find_by(user_id: Current.user.id)
     respond_to do |format|
       format.html
       format.js
@@ -118,6 +119,15 @@ class UserController < ApplicationController
     redirect_to user_dashboard_page_path(Current.user.id)
   end
 
+  def modal_ask_form
+    @coach = Invitation.find_by(user_id: Current.user.id, status: 1).coach
+    @invite = Invitation.find_by(user_id: Current.user.id)
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   def end_cooperation
     @invite = Invitation.find_by_id(params[:invite_id])
     Notification.create(body: "You have ended cooperation with coach #{@invite.coach.name}", user_id: @invite.user.id, status: 1)
@@ -136,6 +146,18 @@ class UserController < ApplicationController
     @user = Current.user
     if Rating.find_by(technique_id: params[:technique_id], user_id: @user.id) == nil
         Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 1, dislike: 0)
+        Notification.create(body: "You like your Technique", user_id: @user.id, status: 1)
+    end
+    recommendation = Recommendation.find_by(technique_id: params[:technique_id], user_id: @user.id)
+    recommendation.update(status: 2)
+    recommendation.update(ended_at: Time.zone.now) if recommendation.ended_at == nil
+    redirect_to user_dashboard_page_path
+  end
+
+  def dislike
+    @user = Current.user
+    if Rating.find_by(technique_id: params[:technique_id], user_id: @user.id) == nil
+        Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 0, dislike: 1)
         Notification.create(body: "You like your Technique", user_id: @user.id, status: 1)
     end
     recommendation = Recommendation.find_by(technique_id: params[:technique_id], user_id: @user.id)

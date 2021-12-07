@@ -8,7 +8,7 @@
         </div>
         <div class="image-avatar">
           <% if @coach.avatar.attached? %>
-            <img src="<%= url_for(@coach.avatar) %>" class= "img-fluid rounded-circle mb-3">
+            <img src="<%= url_for(@coach.avatar) %>" class= "invite-avatar rounded-circle ">
           <% else %>
             <img src="<%= asset_path('generic-user-icon-10.png') %>" class="img-fluid rounded-circle mb-3">
           <% end %>
@@ -17,6 +17,7 @@
           <i class="bi bi-linkedin"></i>
         </div>
       </div>
+      <br>
       <h6 class="coach-name"><%= @coach.name %></h6>
       <p class="status">Current coach</p>
 
@@ -40,7 +41,14 @@
       <p class="tages-info">Licenses and Certificates</p>
       <p class="education-data"><%= @coach.licenses %></p>
       <br>
-      <div class="send-an-inv"><%= button_to 'SEND AN INVITATION', class: "get_down_link" %></div>
+      <% if @invite == nil %>
+        <div class="send-an-inv"><%= button_to 'SEND AN INVITATION', class: "get_down_link" %></div>
+      <% else %>
+
+        <hr>
+        <div class="date-info">You cannot invite a coach.</div>
+        <div class="date-info">First, complete the cooperation with your current coach.</div>
+      <% end %>
     </div>
 
 </div>

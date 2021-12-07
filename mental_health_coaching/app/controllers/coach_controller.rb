@@ -117,6 +117,19 @@ class CoachController < ApplicationController
     end
   end
 
+  def user_detail
+    @coach = Current.coach
+    @invitation = Invitation.find_by(user_id: params[:user_id])
+    @recommendations = Recommendation.where(user_id: params[:user_id])
+    notifications = Notification.where(coach_id: @coach.id)
+    @history = []
+    notifications.each do |notice|
+      if notice.body.include?(@invitation.user.name)
+        @history << notice
+      end
+    end
+  end
+
   private
 
   def update_params

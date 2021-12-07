@@ -42,12 +42,14 @@ Rails.application.routes.draw do
   get '/user/:id/coaches/invitation/:coach_id', to: "user#new", as: 'invitation'
   post 'user/:id/coaches/invitation/:coach_id', to: "user#send_invintation"
   delete 'cancel/:invite_id', to: 'user#cancel_invite', as: 'cancel_coach_invite'
+  get '/user/:id/ask', to: 'user#modal_ask_form', as: 'asking_form'
   delete 'end/:invite_id', to: 'user#end_cooperation', as: 'end_cooperation_coach_invite'
   get '/user/:id/dashboard/:technique_id/step/:step_id', to: 'user#user_technique_detail', as: 'user_technique_detail'
   patch '/user/:id/dashboard/:technique_id/step/:step_id', to: 'user#restart', as: 'restart'
   get '/user/:id/my_techniques', to: 'user#my_techniques', as: 'user_techniques_page'
   get '/user/:id/dashboard/:technique_id/step/:step_id/rate', to: 'user#finish', as: 'user_rate_window'
   post '/user/:id/dashboard/:technique_id/step/:step_id/rate', to: 'user#like', as: 'like_rating'
+  patch '/user/:id/dashboard/:technique_id/step/:step_id/rate', to: 'user#dislike', as: 'dislike_rating'
   # coach contoller
   get '/coach/:id', to: 'coach#dashboard', as: 'coach_page'
   get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'
@@ -62,6 +64,7 @@ Rails.application.routes.draw do
   get '/coach/:id/library/:technique_id', to: 'coach#technique_detail', as: 'technique_detail_page'
   get '/coach/:id/library/:technique_id/recommendation', to: 'coach#new', as: 'recommend_to_users_page'
   post '/coach/:id/library/:technique_id/recommendation', to: 'coach#create'
+  get '/coach/:id/user/:user_id/detail', to: 'coach#user_detail', as: 'user_detail'
 
 
 
