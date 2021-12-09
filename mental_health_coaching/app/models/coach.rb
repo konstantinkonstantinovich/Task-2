@@ -1,7 +1,7 @@
 class Coach < ApplicationRecord
   has_many :users
   has_many :social_networks
-  has_many :notifications
+  has_many :coach_notifications
   has_and_belongs_to_many :problems
 
   has_many :invitations

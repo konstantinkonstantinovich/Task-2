@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   belongs_to :coach, optional: true
 
-  has_many :notifications
+  has_many :user_notifications
 
   has_and_belongs_to_many :problems
 
