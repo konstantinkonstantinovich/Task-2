@@ -8,7 +8,8 @@ class CoachController < ApplicationController
     @coach = Current.coach
     @problems = @coach.problems
     @notifications = CoachNotification.where(coach_id: @coach.id)
-    @invitation = Invitation.where(coach_id: @coach.id)
+    @invitation = Invitation.where(coach_id: @coach.id, status: 1)
+    get_techniques_in_progress(@invitation)
     @recommendations = Recommendation.where(coach_id: @coach.id)
   end
 
@@ -54,6 +55,7 @@ class CoachController < ApplicationController
     @notifications = CoachNotification.where.not(coach_id: @coach.id, user_id: nil)
     @count = Invitation.where(coach_id: @coach.id, status: 0).count
     @invitation = Invitation.where(coach_id: @coach.id)
+    get_techniques_in_progress(@invitation)
   end
 
   def refuse
@@ -125,6 +127,20 @@ class CoachController < ApplicationController
   end
 
   private
+
+  def get_techniques_in_progress(invitation)
+    @user_data = {}
+    invitation.each do |data|
+      @user_data[data.user.name] = []
+      user_recommendations = data.user.recommendations
+      user_recommendations.each do |recommendation|
+        if recommendation.status == 'in_progress'
+          @user_data[data.user.name] << recommendation.technique.title
+        end
+      end
+      @user_data[data.user.name] << "All techniques completed" if @user_data[data.user.name] == []
+    end
+  end
 
   def update_params
     params.require(:coach).permit(:name, :email, :avatar, :about, :age, :gender, :education, :experience, :licenses)
