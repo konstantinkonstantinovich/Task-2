@@ -15,6 +15,10 @@
 
 }
 
+#render-block {
+  display: inline-block;
+}
+
 .form-update {
   margin: 0px auto;
   border-top: 1px solid lightgrey;

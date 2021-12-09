@@ -35,7 +35,7 @@ class UserController < ApplicationController
           end
         end
       end
-      Notification.create(body: "You changed your profile settings", status: 1, user_id: @user.id)
+      UserNotification.create(body: "You changed your profile settings", status: 1, user_id: @user.id)
       redirect_to user_page_path(@user.id)
     else
       render :edit
@@ -50,7 +50,7 @@ class UserController < ApplicationController
     @user = Current.user
     if BCrypt::Password.new(Current.user.password_digest) == params[:user][:old_password]
       if Current.user.update(password_params)
-        Notification.create(body: "You changed your password settings", status: 1, user_id: @user.id)
+        UserNotification.create(body: "You changed your password settings", status: 1, user_id: @user.id)
         redirect_to user_page_path(Current.user.id)
       else
         render :password_edit
@@ -63,7 +63,7 @@ class UserController < ApplicationController
   def dashboard
     @user = Current.user
     @problems = @user.problems
-    @notifications = @user.notifications
+    @notifications = UserNotification.where(user_id: @user.id)
     @invite = Invitation.find_by(user_id: @user.id)
     @recommendations = Recommendation.where(user_id: @user.id).order(:status)
   end
@@ -77,10 +77,6 @@ class UserController < ApplicationController
       @recommendation.update(step: next_step+1, status: 1)
       @recommendation.update(started_at: Time.zone.now) if @recommendation.started_at == nil
       @step = Step.find_by(number: next_step+1)
-    # else
-    #   @recommendation.update(status: 2)
-    #   @recommendation.update(ended_at: Time.zone.now) if @recommendation.ended_at == nil
-    #   @step = Step.find_by(number: next_step)
     end
   end
 
@@ -103,8 +99,8 @@ class UserController < ApplicationController
     @coach = Coach.find_by_id(params[:coach_id])
     if Invitation.find_by(user_id: @user.id) == nil
       Invitation.create(coach_id: @coach.id, user_id: @user.id, status: 0)
-      Notification.create(body: "You have sent an invitation to coach #{@coach.name}", user_id: @user.id, status: 1)
-      Notification.create(body: "You have received an invitation to become a coach from a user #{@user.name}", coach_id: @coach.id, user_id: @user.id, status: 1)
+      UserNotification.create(body: "You have sent an invitation to coach #{@coach.name}", user_id: @user.id, coach_id: @coach.id, status: 1)
+      CoachNotification.create(body: "You have received an invitation to become a coach from a user #{@user.name}", coach_id: @coach.id, user_id: @user.id, status: 1)
       redirect_to user_dashboard_page_path, notice: "You have sent an invitation to coach!"
     else
       flash[:alert] = "First, cancel the invitation to another coach!"
@@ -114,7 +110,7 @@ class UserController < ApplicationController
 
   def cancel_invite
     @invite = Invitation.find_by_id(params[:invite_id])
-    Notification.create(body: "You have canceled an invitation to coach #{@invite.coach.name}", user_id: @invite.user.id, status: 1)
+    UserNotification.create(body: "You have canceled an invitation to coach #{@invite.coach.name}", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
     @invite.destroy
     redirect_to user_dashboard_page_path(Current.user.id)
   end
@@ -130,7 +126,7 @@ class UserController < ApplicationController
 
   def end_cooperation
     @invite = Invitation.find_by_id(params[:invite_id])
-    Notification.create(body: "You have ended cooperation with coach #{@invite.coach.name}", user_id: @invite.user.id, status: 1)
+    UserNotification.create(body: "You have ended cooperation with coach #{@invite.coach.name}", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
     @invite.destroy
     redirect_to user_dashboard_page_path(Current.user.id)
   end
@@ -146,7 +142,7 @@ class UserController < ApplicationController
     @user = Current.user
     if Rating.find_by(technique_id: params[:technique_id], user_id: @user.id) == nil
         Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 1, dislike: 0)
-        Notification.create(body: "You like your Technique", user_id: @user.id, status: 1)
+        UserNotification.create(body: "You like your Technique", user_id: @user.id, status: 1)
     end
     recommendation = Recommendation.find_by(technique_id: params[:technique_id], user_id: @user.id)
     recommendation.update(status: 2)
@@ -158,7 +154,7 @@ class UserController < ApplicationController
     @user = Current.user
     if Rating.find_by(technique_id: params[:technique_id], user_id: @user.id) == nil
         Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 0, dislike: 1)
-        Notification.create(body: "You like your Technique", user_id: @user.id, status: 1)
+        UserNotification.create(body: "You like your Technique", user_id: @user.id, status: 1)
     end
     recommendation = Recommendation.find_by(technique_id: params[:technique_id], user_id: @user.id)
     recommendation.update(status: 2)

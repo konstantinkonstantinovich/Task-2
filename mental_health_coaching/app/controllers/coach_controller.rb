@@ -7,7 +7,7 @@ class CoachController < ApplicationController
   def dashboard
     @coach = Current.coach
     @problems = @coach.problems
-    @notifications = @coach.notifications
+    @notifications = CoachNotification.where(coach_id: @coach.id)
     @invitation = Invitation.where(coach_id: @coach.id)
     @recommendations = Recommendation.where(coach_id: @coach.id)
   end
@@ -41,7 +41,7 @@ class CoachController < ApplicationController
       user = User.find_by(name: user_name)
       if Recommendation.find_by(user_id: user.id, technique_id: @technique.id) == nil
         Recommendation.create(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id, status: 0, step: 0)
-        Notification.create(body: "Coach #{@coach.name} recommended a Technique for you", user_id: user.id, status: 1)
+        UserNotification.create(body: "Coach #{@coach.name} recommended a Technique for you", user_id: user.id, coach_id: @coach.id ,status: 1)
       else
         flash[:warning] = "User #{user_name} is alraedy passed this technique!"
       end
@@ -51,23 +51,23 @@ class CoachController < ApplicationController
 
   def coach_users
     @coach = Current.coach
-    @notifications = @coach.notifications
+    @notifications = CoachNotification.where.not(coach_id: @coach.id, user_id: nil)
     @count = Invitation.where(coach_id: @coach.id, status: 0).count
     @invitation = Invitation.where(coach_id: @coach.id)
   end
 
   def refuse
     @invite = Invitation.find_by_id(params[:invite_id])
-    Notification.create(body: "You have rejected #{@invite.user.name} invite", coach_id: @invite.coach.id, status: 1)
-    Notification.create(body: "Coach #{@invite.coach.name} refused to become your coach", user_id: @invite.user.id, status: 1)
+    CoachNotification.create(body: "You have rejected #{@invite.user.name} invite", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
+    UserNotification.create(body: "Coach #{@invite.coach.name} refused to become your coach", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
     @invite.destroy
     redirect_to coach_users_page_path(Current.coach.id)
   end
 
   def confirm
     @invite = Invitation.find_by_id(params[:invite_id])
-    Notification.create(body: "Coach #{@invite.coach.name} agreed to become your coach", user_id: @invite.user.id, status: 1)
-    Notification.create(body: "You agreed to become a coach for a user #{@invite.user.name}", coach_id: @invite.coach.id, status: 1)
+    UserNotification.create(body: "Coach #{@invite.coach.name} agreed to become your coach", user_id: @invite.user.id, status: 1)
+    CoachNotification.create(body: "You agreed to become a coach for a user #{@invite.user.name}", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
     @invite.update(status: 1)
 
     redirect_to coach_users_page_path(Current.coach.id)
@@ -92,7 +92,7 @@ class CoachController < ApplicationController
           end
         end
       end
-      Notification.create(body: "You changed your profile settings", status: 1, coach_id: @coach.id)
+      CoachNotification.create(body: "You changed your profile settings", status: 1, coach_id: @coach.id)
       redirect_to coach_page_path(@coach.id)
     else
       render :edit
@@ -107,7 +107,7 @@ class CoachController < ApplicationController
     @coach = Current.coach
     if BCrypt::Password.new(Current.coach.password_digest) == params[:coach][:old_password]
       if Current.coach.update(password_params)
-        Notification.create(body: "You changed your password settings", status: 1, coach_id: @coach.id)
+        CoachNotification.create(body: "You changed your password settings", status: 1, coach_id: @coach.id)
         redirect_to coach_page_path(Current.coach.id)
       else
         render :password_edit
@@ -121,13 +121,7 @@ class CoachController < ApplicationController
     @coach = Current.coach
     @invitation = Invitation.find_by(user_id: params[:user_id])
     @recommendations = Recommendation.where(user_id: params[:user_id])
-    notifications = Notification.where(coach_id: @coach.id)
-    @history = []
-    notifications.each do |notice|
-      if notice.body.include?(@invitation.user.name)
-        @history << notice
-      end
-    end
+    @notifications = CoachNotification.where(coach_id: @coach.id, user_id: @invitation.user.id)
   end
 
   private

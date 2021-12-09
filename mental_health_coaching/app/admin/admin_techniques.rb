@@ -1,5 +1,6 @@
 ActiveAdmin.register Technique do
   permit_params :title, :description, :age, :gender, :total_steps, :duration, :status, :photo
+  
   form do |f|
     f.inputs do
       f.input :title

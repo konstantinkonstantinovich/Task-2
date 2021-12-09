@@ -44,8 +44,8 @@
                   </div>
                   <div class="col-1">
                     <div class="end-cooperation"><%= link_to raw("<i class=\"bi bi-three-dots-vertical get_down_link\"></i>"),
-                                      end_cooperation_coach_invite_path(@invite.id),
-                                      method: :delete ,  confirm: "Are you sure you want to cancel your invitation to cooperation with this coach?" %>
+                                      asking_form_path,
+                                      {:remote => true, 'data-bs-toggle' =>  "modal", 'data-bs-target' => '#modal-window'} %>
                     </div>
                   </div>
                 </div>
@@ -104,23 +104,6 @@
           <% end %>
         </div>
 
-        <div class="col-12 show-filters">
-          Work experience
-        </div>
-        <div class="col-12 filter-border">
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-              Less than 5 years
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-            <label class="form-check-label" for="flexCheckChecked">
-              More than 5 years
-            </label>
-          </div>
-        </div>
 
         <div class="col-12 show-filters">
           Number of users in training
@@ -181,26 +164,26 @@
         </div>
         <div class="col-12 filter-border">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
+            <input class="form-check-input" type="checkbox" id="age1" onclick='checkedInput(this);'>
+            <label class="form-check-label" for="age1">
               To 25 years
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-            <label class="form-check-label" for="flexCheckChecked">
+            <input class="form-check-input" type="checkbox" id="age2" onclick='checkedInput(this);'>
+            <label class="form-check-label" for="age2">
               25-35 years
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-            <label class="form-check-label" for="flexCheckChecked">
+            <input class="form-check-input" type="checkbox" value="" id="age3" onclick='checkedInput(this);'>
+            <label class="form-check-label" for="age3">
               35-45 years
             </label>
           </div>
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-            <label class="form-check-label" for="flexCheckChecked">
+            <input class="form-check-input" type="checkbox" value="" id="age4" onclick='checkedInput(this);'>
+            <label class="form-check-label" for="age4">
               Over 45 years
             </label>
           </div>
@@ -222,13 +205,46 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           </form>
         </div>
-        <div class="col-12 pading-tags">
-          <span class="tags-filter">All <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <span class="tags-filter">Depression <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <span class="tags-filter">More than 5 years <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <button class="clear-button-tags">Сlear all filters</button>
+        <div class="col-12 pading-tags"  id="filters">
+          <div id="render-block">
+          </div>
+          <button class="clear-button-tags" id="remove-tags" onclick='removeAllTags(this);'>Сlear all filters</button>
         </div>
       </div>
+
+
+      <script type="text/javascript">
+        function checkedInput(inp) {
+          console.log(inp.checked)
+          let render_block = document.getElementById("render-block")
+          if(inp.checked){
+            let span = document.createElement("span")
+            span.classList.add("tags-filter")
+            span.id = inp.id + 'elem'
+            let text = document.createTextNode(inp.labels[0].innerHTML)
+            let inLable = document.createElement("label")
+            inLable.htmlFor = inp.id
+            let i = document.createElement("i")
+            i.classList.add("bi", "bi-x-circle-fill")
+            inLable.appendChild(i)
+            span.appendChild(text);
+            span.appendChild(inLable);
+            render_block.appendChild(span);
+          }
+          else {
+            document.getElementById(inp.id + 'elem').remove()
+          }
+        }
+
+        function removeAllTags(button) {
+          let filters = document.getElementById('render-block')
+          var child = filters.lastElementChild;
+          while (child) {
+            filters.removeChild(child);
+            child = filters.lastElementChild;
+          }
+        }
+      </script>
 
       <div class="row">
         <% @coahes.each do |coach|%>
@@ -253,8 +269,6 @@
                     <% end %>
 
                   </div>
-                  <!-- <div class="see-detail-button">SEE DETAILS</div> -->
-
                   <div class="see-detail-button"><%= link_to 'SEE DETAILS', invitation_path(coach_id: coach.id),  {:remote => true, 'data-bs-toggle' =>  "modal", 'data-bs-target' => '#modal-window', class: "get_down_link"}  %></div>
 
                 </div>
