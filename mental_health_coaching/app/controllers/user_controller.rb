@@ -90,7 +90,7 @@ class UserController < ApplicationController
   def coaches_page
     @user = Current.user
     @problems = Problem.all
-    @coahes = Coach.all
+    @coaches = Coach.all
     @invite = Invitation.find_by(user_id: @user.id)
     if params[:search] != nil
       search_coach(params[:search])
@@ -170,43 +170,65 @@ class UserController < ApplicationController
   private
 
   def search_coach(param)
-    @coahes = Coach.search(param)
+    @coaches = Coach.search(param)
   end
 
   def filter_coach(filter_params)
-    @coahes = Coach.where(nil)
-    # temp = @coahes
-    # array = []
+    @coaches = Coach.where(nil)
+    temp = @coaches
+    array = []
     if filter_params
       if filter_params[:problems].present?
-        @coahes = Problem.find_by(name: filter_params[:problems]).coaches
+        @coaches = Problem.find_by(name: filter_params[:problems]).coaches
+      end
+      if filter_params[:users].present?
+        temp&.each do |coach|
+          count = Invitation.where(coach_id: coach.id).count
+          puts count
+          filter_params[:users].each do |user_total|
+            if user_total == '5' and count <= 5
+              array << coach.id
+            end
+            if user_total == '5-10' and count > 5 and count <= 10
+              array << coach.id
+            end
+            if user_total == '10-20' and count > 10 and count <= 20
+              array << coach.id
+            end
+            if user_total == '20' and count > 20
+              array << coach.id
+            end
+          end
+        end
+        array.uniq!
+        @coaches = @coaches.where(id: array)
       end
       filter_params[:gender]&.each do |gender|
-        @coahes = @coahes.where("gender = ?", 0) if gender == "male"
-        @coahes = @coahes.where("gender = ?", 1) if gender == "female"
-        @coahes = @coahes.where(nil) if gender == "all"
+        @coaches = @coaches.where("gender = ?", 0) if gender == "male"
+        @coaches = @coaches.where("gender = ?", 1) if gender == "female"
+        @coaches = @coaches.where(nil) if gender == "all"
       end
       filter_params[:gender]&.each do |gender|
-        @coahes = @coahes.where("gender = ?", 0) if gender == "male"
-        @coahes = @coahes.where("gender = ?", 1) if gender == "female"
-        @coahes = @coahes.where(nil) if gender == "all"
+        @coaches = @coaches.where("gender = ?", 0) if gender == "male"
+        @coaches = @coaches.where("gender = ?", 1) if gender == "female"
+        @coaches = @coaches.where(nil) if gender == "all"
       end
       filter_params[:age]&.each do |age|
         if age == "25"
-          @coahes = @coahes.where("age <= '25'")
+          @coaches = @coaches.where("age <= '25'")
         end
         if age == "25-35"
-          @coahes = @coahes.where("age > '25' and age < '35'")
+          @coaches = @coaches.where("age > '25' and age < '35'")
         end
         if age == "35-45"
-          @coahes = @coahes.where("age > '35' and age < '45'")
+          @coaches = @coaches.where("age > '35' and age < '45'")
         end
         if age == "45"
-          @coahes = @coahes.where("age >= '45'")
+          @coaches = @coaches.where("age >= '45'")
         end
       end
     else
-      @coahes = Coach.all
+      @coaches = Coach.all
     end
   end
 

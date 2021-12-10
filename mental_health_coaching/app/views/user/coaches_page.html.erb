@@ -72,23 +72,7 @@
           <div class="col-12 mt">
             Filters
           </div>
-          <div class="col-12 show-filters">
-            Show
-          </div>
-          <div class="col-12 filter-border">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-              <label class="form-check-label" for="flexCheckDefault">
-                All
-              </label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-              <label class="form-check-label" for="flexCheckChecked">
-                Recommended
-              </label>
-            </div>
-          </div>
+
 
           <div class="col-12 show-filters">
             Expertise
@@ -110,26 +94,26 @@
           </div>
           <div class="col-12 filter-border">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
+              <input class="form-check-input" type="checkbox" value="5" id="users1" name="filter[users][]" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="users1">
                 Less than 5 users
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-              <label class="form-check-label" for="flexCheckChecked">
+              <input class="form-check-input" type="checkbox" value="5-10" id="users2" name="filter[users][]" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="users2">
                 5-10 users
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-              <label class="form-check-label" for="flexCheckDefault">
+              <input class="form-check-input" type="checkbox" value="10-20" id="users3" name="filter[users][]" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="users3">
                 10-20 users
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-              <label class="form-check-label" for="flexCheckChecked">
+              <input class="form-check-input" type="checkbox" value="20" id="users4" name="filter[users][]" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="users4">
                 More than 20 users
               </label>
             </div>
@@ -140,7 +124,7 @@
           </div>
           <div class="col-12 filter-border">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gender1" name="filter[gender][]" value="all" onclick='checkedInput(this);' checked>
+              <input class="form-check-input" type="checkbox" id="gender1" name="filter[gender][]" value="all" onclick='checkedInput(this);'>
               <label class="form-check-label" for="gender1">
                 All
               </label>
@@ -249,7 +233,7 @@
       </script>
 
       <div class="row">
-        <% @coahes.each do |coach|%>
+        <% @coaches.each do |coach|%>
           <div class="col-6">
             <div class="card">
               <div class="body">
