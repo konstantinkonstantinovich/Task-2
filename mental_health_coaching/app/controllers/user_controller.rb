@@ -89,9 +89,14 @@ class UserController < ApplicationController
 
   def coaches_page
     @user = Current.user
-    @coahes = Coach.all
     @problems = Problem.all
+    @coahes = Coach.all
     @invite = Invitation.find_by(user_id: @user.id)
+    if params[:search] != nil
+      search_coach(params[:search])
+    else
+      filter_coach(params[:filter])
+    end
   end
 
   def send_invintation
@@ -163,6 +168,47 @@ class UserController < ApplicationController
   end
 
   private
+
+  def search_coach(param)
+    @coahes = Coach.search(param)
+  end
+
+  def filter_coach(filter_params)
+    @coahes = Coach.where(nil)
+    # temp = @coahes
+    # array = []
+    if filter_params
+      if filter_params[:problems].present?
+        @coahes = Problem.find_by(name: filter_params[:problems]).coaches
+      end
+      filter_params[:gender]&.each do |gender|
+        @coahes = @coahes.where("gender = ?", 0) if gender == "male"
+        @coahes = @coahes.where("gender = ?", 1) if gender == "female"
+        @coahes = @coahes.where(nil) if gender == "all"
+      end
+      filter_params[:gender]&.each do |gender|
+        @coahes = @coahes.where("gender = ?", 0) if gender == "male"
+        @coahes = @coahes.where("gender = ?", 1) if gender == "female"
+        @coahes = @coahes.where(nil) if gender == "all"
+      end
+      filter_params[:age]&.each do |age|
+        if age == "25"
+          @coahes = @coahes.where("age <= '25'")
+        end
+        if age == "25-35"
+          @coahes = @coahes.where("age > '25' and age < '35'")
+        end
+        if age == "35-45"
+          @coahes = @coahes.where("age > '35' and age < '45'")
+        end
+        if age == "45"
+          @coahes = @coahes.where("age >= '45'")
+        end
+      end
+    else
+      @coahes = Coach.all
+    end
+  end
 
   def update_params
     params.require(:user).permit(:name, :email, :avatar_user, :about, :age, :gender)

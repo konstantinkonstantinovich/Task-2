@@ -33,6 +33,14 @@ class Coach < ApplicationRecord
   validates :education, presence: false
   validates :licenses, presence: false
 
+  def self.search(search)
+    if search
+      where(["name LIKE ?","%#{search}%"])
+    else
+      all
+    end
+  end
+
   validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: 'Invalid email' }
   enum gender: [ :male, :female ]
 end

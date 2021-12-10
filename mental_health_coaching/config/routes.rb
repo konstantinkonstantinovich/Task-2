@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   get '/user/:id/my_techniques', to: 'user#my_techniques', as: 'user_techniques_page'
   get '/user/:id/dashboard/:technique_id/step/:step_id/rate', to: 'user#finish', as: 'user_rate_window'
   post '/user/:id/dashboard/:technique_id/step/:step_id/rate', to: 'user#like', as: 'like_rating'
-  patch '/user/:id/dashboard/:technique_id/step/:step_id/rate', to: 'user#dislike', as: 'dislike_rating'
+  post '/user/:id/dashboard/:technique_id/step/:step_id/rate/dislike', to: 'user#dislike', as: 'dislike_rating'
   # coach contoller
   get '/coach/:id', to: 'coach#dashboard', as: 'coach_page'
   get '/coach/:id/update', to: 'coach#edit', as: 'update_profile_coach'

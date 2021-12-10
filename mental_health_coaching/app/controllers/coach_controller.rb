@@ -9,8 +9,9 @@ class CoachController < ApplicationController
     @problems = @coach.problems
     @notifications = CoachNotification.where(coach_id: @coach.id)
     @invitation = Invitation.where(coach_id: @coach.id, status: 1)
-    get_techniques_in_progress(@invitation)
     @recommendations = Recommendation.where(coach_id: @coach.id)
+    get_techniques_in_progress(@invitation)
+    count_likes_on_techniques(@recommendations)
   end
 
   def library
@@ -84,7 +85,11 @@ class CoachController < ApplicationController
     @coach = Current.coach
     @problems = Problem.all
     if @coach.update(update_params)
-      socail_network = SocialNetwork.create(name: params[:coach][:social_networks], coach_id: @coach.id)
+      if params[:coach][:social_networks]
+        params[:coach][:social_networks].each do |social_network|
+          SocialNetwork.create(name: social_network, coach_id: @coach.id)
+        end
+      end
       if params[:coach][:problems]
         params[:coach][:problems].each do |problem|
           @problems.each do |data|
@@ -140,6 +145,16 @@ class CoachController < ApplicationController
       end
       @user_data[data.user.name] << "All techniques completed" if @user_data[data.user.name] == []
     end
+  end
+
+  def count_likes_on_techniques(recommendations)
+    techniques_ids = []
+    @total_likes = 0
+    recommendations.each do |data|
+      techniques_ids << data.technique_id
+    end
+    techniques_ids.uniq!
+    techniques_ids.each { |id| @total_likes += Rating.where(technique_id: id).sum(:like)}
   end
 
   def update_params

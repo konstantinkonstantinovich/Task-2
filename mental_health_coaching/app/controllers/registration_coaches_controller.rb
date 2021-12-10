@@ -30,7 +30,11 @@ class RegistrationCoachesController < ApplicationController
     @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
     @problems = Problem.all
     if @coach.update(update_params)
-      socail_network = SocialNetwork.create(name: params[:coach][:social_networks], coach_id: @coach.id)
+      if params[:coach][:social_networks]
+        params[:coach][:social_networks].each do |social_network|
+          SocialNetwork.create(name: social_network, coach_id: @coach.id)
+        end
+      end
       if params[:coach][:problems]
         params[:coach][:problems].each do |problem|
           @problems.each do |data|

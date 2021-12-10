@@ -314,3 +314,7 @@ input[class="male"]:focus + p {
   font-weight: bold;
 
 }
+
+.marge_text {
+  margin-bottom: 10px;
+}

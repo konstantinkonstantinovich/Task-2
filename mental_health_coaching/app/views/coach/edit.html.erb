@@ -102,13 +102,13 @@
   </div>
   <br>
 
-  <div class="form-group">
-    <%= f.label 'Link on social networks', class: "labels" %>
-    <%= f.text_field :social_networks, class: "field form-control" %>
-    <p class="after-input">Link on social networks</p>
+  <div class="form-group" id="networks-block">
+    <label for="social_network" class="labels">Link on social networks</label>
+    <input type="text" class="field form-control" name="coach[social_networks][]" id="social_network">
+    <p class="after-input">E.g., facebook, linkedin, etc.</p>
   </div>
   <div class="add-block">
-    <img class="rounded-circle" src="<%= asset_path('add_button.png') %>">
+    <img class="rounded-circle" src="<%= asset_path('add_button.png') %>" onclick="addInput()">
     <label>Add another</label>
   </div>
   <br>
@@ -118,6 +118,20 @@
     <p class="after-input">This information will help the user to learn more about you and your expertise</p>
   </div>
   <br>
+  <script type="text/javascript">
+    function addInput() {
+      let block = document.getElementById('networks-block')
+      let input = document.createElement("input")
+      let p = document.createElement("p")
+      let text = document.createTextNode("E.g., facebook, linkedin, etc.")
+      input.classList.add("field", "form-control")
+      input.name = "coach[social_networks][]"
+      p.classList.add("after-input", "marge_text")
+      block.appendChild(input)
+      block.appendChild(p)
+      p.appendChild(text)
+    }
+  </script>
   <%= f.submit 'SAVE CHANGES', class: "btn btn-sing-up marge-top"%>
 <% end %>
 
