@@ -25,7 +25,7 @@
           <div class="size-total-coach"><i class="bi bi-card-list"></i></div>
           <p class="tt">Total number of</p>
           <p class="tt">techniques used</p>
-          <p class="coach-stats"><%= Recommendation.where(coach_id: @coach.id).count%></p>
+          <p class="coach-stats"><%= @technique_in_used %></p>
         </div>
       </div>
       <div class="col-3">

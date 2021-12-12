@@ -9,16 +9,15 @@ class CoachController < ApplicationController
     @problems = @coach.problems
     @notifications = CoachNotification.where(coach_id: @coach.id)
     @invitation = Invitation.where(coach_id: @coach.id, status: 1)
-    @recommendations = Recommendation.where(coach_id: @coach.id)
+    recommendations = Recommendation.where(coach_id: @coach.id)
     techniques_ids = []
-    @recommendations.each do |data|
-      techniques_ids << data.technique_id
-    end
+    recommendations.each { |data| techniques_ids << data.technique_id }
     techniques_ids.uniq!
     @techniques = []
+    @technique_in_used = techniques_ids.length
     techniques_ids.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
     get_techniques_in_progress(@invitation)
-    count_likes_on_techniques(@recommendations)
+    count_likes_on_techniques(recommendations)
   end
 
   def library
