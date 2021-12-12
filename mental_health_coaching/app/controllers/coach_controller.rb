@@ -12,10 +12,9 @@ class CoachController < ApplicationController
     recommendations = Recommendation.where(coach_id: @coach.id)
     techniques_ids = []
     recommendations.each { |data| techniques_ids << data.technique_id }
-    techniques_ids.uniq!
     @techniques = []
+    techniques_ids.uniq!.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
     @technique_in_used = techniques_ids.length
-    techniques_ids.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
     get_techniques_in_progress(@invitation)
     count_likes_on_techniques(recommendations)
   end
@@ -27,6 +26,7 @@ class CoachController < ApplicationController
       search_techniques(params[:search])
     else
       if params[:filter].present?
+        filter_status(params[:filter][:status])
         filter_problems(params[:filter][:problems])
         filter_gender(params[:filter][:gender])
       else
@@ -152,8 +152,28 @@ class CoachController < ApplicationController
     @technigues = Technique.search(param)
   end
 
+  def filter_status(param)
+    @technigues = Technique.all
+    param&.each do |p|
+      if p == "recommend"
+        @technigues, techniques_ids = [], []
+        Recommendation.where(coach_id: Current.coach.id).each { |data| techniques_ids << data.technique_id }
+        techniques_ids.uniq!.each { |id| @technigues << Technique.find_by_id(id) }
+      else
+        @technigues = []
+        technigues_where_status = Technique.where(p)
+        technigues_where_status.each do |data|
+          if data.recommendations.where(coach_id: Current.coach.id) == []
+            @technigues << data
+          end
+        end
+      end
+    end
+
+  end
+
   def filter_gender(param)
-    params[:filter][:gender]&.each do |data|
+    param&.each do |data|
       @technigues = @technigues.where(data)
     end
   end
