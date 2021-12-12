@@ -95,7 +95,12 @@ class UserController < ApplicationController
     if params[:search] != nil
       search_coach(params[:search])
     else
-      filter_coach(params[:filter])
+      if params[:filter].present?
+        filter_expertise(params[:filter][:problems])
+        filter_users_count(params[:filter][:users])
+        filter_gender(params[:filter][:gender])
+        filter_age(params[:filter][:age])
+      end
     end
   end
 
@@ -173,62 +178,47 @@ class UserController < ApplicationController
     @coaches = Coach.search(param)
   end
 
-  def filter_coach(filter_params)
-    @coaches = Coach.where(nil)
-    temp = @coaches
-    array = []
-    if filter_params
-      if filter_params[:problems].present?
-        @coaches = Problem.find_by(name: filter_params[:problems]).coaches
-      end
-      if filter_params[:users].present?
-        temp&.each do |coach|
-          count = Invitation.where(coach_id: coach.id).count
-          puts count
-          filter_params[:users].each do |user_total|
-            if user_total == '5' and count <= 5
-              array << coach.id
-            end
-            if user_total == '5-10' and count > 5 and count <= 10
-              array << coach.id
-            end
-            if user_total == '10-20' and count > 10 and count <= 20
-              array << coach.id
-            end
-            if user_total == '20' and count > 20
-              array << coach.id
-            end
+  def filter_expertise(param)
+    if param.present?
+      @coaches = Problem.find_by(name: param).coaches
+    end
+  end
+
+  def filter_gender(param)
+    param&.each do |data|
+      @coaches = @coaches.where(data)
+    end
+  end
+
+  def filter_age(param)
+    param&.each do |data|
+      @coaches = @coaches.where(data)
+    end
+  end
+
+  def filter_users_count(param)
+    if param.present?
+      temp = @coaches
+      array = []
+      temp&.each do |coach|
+        count = coach.invitations.where(status: 1).count
+        param.each do |user_total|
+          if user_total == '5' and count <= 5
+            array << coach.id
+          end
+          if user_total == '5-10' and count > 5 and count <= 10
+            array << coach.id
+          end
+          if user_total == '10-20' and count > 10 and count <= 20
+            array << coach.id
+          end
+          if user_total == '20' and count > 20
+            array << coach.id
           end
         end
-        array.uniq!
-        @coaches = @coaches.where(id: array)
       end
-      filter_params[:gender]&.each do |gender|
-        @coaches = @coaches.where("gender = ?", 0) if gender == "male"
-        @coaches = @coaches.where("gender = ?", 1) if gender == "female"
-        @coaches = @coaches.where(nil) if gender == "all"
-      end
-      filter_params[:gender]&.each do |gender|
-        @coaches = @coaches.where("gender = ?", 0) if gender == "male"
-        @coaches = @coaches.where("gender = ?", 1) if gender == "female"
-        @coaches = @coaches.where(nil) if gender == "all"
-      end
-      filter_params[:age]&.each do |age|
-        if age == "25"
-          @coaches = @coaches.where("age <= '25'")
-        end
-        if age == "25-35"
-          @coaches = @coaches.where("age > '25' and age < '35'")
-        end
-        if age == "35-45"
-          @coaches = @coaches.where("age > '35' and age < '45'")
-        end
-        if age == "45"
-          @coaches = @coaches.where("age >= '45'")
-        end
-      end
-    else
-      @coaches = Coach.all
+      array.uniq!
+      @coaches = @coaches.where(id: array)
     end
   end
 

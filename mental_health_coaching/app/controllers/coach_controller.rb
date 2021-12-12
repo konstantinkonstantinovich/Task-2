@@ -15,6 +15,7 @@ class CoachController < ApplicationController
     @techniques = []
     techniques_ids.uniq!.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
     @technique_in_used = techniques_ids.length
+    @total_coach_users = @coach.invitations.where(status: 1).count
     get_techniques_in_progress(@invitation)
     count_likes_on_techniques(recommendations)
   end
@@ -181,7 +182,6 @@ class CoachController < ApplicationController
   def filter_problems(param)
     if param.present?
       @technigues = Problem.find_by(name: param).techniques
-      puts "#{@technigues} FINALY!!!!!!!!!!!!"
     end
   end
 
