@@ -82,7 +82,7 @@ class UserController < ApplicationController
 
   def restart
     @user = Current.user
-    @recommendation = Recommendation.find_by(user_id: @user.id, technique_id: params[:technique_id]).update(step: 0, status: 0)
+    @recommendation = Recommendation.find_by(user_id: @user.id, technique_id: params[:technique_id]).update(step: 0, status: 0, started_at: Time.zone.now, ended_at: nil)
     redirect_to user_technique_detail_path(technique_id: params[:technique_id], step_id: 0)
   end
 

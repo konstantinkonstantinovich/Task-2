@@ -116,21 +116,17 @@
     </div>
     <br>
     <div class="row">
-      <% @recommendations.each do |recommendation|%>
+      <% @techniques.each do |recommendation|%>
         <div class="col-6 distance">
           <div class="card h-100">
             <div class="item">
-              <% if recommendation.status == 'recommended' %>
-                <span class="notify-badge">RECOMMENDS</span>
-              <% elsif recommendation.status == 'compeleted' %>
-                <span class="notify-badge">COMPLETED</span>
-              <% end %>
+
               <% if recommendation.technique.photo.attached? %>
                 <img src="<%= url_for(recommendation.technique.photo) %>" class= "card-img-top" alt="...">
               <% else %>
                 <img src="<%= asset_path('anthony-tran-vXymirxr5ac-unsplash.jpg') %>" class="card-img-top" alt="...">
               <% end %>
-              <span class="steps-passed"><%= recommendation.step %>/<%= recommendation.technique.total_steps %> steps passed</span>
+
               <% if recommendation.technique.problems %>
                 <div class="tags-div-absolute">
                   <% recommendation.technique.problems.each do |problem|%>
@@ -147,9 +143,9 @@
               <br>
               <div class="step">Steps: <strong><%= recommendation.technique.total_steps %></strong></div>
               <div class="duration">Duration: <strong><%= recommendation.technique.duration %></strong></div>
-              <% if Recommendation.where(technique_id: recommendation.technique.id, user_id: recommendation.user_id).count <= 11 %>
+              <% if Recommendation.where(technique_id: recommendation.technique.id, coach_id: recommendation.coach_id).count <= 11 %>
                 <div class="users-count">
-                  <%= Recommendation.where(technique_id: recommendation.technique.id, user_id: recommendation.user_id).count %> users
+                  <%= Recommendation.where(technique_id: recommendation.technique.id, coach_id: recommendation.coach_id).count %> users
                 </div>
               <% else %>
                 <div class="users-count">11+ users</div>

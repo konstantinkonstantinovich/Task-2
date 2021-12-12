@@ -10,6 +10,13 @@ class CoachController < ApplicationController
     @notifications = CoachNotification.where(coach_id: @coach.id)
     @invitation = Invitation.where(coach_id: @coach.id, status: 1)
     @recommendations = Recommendation.where(coach_id: @coach.id)
+    techniques_ids = []
+    @recommendations.each do |data|
+      techniques_ids << data.technique_id
+    end
+    techniques_ids.uniq!
+    @techniques = []
+    techniques_ids.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
     get_techniques_in_progress(@invitation)
     count_likes_on_techniques(@recommendations)
   end
@@ -53,7 +60,7 @@ class CoachController < ApplicationController
 
   def coach_users
     @coach = Current.coach
-    @notifications = CoachNotification.where.not(coach_id: @coach.id, user_id: nil)
+    @notifications = CoachNotification.where.not(user_id: nil).where(coach_id: @coach.id)
     @count = Invitation.where(coach_id: @coach.id, status: 0).count
     @invitation = Invitation.where(coach_id: @coach.id)
     get_techniques_in_progress(@invitation)

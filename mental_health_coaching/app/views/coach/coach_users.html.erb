@@ -53,7 +53,13 @@
                             <span class="tags"><%= problem.name%></span>
                           <% end %>
                           <p class="tages-info">Techniques in process</p>
-                          <p class="user-t-info">Lifestyle changes</p>
+                          <% @user_data[value.user.name].each do |value|%>
+                            <% if value == "All techniques completed" %>
+                              <p class="completed_techniques"><%= value %></p>
+                            <% else %>
+                              <p class="user-t-info"><%= value %></p>
+                            <% end %>
+                          <% end %>
                           <div class="buttons-list">
                             <%= button_to 'CONFIRM', confirm_user_invite_path(value.id), method: :patch, class:"button-confirm"%>
                             <%= button_to 'REFUSE', refuse_user_invite_path(value.id), method: :delete, class:"button-refuse" %>
