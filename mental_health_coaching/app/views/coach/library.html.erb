@@ -10,108 +10,82 @@
   <div class="col-4">
 
     <div class="row-width">
-      <div class="row">
-        <div class="col-12 mt">
-          Filters
-        </div>
-        <div class="col-12 show-filters">
-          Show
-        </div>
-        <div class="col-12 filter-border">
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" checked value="alll" id="checkbox-1">
-            <label class="form-check-label" for="checkbox-1">
-              All
-            </label>
+      <%= form_with method: 'get', url: coach_library_page_path do |f| %>
+        <div class="row">
+          <div class="col-12 mt">
+            Filters
           </div>
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="popular" id="checkbox-2">
-            <label class="form-check-label" for="checkbox-2">
-              Popular
-            </label>
+          <div class="col-12 show-filters">
+            Show
           </div>
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="new" id="checkbox-3">
-            <label class="form-check-label" for="checkbox-3">
-              New
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="recommend" id="checkbox-4">
-            <label class="form-check-label" for="checkbox-4">
-              Recommended by me
-            </label>
-          </div>
-        </div>
-
-        <div class="col-12 show-filters">
-          Problems
-        </div>
-        <div class="col-12 filter-border">
-          <% @problems.each_with_index do |p, index|%>
+          <div class="col-12 filter-border">
             <div class="form-check">
-              <input class="form-check-input checkbox" type="checkbox" value="<%= p.name %>" id="checkbox-2<%= index %>">
-              <label class="form-check-label" for="checkbox-1<%= index %>">
-                <%= p.name %>
+              <input class="form-check-input checkbox" type="checkbox" value="all" name="filter[status][]" id="checkbox0" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="checkbox0">
+                All
               </label>
             </div>
-          <% end %>
-        </div>
+            <div class="form-check">
+              <input class="form-check-input checkbox" type="checkbox" value="popular" name="filter[status][]" id="checkbox2" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="checkbox2">
+                Popular
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input checkbox" type="checkbox" value="new" name="filter[status][]" id="checkbox3" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="checkbox3">
+                New
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input checkbox" type="checkbox" value="recommend" id="checkbox4" name="filter[status][]" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="checkbox4">
+                Recommended by me
+              </label>
+            </div>
+          </div>
 
-        <div class="col-12 show-filters">
-          Gender
-        </div>
-        <div class="col-12 filter-border">
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="alll" id="checkbox-1">
-            <label class="form-check-label" for="checkbox-1">
-              All
-            </label>
+          <div class="col-12 show-filters">
+            Problems
           </div>
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="male" id="checkbox-6">
-            <label class="form-check-label" for="checkbox-6">
-              Male
-            </label>
+          <div class="col-12 filter-border">
+            <% @problems.each_with_index do |p, index|%>
+              <div class="form-check">
+                <input class="form-check-input checkbox" type="checkbox" value="<%= p.name %>" id="checkbox2<%= index %>" name="filter[problems][]" onclick='checkedInput(this);'>
+                <label class="form-check-label" for="checkbox2<%= index %>">
+                  <%= p.name %>
+                </label>
+              </div>
+            <% end %>
           </div>
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="female" id="checkbox-7">
-            <label class="form-check-label" for="checkbox-7">
-              Female
-            </label>
-          </div>
-        </div>
 
-        <div class="col-12 show-filters">
-          Age
+          <div class="col-12 show-filters">
+            Gender
+          </div>
+          <div class="col-12 filter-border">
+            <div class="form-check">
+              <input class="form-check-input checkbox" type="checkbox" value="gender = 2" id="checkbox1" name="filter[gender][]" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="checkbox1">
+                All
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input checkbox" type="checkbox" value="gender = 0" id="checkbox6" name="filter[gender][]" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="checkbox6">
+                Male
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input checkbox" type="checkbox" value="gender = 1" id="checkbox7" name="filter[gender][]" onclick='checkedInput(this);'>
+              <label class="form-check-label" for="checkbox7">
+                Female
+              </label>
+            </div>
+          </div>
+
         </div>
-        <div class="col-12 filter-border">
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="" id="checkbox-8">
-            <label class="form-check-label" for="checkbox-8">
-              To 25 years
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="" id="checkbox-9" >
-            <label class="form-check-label" for="checkbox-9">
-              25-35 years
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="" id="checkbox-10">
-            <label class="form-check-label" for="checkbox-10">
-              35-45 years
-            </label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input checkbox" type="checkbox" value="" id="checkbox-11">
-            <label class="form-check-label" for="checkbox-11">
-              Over 45 years
-            </label>
-          </div>
-        </div>
-      </div>
+        <%= f.submit "submit", class: "hide-button"%>
+      <% end %>
     </div>
 
   </div>
@@ -122,37 +96,70 @@
           Library
         </div>
         <div class="col-2 mt">
-          <form>
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          </form>
+          <%= form_with method: 'get', url: coach_library_page_path do %>
+            <input class="form-control me-2" type="text" name="search" placeholder="Search" aria-label="Search">
+          <% end %>
         </div>
-        <div class="col-12 pading-tags">
+        <div class="col-12 pading-tags"  id="filters">
+          <div id="render-block">
+          </div>
+          <button class="clear-button-tags" id="remove-tags" onclick='removeAllTags(this);'>Сlear all filters</button>
+        </div>
+        <script type="text/javascript">
+          function checkedInput(inp) {
+            let render_block = document.getElementById("render-block")
+            if(inp.checked){
+              let span = document.createElement("span")
+              span.classList.add("tags-filter")
+              span.id = inp.id + 'elem'
+              let text = document.createTextNode(inp.labels[0].innerHTML)
+              let inLable = document.createElement("label")
+              inLable.htmlFor = inp.id
+              let i = document.createElement("i")
+              i.classList.add("bi", "bi-x-circle-fill")
+              inLable.appendChild(i)
+              span.appendChild(text);
+              span.appendChild(inLable);
+              render_block.appendChild(span);
+            }
+            else {
+              document.getElementById(inp.id + 'elem').remove()
+            }
+          }
+
+          function removeAllTags(button) {
+            let filters = document.getElementById('render-block')
+            let child = filters.lastElementChild;
+            while (child) {
+              filters.removeChild(child);
+              child = filters.lastElementChild;
+            }
+            let inputs = document.getElementsByClassName('checkbox')
+            let url = document.URL.split('?')
+            for (let i = 0; i<inputs.length; i++) {
+              if (inputs[i].checked) {
+                inputs[i].checked = 0
+              }
+
+            }
+            window.history.replaceState({}, document.title, url[0]);
+          }
+          function paramsUrl() {
+            let url = document.URL.split('?')[1]
+            let searchParams = new URLSearchParams(url);
+
+            let inputs = document.getElementsByClassName('checkbox')
+            for (let i = 0; i<inputs.length; i++) {
+              if (searchParams.getAll(inputs[i].name).includes(inputs[i].value)){
+                inputs[i].checked = 1
+                checkedInput(inputs[i])
+              }
+            }
 
 
-          <span style="display:none;" id="alll" class="tags-filter">All <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <span style="display:none;" id="popular" class="tags-filter">Popular <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <span style="display:none;" id="new" class="tags-filter">new <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <span style="display:none;" id="recommend" class="tags-filter">Recommended by me <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <span style="display:none;" id="male" class="tags-filter">Male <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <span style="display:none;" id="female" class="tags-filter">Female <span><i class="bi bi-x-circle-fill"></i></span></span>
-          <form style="display: inline-block">
-            <button class="clear-button-tags">Сlear all filters</button>
-          </form>
-          <script type="text/javascript">
-            $(function() {
-              $(".checkbox:checked").each(function() {
-                  $("#" + $(this).val()).hide();
-              });
-              $(".checkbox").click(function(){
-                  if($(this).is(":checked")) {
-                      $("#" + $(this).val()).show();
-                      } else {
-                      $("#" + $(this).val()).hide();
-                  }
-              });
-          });
-          </script>
-        </div>
+          }
+          paramsUrl()
+        </script>
       </div>
 
       <div class="row">

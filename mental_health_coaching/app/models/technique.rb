@@ -1,4 +1,6 @@
 class Technique < ApplicationRecord
+  include SearchTechnique
+  
   has_and_belongs_to_many :problems
 
   has_many :ratings

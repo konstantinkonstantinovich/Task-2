@@ -23,7 +23,16 @@ class CoachController < ApplicationController
   def library
     @coach = Current.coach
     @problems = Problem.all
-    @technigues = Technique.all
+    if params[:search].present?
+      search_techniques(params[:search])
+    else
+      if params[:filter].present?
+        filter_problems(params[:filter][:problems])
+        filter_gender(params[:filter][:gender])
+      else
+        @technigues = Technique.all
+      end
+    end
   end
 
   def technique_detail
@@ -138,6 +147,23 @@ class CoachController < ApplicationController
   end
 
   private
+
+  def search_techniques(param)
+    @technigues = Technique.search(param)
+  end
+
+  def filter_gender(param)
+    params[:filter][:gender]&.each do |data|
+      @technigues = @technigues.where(data)
+    end
+  end
+
+  def filter_problems(param)
+    if param.present?
+      @technigues = Problem.find_by(name: param).techniques
+      puts "#{@technigues} FINALY!!!!!!!!!!!!"
+    end
+  end
 
   def get_techniques_in_progress(invitation)
     @user_data = {}
