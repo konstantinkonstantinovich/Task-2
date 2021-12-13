@@ -149,7 +149,8 @@ class CoachController < ApplicationController
     @coach = Current.coach
     @invitation = Invitation.find_by(user_id: params[:user_id])
     @recommendations = Recommendation.where(user_id: params[:user_id])
-    get_total_time_for_techniques(@recommendations )
+    get_total_time_for_techniques(@recommendations)
+    get_current_time_for_techniques(@recommendations)
     @notifications = CoachNotification.where(coach_id: @coach.id, user_id: @invitation.user.id)
   end
 
@@ -164,6 +165,17 @@ class CoachController < ApplicationController
     end
     @total_hours = @total_hours.round
   end
+
+  def get_current_time_for_techniques(techniques)
+    @current_hours = 0
+    techniques&.each do |t|
+      if t.status == 'in_progress'
+        @current_hours += (Time.zone.now - t.started_at)/60/60
+      end
+    end
+    @current_hours = @current_hours.round
+  end
+
 
   def search_techniques(param)
     @technigues = Technique.search(param)
