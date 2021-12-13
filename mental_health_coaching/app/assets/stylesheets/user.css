@@ -409,3 +409,8 @@ padding: 10px;
 .hide-button {
   display: none;
 }
+
+.block-for-link {
+  text-align: center;
+  width: 100%;
+}

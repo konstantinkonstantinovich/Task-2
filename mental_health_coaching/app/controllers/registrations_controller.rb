@@ -48,7 +48,7 @@ class RegistrationsController < ApplicationController
   def resend
     @user = User.find_by(id: session[:user_id]) if session[:user_id]
     UserMailer.new_registration_email(@user).deliver_now
-    render :edit
+    render :create
   end
 
   def destroy

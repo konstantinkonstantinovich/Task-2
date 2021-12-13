@@ -13,7 +13,8 @@ class CoachController < ApplicationController
     techniques_ids = []
     recommendations.each { |data| techniques_ids << data.technique_id }
     @techniques = []
-    techniques_ids.uniq!.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
+    techniques_ids.uniq!
+    techniques_ids.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
     @technique_in_used = techniques_ids.length
     @total_coach_users = @coach.invitations.where(status: 1).count
     get_techniques_in_progress(@invitation)
@@ -80,7 +81,8 @@ class CoachController < ApplicationController
     CoachNotification.create(body: "You have rejected #{@invite.user.name} invite", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
     UserNotification.create(body: "Coach #{@invite.coach.name} refused to become your coach", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
     @invite.destroy
-    redirect_to coach_users_page_path(Current.coach.id)
+    flash[:info] = "You refused user invite!"
+    redirect_to coach_users_page_path
   end
 
   def confirm
@@ -88,8 +90,8 @@ class CoachController < ApplicationController
     UserNotification.create(body: "Coach #{@invite.coach.name} agreed to become your coach", user_id: @invite.user.id, status: 1)
     CoachNotification.create(body: "You agreed to become a coach for a user #{@invite.user.name}", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
     @invite.update(status: 1)
-
-    redirect_to coach_users_page_path(Current.coach.id)
+    flash[:info] = "You agreed to become a coach for a user #{@invite.user.name}!"
+    redirect_to coach_users_page_path
   end
 
   def edit
@@ -116,7 +118,8 @@ class CoachController < ApplicationController
         end
       end
       CoachNotification.create(body: "You changed your profile settings", status: 1, coach_id: @coach.id)
-      redirect_to coach_page_path(@coach.id)
+      flash[:info] = "You updated your profile info!"
+      redirect_to coach_page_path
     else
       render :edit
     end
@@ -131,11 +134,13 @@ class CoachController < ApplicationController
     if BCrypt::Password.new(Current.coach.password_digest) == params[:coach][:old_password]
       if Current.coach.update(password_params)
         CoachNotification.create(body: "You changed your password settings", status: 1, coach_id: @coach.id)
-        redirect_to coach_page_path(Current.coach.id)
+        flash[:info] = "You changed your password!"
+        redirect_to coach_page_path
       else
         render :password_edit
       end
     else
+      flash[:error] = "You entered invalid password!"
       render :password_edit
     end
   end
@@ -144,10 +149,21 @@ class CoachController < ApplicationController
     @coach = Current.coach
     @invitation = Invitation.find_by(user_id: params[:user_id])
     @recommendations = Recommendation.where(user_id: params[:user_id])
+    get_total_time_for_techniques(@recommendations )
     @notifications = CoachNotification.where(coach_id: @coach.id, user_id: @invitation.user.id)
   end
 
   private
+
+  def get_total_time_for_techniques(techniques)
+    @total_hours = 0
+    techniques&.each do |t|
+      if t.status == 'compeleted'
+        @total_hours += (t.ended_at - t.started_at)/60/60
+      end
+    end
+    @total_hours = @total_hours.round
+  end
 
   def search_techniques(param)
     @technigues = Technique.search(param)

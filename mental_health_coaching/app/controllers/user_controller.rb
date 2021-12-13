@@ -36,7 +36,8 @@ class UserController < ApplicationController
         end
       end
       UserNotification.create(body: "You changed your profile settings", status: 1, user_id: @user.id)
-      redirect_to user_page_path(@user.id)
+      flash[:info] = "You updated your profile info!"
+      redirect_to user_page_path
     else
       render :edit
     end
@@ -51,11 +52,13 @@ class UserController < ApplicationController
     if BCrypt::Password.new(Current.user.password_digest) == params[:user][:old_password]
       if Current.user.update(password_params)
         UserNotification.create(body: "You changed your password settings", status: 1, user_id: @user.id)
-        redirect_to user_page_path(Current.user.id)
+        flash[:info] = "You changed your password!"
+        redirect_to user_page_path
       else
         render :password_edit
       end
     else
+      flash[:error] = "You entered invalid password!"
       render :password_edit
     end
   end
@@ -64,8 +67,9 @@ class UserController < ApplicationController
     @user = Current.user
     @problems = @user.problems
     @notifications = UserNotification.where(user_id: @user.id)
-    @invite = Invitation.find_by(user_id: @user.id)
+    @invite = @user.invitations.first
     @recommendations = Recommendation.where(user_id: @user.id).order(:status)
+    get_total_time_for_techniques(@recommendations)
   end
 
   def user_technique_detail
@@ -111,18 +115,17 @@ class UserController < ApplicationController
       Invitation.create(coach_id: @coach.id, user_id: @user.id, status: 0)
       UserNotification.create(body: "You have sent an invitation to coach #{@coach.name}", user_id: @user.id, coach_id: @coach.id, status: 1)
       CoachNotification.create(body: "You have received an invitation to become a coach from a user #{@user.name}", coach_id: @coach.id, user_id: @user.id, status: 1)
-      redirect_to user_dashboard_page_path, notice: "You have sent an invitation to coach!"
-    else
-      flash[:alert] = "First, cancel the invitation to another coach!"
-      redirect_to user_coahes_page_path
+      flash[:info] = "You have sent an invitation to coach!"
+      redirect_to user_dashboard_page_path
     end
   end
 
   def cancel_invite
     @invite = Invitation.find_by_id(params[:invite_id])
     UserNotification.create(body: "You have canceled an invitation to coach #{@invite.coach.name}", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
+    flash[:info] = "You have ended cooperation with this coach!"
     @invite.destroy
-    redirect_to user_dashboard_page_path(Current.user.id)
+    redirect_to user_dashboard_page_path
   end
 
   def modal_ask_form
@@ -137,8 +140,9 @@ class UserController < ApplicationController
   def end_cooperation
     @invite = Invitation.find_by_id(params[:invite_id])
     UserNotification.create(body: "You have ended cooperation with coach #{@invite.coach.name}", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
+    flash[:info] = "You have ended cooperation with this coach!"
     @invite.destroy
-    redirect_to user_dashboard_page_path(Current.user.id)
+    redirect_to user_dashboard_page_path
   end
 
   def my_techniques
@@ -157,6 +161,7 @@ class UserController < ApplicationController
     recommendation = Recommendation.find_by(technique_id: params[:technique_id], user_id: @user.id)
     recommendation.update(status: 2)
     recommendation.update(ended_at: Time.zone.now) if recommendation.ended_at == nil
+    flash[:info] = "You like Technique"
     redirect_to user_dashboard_page_path
   end
 
@@ -164,11 +169,12 @@ class UserController < ApplicationController
     @user = Current.user
     if Rating.find_by(technique_id: params[:technique_id], user_id: @user.id) == nil
         Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 0, dislike: 1)
-        UserNotification.create(body: "You like your Technique", user_id: @user.id, status: 1)
+        UserNotification.create(body: "You dislike your Technique", user_id: @user.id, status: 1)
     end
     recommendation = Recommendation.find_by(technique_id: params[:technique_id], user_id: @user.id)
     recommendation.update(status: 2)
     recommendation.update(ended_at: Time.zone.now) if recommendation.ended_at == nil
+    flash[:info] = "You dislike Technique"
     redirect_to user_dashboard_page_path
   end
 
@@ -220,6 +226,16 @@ class UserController < ApplicationController
       array.uniq!
       @coaches = @coaches.where(id: array)
     end
+  end
+
+  def get_total_time_for_techniques(techniques)
+    @total_hours = 0
+    techniques&.each do |t|
+      if t.status == 'compeleted'
+        @total_hours += (t.ended_at - t.started_at)/60/60
+      end
+    end
+    @total_hours = @total_hours.round
   end
 
   def update_params

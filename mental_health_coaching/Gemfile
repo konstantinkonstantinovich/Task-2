@@ -5,8 +5,6 @@ ruby '3.0.0'
 
 gem 'popper_js'
 
-gem 'acts-as-taggable-on'
-
 gem "jquery-rails"
 
 gem 'dotenv-rails', :groups => [:development, :test]

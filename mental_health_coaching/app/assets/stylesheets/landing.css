@@ -428,3 +428,27 @@ footer {
 .body {
     padding: 8.5px;
 }
+
+.box {
+  background: #CED4DA;
+  border-radius: 4px;
+
+}
+
+.number-size {
+  font-size: 60px;
+  text-align: center;
+  letter-spacing: -0.48px;
+  color: #000000DE;
+  opacity: 1;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.text-col-10 {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 20px;
+  text-align: left;
+  color: #000000DE;
+}

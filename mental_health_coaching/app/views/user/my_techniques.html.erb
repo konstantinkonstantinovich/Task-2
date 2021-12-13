@@ -338,9 +338,10 @@
             <p class="education-data"><%=@invite.coach.experience %></p>
             <p class="tages-info">Licenses and Certificates</p>
             <p class="education-data"><%= @invite.coach.licenses %></p>
-            <form>
-              <div class="end-coop"><%= button_to 'END COOPERATION', end_cooperation_coach_invite_path(@invite.id), method: :delete, class: "get_down_link end-coop" %></div>
-            </form>
+            <div class="block-for-link"><%= link_to 'END COOPERATION',  end_cooperation_coach_invite_path(@invite.id), method: :delete, class: "get_down_link end-coop"%></div>
+            <!-- <form>
+
+            </form> -->
           </div>
 
         </div>

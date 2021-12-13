@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   delete 'destroy_coach', to: 'registration_coaches#destroy', as: 'back_to_sign_up'
   get '/become_coach/update', to: 'registration_coaches#edit'
   patch '/become_coach/update', to: 'registration_coaches#update'
+  get '/become_coach/update/resend/', to: 'registration_coaches#resend', as: 'resend_coach'
 
 
   # authorization user controller
@@ -73,10 +74,12 @@ Rails.application.routes.draw do
   post '/reset_password/new', to: 'reset_password#create'
   get '/reset_password/edit', to: 'reset_password#edit'
   patch '/reset_password/edit', to: 'reset_password#update'
+  get '/reset_password/edit/resend/', to: 'reset_password#resend', as: 'resend_user_reset'
 
   # reset password coach controller
   get '/reset_password_coach/new', to: "reset_password_coach#new"
   post '/reset_password_coach/new', to: "reset_password_coach#create"
   get '/reset_password_coach/edit', to: "reset_password_coach#edit"
   patch '/reset_password_coach/edit', to: "reset_password_coach#update"
+  get '/reset_password_coach/edit/resend/', to: 'reset_password_coach#resend', as: 'resend_coach_reset'
 end

@@ -44,7 +44,7 @@ class RegistrationCoachesController < ApplicationController
           end
         end
       end
-      redirect_to coach_page_path(@coach.id)
+      redirect_to coach_page_path
     else
       render :edit
     end
@@ -55,6 +55,12 @@ class RegistrationCoachesController < ApplicationController
     session[:coach_id] = nil
     @coach.destroy
     redirect_to become_coach_path
+  end
+
+  def resend
+    @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
+    CoachMailer.varify_email(@coach).deliver_now
+    render :create
   end
 
   private

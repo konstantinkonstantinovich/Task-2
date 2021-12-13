@@ -40,7 +40,7 @@
           <span class="size-total"><i class="bi bi-clock"></i> Total time</span>
           <div class="total-statistic">
             <div class="big-numder">
-              16
+              <%= @total_hours %>
             </div>
             <div class="of">
               hours for technigues
@@ -252,9 +252,6 @@
       <% if @notifications %>
         <div class="layer">
         <% @notifications.reverse_each do |data| %>
-          <% if  data.coach_id && data.user_id %>
-
-          <% else %>
           <div class="row">
             <div class="col-2 notif-avatar-block">
               <% if data.coach_id && data.user_id %>
@@ -281,8 +278,6 @@
             </div>
           </div>
           <% end %>
-
-        <% end %>
         </div>
       <% end %>
 
