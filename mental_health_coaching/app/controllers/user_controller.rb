@@ -66,7 +66,7 @@ class UserController < ApplicationController
   def dashboard
     @user = Current.user
     @problems = @user.problems
-    @notifications = UserNotification.where(user_id: @user.id)
+    @notifications = @user.user_notifications
     @invite = @user.invitations.first
     @recommendations = Recommendation.where(user_id: @user.id).order(:status)
     get_total_time_for_techniques(@recommendations)
@@ -103,8 +103,8 @@ class UserController < ApplicationController
       if params[:filter].present?
         filter_expertise(params[:filter][:problems])
         filter_users_count(params[:filter][:users])
-        filter_gender(params[:filter][:gender])
-        filter_age(params[:filter][:age])
+        filter(params[:filter][:gender])
+        filter(params[:filter][:age])
       end
     end
   end
@@ -191,13 +191,7 @@ class UserController < ApplicationController
     end
   end
 
-  def filter_gender(param)
-    param&.each do |data|
-      @coaches = @coaches.where(data)
-    end
-  end
-
-  def filter_age(param)
+  def filter(param)
     param&.each do |data|
       @coaches = @coaches.where(data)
     end
