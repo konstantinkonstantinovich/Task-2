@@ -3,14 +3,13 @@ class ResetPasswordController < ApplicationController
   end
 
   def create
-    @user = User.find_by(email: params[:email])
-    if @user.present?
-      PasswordMailer.with(user: @user).reset.deliver_now
-      session[:user_email] = @user.email
-      render :create
-    else
-      render :new
-    end
+    @user = Users::ResetPassword.call(params)
+    PasswordMailer.with(user: @user).reset.deliver_now
+    session[:user_email] = @user.email
+    render :create
+  rescue ServiceError => e
+    flash.now[:alert] = e.message
+    render :new
   end
 
   def edit

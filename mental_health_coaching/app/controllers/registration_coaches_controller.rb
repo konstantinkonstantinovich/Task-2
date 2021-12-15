@@ -4,19 +4,15 @@ class RegistrationCoachesController < ApplicationController
   end
 
   def create
-    @coach = Coach.new(coach_params)
+    @coach = Coaches::Signup.call(coach_params)
     if params[:coach][:agree] == "on"
-      if @coach.save
-        CoachMailer.varify_email(@coach).deliver_now
-        session[:coach_id] = @coach.id
-        render :create
-      else
-        render :new
-      end
-    else
-      flash.now[:alert] = "You must check the box to agree!"
-      render :new
+      CoachMailer.varify_email(@coach).deliver_now
+      session[:coach_id] = @coach.id
+      render :create
     end
+  rescue ServiceError => e
+    flash.now[:alert] = e.message
+    render :new
   end
 
   def edit
@@ -30,15 +26,15 @@ class RegistrationCoachesController < ApplicationController
     @coach = Coach.find_by(id: session[:coach_id]) if session[:coach_id]
     @problems = Problem.all
     if @coach.update(update_params)
-      if params[:coach][:social_networks]
+      if params[:coach][:social_networks] && params[:coach][:social_networks] != ""
         params[:coach][:social_networks].each do |social_network|
           SocialNetwork.create(name: social_network, coach_id: @coach.id)
         end
       end
-      if params[:coach][:problems]
-        params[:coach][:problems].each do |problem|
-          @problems.each do |data|
-            if problem == data[:name]
+      params[:coach][:problems]&.each do |problem|
+        @problems.each do |data|
+          if problem == data[:name]
+            if @coach.problems.find_by(name: data[:name]) == nil
               @coach.problems << data
             end
           end

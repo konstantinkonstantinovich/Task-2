@@ -103,15 +103,15 @@ class CoachController < ApplicationController
     @coach = Current.coach
     @problems = Problem.all
     if @coach.update(update_params)
-      if params[:coach][:social_networks]
+      if params[:coach][:social_networks] && params[:coach][:social_networks] != ""
         params[:coach][:social_networks].each do |social_network|
           SocialNetwork.create(name: social_network, coach_id: @coach.id)
         end
       end
-      if params[:coach][:problems]
-        params[:coach][:problems].each do |problem|
-          @problems.each do |data|
-            if problem == data[:name]
+      params[:coach][:problems]&.each do |problem|
+        @problems.each do |data|
+          if problem == data[:name]
+            if @coach.problems.find_by(name: data[:name]) == nil
               @coach.problems << data
             end
           end

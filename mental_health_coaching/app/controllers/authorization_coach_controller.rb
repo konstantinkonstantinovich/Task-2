@@ -3,16 +3,15 @@ class AuthorizationCoachController < ApplicationController
   end
 
   def create
-    coach = Coach.find_by(email: params[:email])
-    if coach.present? && coach.authenticate(params[:password])
-      session[:coach_id] = coach.id
-      redirect_to coach_page_path(coach.id), notice: 'Logged in successfully'
-    else
-      flash.now[:alert] = 'Invalid email or password'
-      render :new
-    end
-
+    coach = Coaches::Signin.call(params)
+    session[:coach_id] = coach.id
+    flash.now[:info] = 'Logged in successfully'
+    redirect_to coach_page_path
+  rescue ServiceError => e
+    flash.now[:alert] = e.message
+    render :new
   end
+
 
   def destroy
     session[:coach_id] = nil

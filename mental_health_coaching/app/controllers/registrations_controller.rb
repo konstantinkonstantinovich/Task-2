@@ -4,19 +4,15 @@ class RegistrationsController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
+    @user = Users::Signup.call(user_params)
     if params[:user][:agree] == "on"
-      if @user.save
-        UserMailer.new_registration_email(@user).deliver_now
-        session[:user_id] = @user.id
-        render :create
-      else
-        render :new
-      end
-    else
-      flash.now[:alert] = "You must check the box to agree!"
-      render :new
+      UserMailer.new_registration_email(@user).deliver_now
+      session[:user_id] = @user.id
+      render :create
     end
+  rescue ServiceError => e
+    flash.now[:alert] = e.message
+    render :new
   end
 
   def edit
@@ -30,16 +26,16 @@ class RegistrationsController < ApplicationController
     @user = User.find_by(id: session[:user_id]) if session[:user_id]
     @problems = Problem.all
     if @user.update(update_params)
-      if params[:user][:problems]
-        params[:user][:problems].each do |problem|
-          @problems.each do |data|
-            if problem == data[:name]
+      params[:user][:problems]&.each do |problem|
+        @problems.each do |data|
+          if problem == data[:name]
+            if @user.problems.find_by(name: data[:name]) == nil
               @user.problems << data
             end
           end
         end
       end
-      redirect_to user_page_path(@user.id)
+      redirect_to user_page_path
     else
       render :edit
     end

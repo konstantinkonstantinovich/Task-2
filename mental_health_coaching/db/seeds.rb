@@ -6,12 +6,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 #
-Problem.create(name: "Stress")
-Problem.create(name: "Anxiety")
-Problem.create(name: "Depression")
-Problem.create(name: "Irritability")
+p1 = Problem.create(name: "Stress")
+p2 = Problem.create(name: "Anxiety")
+p3 = Problem.create(name: "Depression")
+p4 = Problem.create(name: "Irritability")
 
-Technique.create(
+t1 = Technique.create(
   title: "Cognitive - Behavioral Therapy",
   description: "Elimination of the dependence of emotions and human behavior on his thoughts.",
   age: "25-35",
@@ -22,7 +22,7 @@ Technique.create(
 )
 
 
-Technique.create(
+t2 = Technique.create(
   title: "Lifestyle changes",
   description: "Eliminating the lack of control that makes people feel worse.",
   age: "30-40",
@@ -32,7 +32,7 @@ Technique.create(
   status: 0
 )
 
-Technique.create(
+t3 = Technique.create(
   title: "Inflammation and mood",
   description: "Does a dysfunctional immune system cause inflammation in the body, leading to mood swings?",
   age: "30-45",
@@ -42,7 +42,7 @@ Technique.create(
   status: 1
 )
 
-Technique.create(
+t4 = Technique.create(
   title: "Cognitive elaboration of the predicted future",
   description: "It is necessary to complete the unfinished in the past and live in the present.",
   age: "30-45",
@@ -52,7 +52,7 @@ Technique.create(
   status: 0
 )
 
-Technique.create(
+t5 = Technique.create(
   title: "Cognitive Analytical Therapy",
   description: "A collaborative programme for looking at the way a person thinks, feels and acts, and the events and relationships that underlie these experiences.",
   age: "30-45",
@@ -64,7 +64,16 @@ Technique.create(
 
 
 
-
+t1.problems << p1
+t1.problems << p3
+t2.problems << p2
+t2.problems << p4
+t3.problems << p1
+t4.problems << p2
+t4.problems << p3
+t4.problems << p4
+t5.problems << p2
+t5.problems << p4
 
 Coach.create(name: "Adam Loure", email: "mrs.admas@gmail.com", password: "1Q2w3e4!", age: 22, gender: 1)
 Coach.create(name: "Ola Marco", email: "olaola@gmail.com", password: "1Q2w3e4!", age: 25,  gender: 0)

@@ -26,10 +26,10 @@ class UserController < ApplicationController
     @user = Current.user
     @problems = Problem.all
     if @user.update(update_params)
-      if params[:user][:problems]
-        params[:user][:problems].each do |problem|
-          @problems.each do |data|
-            if problem == data[:name]
+      params[:user][:problems]&.each do |problem|
+        @problems.each do |data|
+          if problem == data[:name]
+            if @user.problems.find_by(name: data[:name]) == nil
               @user.problems << data
             end
           end
@@ -78,10 +78,14 @@ class UserController < ApplicationController
     @technique = Technique.find_by_id(params[:technique_id])
     @recommendation = Recommendation.find_by(user_id: @user.id, technique_id: params[:technique_id])
     next_step = params[:step_id].to_i
-    if @recommendation.step + 1 <= @technique.total_steps
+    if next_step < @technique.total_steps
       @recommendation.update(step: next_step+1, status: 1)
       @recommendation.update(started_at: Time.zone.now) if @recommendation.started_at == nil
       @step = Step.find_by(number: next_step+1)
+    else
+      @recommendation.update(ended_at: Time.zone.now) if @recommendation.ended_at == nil
+      @step = Step.find_by(number: next_step)
+      @recommendation.update(status: 2)
     end
   end
 

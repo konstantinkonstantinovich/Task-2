@@ -3,14 +3,13 @@ class AuthorizationController < ApplicationController
   end
 
   def create
-    user = User.find_by(email: params[:email])
-    if user.present? && user.authenticate(params[:password])
-      session[:user_id] = user.id
-      redirect_to user_page_path(user.id), notice: 'Logged in successfully'
-    else
-      flash.now[:alert] = 'Invalid email or password'
-      render :new
-    end
+    user = Users::Signin.call(params)
+    session[:user_id] = user.id
+    flash.now[:info] = 'Logged in successfully'
+    redirect_to user_page_path
+  rescue ServiceError => e
+    flash.now[:alert] = e.message
+    render :new
   end
 
 
@@ -18,7 +17,7 @@ class AuthorizationController < ApplicationController
     @user = User.create_from_omniauth(auth)
     if @user.valid?
       session[:user_id] = @user.id
-      redirect_to user_page_path(@user.id)
+      redirect_to user_page_path
     else
       flash[:alert] = @user.errors.full_messages.join(", ")
       redirect_to sign_in_path
