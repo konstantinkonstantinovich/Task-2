@@ -82,4 +82,11 @@ Rails.application.routes.draw do
   get '/reset_password_coach/edit', to: "reset_password_coach#edit"
   patch '/reset_password_coach/edit', to: "reset_password_coach#update"
   get '/reset_password_coach/edit/resend/', to: 'reset_password_coach#resend', as: 'resend_coach_reset'
+
+  # api authorization user
+
+  namespace :api do
+    post '/auth/user/login', to: 'authorization#login'
+    post '/auth/user/registration', to: 'registration#registration'
+  end
 end
