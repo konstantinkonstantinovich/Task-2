@@ -3,14 +3,13 @@ class ResetPasswordCoachController < ApplicationController
   end
 
   def create
-    @coach = Coach.find_by(email: params[:email])
-    if @coach.present?
-      PasswordMailer.reset_coach(@coach).deliver_now if @coach.present?
-      session[:coach_email] = @coach.email
-      render :create
-    else
-      render :new
-    end
+    @coach = Coaches::ResetPassword.call(params)
+    PasswordMailer.reset_coach(@coach).deliver_now
+    session[:coach_email] = @coach.email
+    render :create
+  rescue ServiceError => e
+    flash.now[:alert] = e.message
+    render :new
   end
 
   def edit

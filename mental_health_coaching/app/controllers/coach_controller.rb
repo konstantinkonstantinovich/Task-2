@@ -187,7 +187,8 @@ class CoachController < ApplicationController
       if p == "recommend"
         @technigues, techniques_ids = [], []
         Recommendation.where(coach_id: Current.coach.id).each { |data| techniques_ids << data.technique_id }
-        techniques_ids.uniq!.each { |id| @technigues << Technique.find_by_id(id) }
+        techniques_ids.uniq!
+        techniques_ids.each { |id| @technigues << Technique.find_by_id(id) }
       else
         @technigues = []
         technigues_where_status = Technique.where(p)
