@@ -9,6 +9,8 @@ gem "jquery-rails"
 
 gem 'factory_bot_rails', :groups => [:development, :test]
 
+gem 'rails-controller-testing', :groups => [:development, :test]
+
 gem 'dotenv-rails', :groups => [:development, :test]
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.1'

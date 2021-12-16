@@ -11,7 +11,7 @@ RSpec.describe Coaches::Signup do
     )
   end
 
-  it "fails if puts wrong email or password" do
+  it "fails if entered wrong email or password" do
     coach = create(:coach)
     expect do
       Coaches::Signin.call(

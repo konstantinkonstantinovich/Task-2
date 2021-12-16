@@ -11,7 +11,7 @@ RSpec.describe Users::Signup do
     )
   end
 
-  it "fails if puts wrong email or password" do
+  it "fails if entered wrong email or password" do
     user = create(:user)
     expect do
       result = Users::Signin.call(
