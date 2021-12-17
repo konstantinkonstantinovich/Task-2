@@ -3,6 +3,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
 
+gem 'sidekiq-scheduler'
+
+gem 'sidekiq'
+
 gem 'jwt'
 
 gem 'popper_js'

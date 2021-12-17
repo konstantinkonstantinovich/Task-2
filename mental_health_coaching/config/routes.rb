@@ -88,5 +88,6 @@ Rails.application.routes.draw do
   namespace :api do
     post '/auth/user/login', to: 'authorization#login'
     post '/auth/user/registration', to: 'registration#registration'
+    get '/auth/user/detail', to: 'user#show'
   end
 end
