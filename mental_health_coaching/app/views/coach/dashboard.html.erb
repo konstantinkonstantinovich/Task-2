@@ -8,7 +8,7 @@
           <div class="size-total-coach"><i class="bi bi-people"></i></div>
           <p class="tt">Total number </p>
           <p class="tt">of users</p>
-          <p class="coach-stats"><%= User.all.count %></p>
+          <p class="coach-stats"><%= @total_user %></p>
         </div>
 
       </div>
@@ -82,7 +82,7 @@
                         <span class="tags"><%= problem.name%></span>
                       <% end %>
                       <p class="tages-info">Techniques in process</p>
-                      <% @user_data[value.user.name].each do |value|%>
+                      <% @user_data[value.user.email].each do |value|%>
                         <% if value == "All techniques completed" %>
                           <p class="completed_techniques"><%= value %></p>
                         <% else %>
@@ -212,11 +212,11 @@
       </div>
       <% if @notifications %>
       <div class="layer">
-        <% @notifications.reverse_each do |data| %>
+        <% @notifications.each do |data| %>
           <div class="row">
             <div class="col-2 notif-avatar-block">
-              <% if data.coach_id && data.user_id%>
-                <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+              <% if data.coach_id && data.user_id %>
+                <img src="<%= url_for(User.find_by_id(data.user_id).avatar_user) %>" class="rounded-circle notification-avatar">
               <% else %>
                 <% if @coach.avatar.attached? %>
                   <img src="<%= url_for(@coach.avatar) %>" class= "rounded-circle notification-avatar">

@@ -7,18 +7,17 @@ class CoachController < ApplicationController
   def dashboard
     @coach = Current.coach
     @problems = @coach.problems
-    @notifications = CoachNotification.where(coach_id: @coach.id)
-    @invitation = Invitation.where(coach_id: @coach.id, status: 1)
-    recommendations = Recommendation.where(coach_id: @coach.id)
-    techniques_ids = []
-    recommendations.each { |data| techniques_ids << data.technique_id }
+    @notifications = @coach.coach_notifications.order('created_at desc')
+    @invitation = @coach.invitations.where(status: 1)
+    @total_user = User.all.count
+    recommendations = @coach.recommendations
+    techniques_ids = recommendations.pluck(:technique_id).uniq
     @techniques = []
-    techniques_ids.uniq!
     techniques_ids.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
-    @technique_in_used = techniques_ids.length
+    @technique_in_used = recommendations.pluck(:technique_id).uniq.length
     @total_coach_users = @coach.invitations.where(status: 1).count
-    get_techniques_in_progress(@invitation)
-    count_likes_on_techniques(recommendations)
+    @user_data = get_techniques_in_progress(@invitation)
+    @total_likes = count_likes_on_techniques(@techniques)
   end
 
   def library
@@ -215,27 +214,29 @@ class CoachController < ApplicationController
   end
 
   def get_techniques_in_progress(invitation)
-    @user_data = {}
+    user_data = {}
     invitation.each do |data|
-      @user_data[data.user.name] = []
+      user_data[data.user.email] = []
       user_recommendations = data.user.recommendations
       user_recommendations.each do |recommendation|
         if recommendation.status == 'in_progress'
-          @user_data[data.user.name] << recommendation.technique.title
+          user_data[data.user.email] << recommendation.technique.title
         end
       end
-      @user_data[data.user.name] << "All techniques completed" if @user_data[data.user.name] == []
+      user_data[data.user.email] << "All techniques completed" if user_data[data.user.email] == []
     end
+    user_data
   end
 
   def count_likes_on_techniques(recommendations)
     techniques_ids = []
-    @total_likes = 0
+    total_likes = 0
     recommendations.each do |data|
       techniques_ids << data.technique_id
     end
     techniques_ids.uniq!
-    techniques_ids.each { |id| @total_likes += Rating.where(technique_id: id).sum(:like)}
+    techniques_ids.each { |id| total_likes += Rating.where(technique_id: id).sum(:like)}
+    total_likes
   end
 
   def update_params

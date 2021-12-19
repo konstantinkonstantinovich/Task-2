@@ -37,7 +37,11 @@
           <br>
           <div class="row">
               <div class="col-4">
-                RESTART
+                <% if @recommendation.step > 1  %>
+                  <%= link_to 'RESTART', restart_path(technique_id: @recommendation.technique.id, step_id: @recommendation.step), method: :patch, class:"get_down_link"%>
+                <% else %>
+                  <div class="color-button-non-active">RESTART</div>
+                <% end %>
               </div>
               <div class="col-4">
                 Step <%= @recommendation.step %> of <%= @technique.total_steps %>

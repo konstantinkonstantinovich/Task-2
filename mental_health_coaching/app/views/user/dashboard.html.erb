@@ -12,7 +12,7 @@
           <span class="size-total"><i class="bi bi-check-circle"></i> Total progress</span>
           <div class="total-statistic">
             <div class="big-numder">
-              <%= @user.recommendations.where(status: 'compeleted').count %>
+              <%= @total_competed_techniques %>
             </div>
             <div class="of">
               techniques completed
@@ -26,7 +26,7 @@
           <span class="size-total"><i class="bi bi-play-circle"></i> Current progress</span>
           <div class="total-statistic">
             <div class="big-numder">
-              <%= @user.recommendations.where(status: 'in_progress').count%>
+              <%= @total_in_progress_technique %>
             </div>
             <div class="of">
               techniques in process
@@ -251,11 +251,11 @@
       </div>
       <% if @notifications %>
         <div class="layer">
-        <% @notifications.reverse_each do |data| %>
+        <% @notifications.each do |data| %>
           <div class="row">
             <div class="col-2 notif-avatar-block">
               <% if data.coach_id && data.user_id %>
-                <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+                <img src="<%= url_for(Coach.find_by_id(data.coach_id).avatar) %>" class="rounded-circle notification-avatar">
               <% else %>
                 <% if @user.avatar_user.attached? %>
                   <img src="<%= url_for(@user.avatar_user) %>" class= "rounded-circle notification-avatar">

@@ -66,11 +66,13 @@ class UserController < ApplicationController
   def dashboard
     @user = Current.user
     @problems = @user.problems
-    @notifications = @user.user_notifications
+    @notifications = @user.user_notifications.order('created_at desc')
     @invite = @user.invitations.first
-    @recommendations = Recommendation.where(user_id: @user.id).order(:status)
-    get_total_time_for_techniques(@recommendations)
-    get_current_time_for_techniques(@recommendations)
+    @recommendations = @user.recommendations.order(:status)
+    @total_hours = get_total_time_for_techniques(@recommendations)
+    @current_hours = get_current_time_for_techniques(@recommendations)
+    @total_competed_techniques = @user.recommendations.where(status: 'compeleted').count
+    @total_in_progress_technique = @user.recommendations.where(status: 'in_progress').count
   end
 
   def user_technique_detail
@@ -152,8 +154,8 @@ class UserController < ApplicationController
 
   def my_techniques
     @user = Current.user
-    @invite = Invitation.find_by(user_id: @user.id, status: 1)
-    @recommendations = Recommendation.where(user_id: @user.id)
+    @invite = @user.invitations.find_by(status: 1)
+    @recommendations = @user.recommendations
   end
 
 
@@ -228,23 +230,23 @@ class UserController < ApplicationController
   end
 
   def get_total_time_for_techniques(techniques)
-    @total_hours = 0
+    total_hours = 0
     techniques&.each do |t|
       if t.status == 'compeleted'
-        @total_hours += (t.ended_at - t.started_at)/60/60
+        total_hours += (t.ended_at - t.started_at)/60/60
       end
     end
-    @total_hours = @total_hours.round
+    total_hours = total_hours.round
   end
 
   def get_current_time_for_techniques(techniques)
-    @current_hours = 0
+    current_hours = 0
     techniques&.each do |t|
       if t.status == 'in_progress'
-        @current_hours += (Time.zone.now - t.started_at)/60/60
+        current_hours += (Time.zone.now - t.started_at)/60/60
       end
     end
-    @current_hours = @current_hours.round
+    current_hours = current_hours.round
   end
 
   def update_params
