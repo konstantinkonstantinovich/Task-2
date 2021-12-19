@@ -105,7 +105,6 @@ GEM
     dotenv-rails (2.7.6)
       dotenv (= 2.7.6)
       railties (>= 3.2)
-    e2mmap (0.1.0)
     erubi (1.10.0)
     et-orbi (1.2.6)
       tzinfo
@@ -306,8 +305,6 @@ GEM
       ffi (~> 1.12)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
-    rufus-scheduler (3.8.0)
-      fugit (~> 1.1, >= 1.1.6)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -327,13 +324,9 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
-    sidekiq-scheduler (3.1.0)
-      e2mmap
-      redis (>= 3, < 5)
-      rufus-scheduler (~> 3.2)
-      sidekiq (>= 3)
-      thwait
-      tilt (>= 1.4.0)
+    sidekiq-cron (1.2.0)
+      fugit (~> 1.1)
+      sidekiq (>= 4.2.1)
     spring (4.0.0)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -343,8 +336,6 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     thor (1.1.0)
-    thwait (0.2.0)
-      e2mmap
     tilt (2.0.10)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
@@ -407,7 +398,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   sidekiq
-  sidekiq-scheduler
+  sidekiq-cron
   spring
   turbolinks (~> 5)
   tzinfo-data

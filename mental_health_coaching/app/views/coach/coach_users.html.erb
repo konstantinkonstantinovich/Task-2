@@ -53,7 +53,7 @@
                             <span class="tags"><%= problem.name%></span>
                           <% end %>
                           <p class="tages-info">Techniques in process</p>
-                          <% @user_data[value.user.name].each do |value|%>
+                          <% @user_data[value.user.email].each do |value|%>
                             <% if value == "All techniques completed" %>
                               <p class="completed_techniques"><%= value %></p>
                             <% else %>
@@ -109,7 +109,7 @@
                             <span class="tags"><%= problem.name%></span>
                           <% end %>
                           <p class="tages-info">Techniques in process</p>
-                          <% @user_data[value.user.name].each do |value|%>
+                          <% @user_data[value.user.email].each do |value|%>
                             <% if value == "All techniques completed" %>
                               <p class="completed_techniques"><%= value %></p>
                             <% else %>
@@ -136,11 +136,11 @@
   </div>
   <script type="text/javascript">
     $('#waiting').click(function (){
-      $('#div-waiting-users').toggle();
+      $('#div-waiting-users').show();
       $('#div-my-users').hide();
     });
     $('#my-users').click(function (){
-      $('#div-my-users').toggle();
+      $('#div-my-users').show();
       $('#div-waiting-users').hide();
     });
   </script>

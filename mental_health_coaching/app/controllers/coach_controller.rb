@@ -72,7 +72,7 @@ class CoachController < ApplicationController
     @notifications = CoachNotification.where.not(user_id: nil).where(coach_id: @coach.id)
     @count = Invitation.where(coach_id: @coach.id, status: 0).count
     @invitation = Invitation.where(coach_id: @coach.id)
-    get_techniques_in_progress(@invitation)
+    @user_data = get_techniques_in_progress(@invitation)
   end
 
   def refuse

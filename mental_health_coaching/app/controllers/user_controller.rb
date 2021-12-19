@@ -85,9 +85,7 @@ class UserController < ApplicationController
       @recommendation.update(started_at: Time.zone.now) if @recommendation.started_at == nil
       @step = Step.find_by(number: next_step+1)
     else
-      @recommendation.update(ended_at: Time.zone.now) if @recommendation.ended_at == nil
       @step = Step.find_by(number: next_step)
-      @recommendation.update(status: 2)
     end
   end
 
