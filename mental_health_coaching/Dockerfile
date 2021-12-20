@@ -6,5 +6,4 @@ WORKDIR /mental_health_coaching
 COPY Gemfile /mental_health_coaching/Gemfile
 COPY Gemfile.lock /mental_health_coaching/Gemfile.lock
 
-
 RUN bundle install
