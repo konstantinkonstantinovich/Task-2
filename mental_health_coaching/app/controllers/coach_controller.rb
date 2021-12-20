@@ -44,7 +44,7 @@ class CoachController < ApplicationController
 
   def new
     @coach = Current.coach
-    @users = @coach.invitations
+    @users = @coach.invitations.where(status: 1)
     respond_to do |format|
       format.html
       format.js
