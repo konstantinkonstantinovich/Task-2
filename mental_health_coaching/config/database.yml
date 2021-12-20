@@ -26,6 +26,6 @@ test:
 
 production:
   <<: *default
-  database: mental_health
+  database: mental_health_production
   username: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['DB_PASSWORD'] %>

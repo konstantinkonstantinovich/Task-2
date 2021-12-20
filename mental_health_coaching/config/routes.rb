@@ -51,6 +51,7 @@ Rails.application.routes.draw do
   get '/user/dashboard/:technique_id/step/:step_id/rate', to: 'user#finish', as: 'user_rate_window'
   post '/user/dashboard/:technique_id/step/:step_id/rate', to: 'user#like', as: 'like_rating'
   post '/user/dashboard/:technique_id/step/:step_id/rate/dislike', to: 'user#dislike', as: 'dislike_rating'
+
   # coach contoller
   get '/coach/', to: 'coach#dashboard', as: 'coach_page'
   get '/coach/update', to: 'coach#edit', as: 'update_profile_coach'
