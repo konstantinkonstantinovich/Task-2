@@ -337,3 +337,19 @@
   color: #000000;
   opacity: 0.5;
 }
+
+.check-box-rec-block {
+  width: 100%;
+  border: 1px solid #000000C7;
+  border-radius: 3px;
+  padding: 15px;
+}
+
+.margin-none {
+  margin: none;
+}
+
+
+input[class="check-box-rec-block"]:checked + p {
+  background-color: #E9ECEF;
+}

@@ -1,6 +1,9 @@
 ## Mental health coaching
 #### Prerequisites
 
+Stable branch:
+  - challenge_17
+
 The setups steps expect following tools installed on the system.
 
 - Github
