@@ -42,7 +42,7 @@
       <p class="education-data"><%= @coach.licenses %></p>
       <br>
       <% if @invite == nil %>
-        <div class="send-an-inv"><%= button_to 'SEND AN INVITATION', class: "get_down_link" %></div>
+        <div class="send-inv-block"><%= link_to 'SEND AN INVITATION', send_invite_path , method: :post, class: "get_down_link" %></div>
       <% else %>
 
         <hr>

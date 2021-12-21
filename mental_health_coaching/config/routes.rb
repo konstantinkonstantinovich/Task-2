@@ -41,7 +41,7 @@ Rails.application.routes.draw do
   get '/user/dashboard', to: 'user#dashboard', as: 'user_dashboard_page'
   get '/user/coaches', to: 'user#coaches_page', as: 'user_coahes_page'
   get '/user/coaches/invitation/:coach_id', to: "user#new", as: 'invitation'
-  post 'user/coaches/invitation/:coach_id', to: "user#send_invintation"
+  post 'user/coaches/invitation/:coach_id', to: "user#send_invintation", as: 'send_invite'
   delete 'cancel/:invite_id', to: 'user#cancel_invite', as: 'cancel_coach_invite'
   get '/user/ask', to: 'user#modal_ask_form', as: 'asking_form'
   delete 'end/:invite_id', to: 'user#end_cooperation', as: 'end_cooperation_coach_invite'
