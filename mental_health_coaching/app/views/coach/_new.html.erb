@@ -6,8 +6,9 @@
   <%= form_with url: recommend_to_users_page_path do |f| %>
 
       <% @users.each do |user|%>
-          <%= f.label :users, user.user.name, class: "check-box-rec-block" do %>
-            <%= f.check_box :users,  {:multiple => true}, user.user.name, '' %>
+          <%= f.label user.user.id, user.user.name, class: "check-box-rec-block m" do %>
+            <input name="users[]" type="checkbox" value="<%= user.user.name %>" class="m" id="<%= user.user.id %>">
+
             <p class="margin-none"><%= user.user.name %></p>
           <% end %>
       <% end %>

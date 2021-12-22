@@ -342,14 +342,29 @@
   width: 100%;
   border: 1px solid #000000C7;
   border-radius: 3px;
-  padding: 15px;
+
 }
 
 .margin-none {
   margin: none;
 }
 
+input[type="checkbox"] {
+  opacity: 0;
+  position: absolute;
+}
 
-input[class="check-box-rec-block"]:checked + p {
+input[class="m"] + p {
+  padding: 15px;
+}
+
+input[class="m"]:checked + p {
   background-color: #E9ECEF;
+  padding: 15px;
+
+}
+
+input[class="m"]:checked + p::after {
+  float: right;
+  content: '\2713';
 }

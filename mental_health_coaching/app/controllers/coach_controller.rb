@@ -54,7 +54,7 @@ class CoachController < ApplicationController
   def create
     @coach = Current.coach
     @technique = Technique.find_by_id(params[:technique_id])
-    users_names_list = params[:users].select! { |element| element&.size.to_i > 0 }
+    users_names_list = params[:users]
     users_names_list.each do |user_name|
       user = User.find_by(name: user_name)
       if Recommendation.find_by(user_id: user.id, technique_id: @technique.id) == nil
@@ -130,8 +130,8 @@ class CoachController < ApplicationController
 
   def password_update
     @coach = Current.coach
-    if BCrypt::Password.new(Current.coach.password_digest) == params[:coach][:old_password]
-      if Current.coach.update(password_params)
+    if BCrypt::Password.new(@coach.password_digest) == params[:coach][:old_password]
+      if @coach.update(password_params)
         CoachNotification.create(body: "You changed your password settings", status: 1, coach_id: @coach.id)
         flash[:info] = "You changed your password!"
         redirect_to coach_page_path
