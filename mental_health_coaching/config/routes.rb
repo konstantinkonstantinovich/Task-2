@@ -83,6 +83,7 @@ Rails.application.routes.draw do
   patch '/reset_password_coach/edit', to: "reset_password_coach#update"
   get '/reset_password_coach/edit/resend/', to: 'reset_password_coach#resend', as: 'resend_coach_reset'
 
+  get '/user/messages/', to: 'message#index', as: 'chat_room_user'
   # api authorization user
 
   namespace :api do

@@ -1,0 +1,143 @@
+<% content_for :content do %>
+<div class="row">
+  <div class="col-8">
+    <div class="card min-height">
+      <div class="card-body">
+        <div class="message-content">
+          <div class="row layer-message">
+
+              <div class="col-12 date-now">
+                <% @date = Date.today  %>
+                — <%= @date.strftime("%B").upcase%> <%= Time.zone.now.day %> —
+              </div>
+              <br>
+              <div class="col-12 under-message">
+                <div class="row">
+                  <div class="col-auto pad-min">
+                    <% if @invite.coach.avatar.attached? %>
+                      <img src="<%= url_for(@invite.coach.avatar) %>" class= "rounded-circle chat-avatar">
+                    <% else %>
+                      <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+                    <% end %>
+                  </div>
+                  <div class="col-11 pad-none">
+                    <div class="message-body">
+                      <p class="message-text">How do you feel?</p>
+                      <p class="message-time">12:35</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 under-message">
+                <div class="message-body-me">
+                  <p class="message-text">Better now. I began to sleep better at night.</p>
+                  <p class="message-time">12:37</p>
+                </div>
+              </div>
+              <div class="col-12 under-message">
+                <div class="row">
+                  <div class="col-auto pad-min">
+                    <% if @invite.coach.avatar.attached? %>
+                      <img src="<%= url_for(@invite.coach.avatar) %>" class= "rounded-circle chat-avatar">
+                    <% else %>
+                      <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+                    <% end %>
+                  </div>
+                  <div class="col-11 pad-none">
+                    <div class="message-body">
+                      <p class="message-text">Vladick</p>
+                      <p class="message-time">12:37</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 under-message">
+                <div class="message-body-me">
+                  <p class="message-text">Fucking slave</p>
+                  <p class="message-time">12:40</p>
+                </div>
+              </div>
+
+          </div>
+
+          <br>
+          <div class="row-width">
+            <div class="row pos-bottom">
+              <div class="col-auto pad-none">
+                <a class="button-send rigth-position" type="submit"><i class="bi bi-link-45deg"></i></a>
+
+              </div>
+              <div class="col-xl-11">
+                <div class="form-group">
+                  <input type="textarea" class="form-control" placeholder="Enter message">
+                </div>
+              </div>
+              <div class="col-auto pad-none">
+                <a class="button-send" type="submit"><i class="bi bi-arrow-up-circle-fill"></i></a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <% if @invite.present?%>
+          <div class="card-body">
+            <div class="avatar">
+              <div class="icon-link">
+                <i class="bi bi-facebook"></i>
+              </div>
+              <div class="image-avatar">
+                <% if @invite.coach.avatar.attached? %>
+                  <img src="<%= url_for(@invite.coach.avatar) %>" class= "c-u-a rounded-circle">
+                <% else %>
+                  <img src="<%= asset_path('generic-user-icon-10.png') %>" class="c-u-a rounded-circle">
+                <% end %>
+                <div class="check-circle"><i class="bi bi-check-circle-fill"></i></div>
+              </div>
+              <div class="icon-link">
+                <i class="bi bi-linkedin"></i>
+              </div>
+            </div>
+            <br>
+            <h6 class="coach-name"><%= @invite.coach.name %></h6>
+            <p class="status">Current coach</p>
+
+            <% if @invite.coach.about %>
+              <p class="coach-info"><%= @invite.coach.about %></p>
+            <% else %>
+              <p class="coach-info">No information about.</p>
+            <% end %>
+
+            <p class="coach-info"><%= @invite.coach.age %> years | <%= @invite.coach.gender %> | <%= Invitation.where(coach_id: @invite.coach.id).count%> users</p>
+            <p class="tages-info">Areas of Expertise</p>
+            <% @invite.coach.problems.each do |coach_problem|%>
+              <span class="tags"><%= coach_problem.name %></span>
+            <% end %>
+            <p class="tages-info">Education</p>
+            <p class="education-data"><%= @invite.coach.education %></p>
+            <p class="tages-info">Work experience</p>
+            <p class="education-data"><%=@invite.coach.experience %></p>
+            <p class="tages-info">Licenses and Certificates</p>
+            <p class="education-data"><%= @invite.coach.licenses %></p>
+            <div class="block-for-link"><%= link_to 'END COOPERATION',  end_cooperation_coach_invite_path(@invite.id), method: :delete, class: "get_down_link end-coop"%></div>
+            <!-- <form>
+
+            </form> -->
+          </div>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% end %>
+<%= render template: "user/show" %>

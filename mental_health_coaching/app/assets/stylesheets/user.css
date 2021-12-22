@@ -419,3 +419,112 @@ padding: 10px;
   width: 100%;
   text-align: center;
 }
+
+.message-content {
+  margin-top: 15%;
+  width: 100%;
+}
+
+.date-now {
+  text-align: center;
+  width: 100%;
+  font-size: 10px;
+}
+
+.chat-avatar {
+  width: 35px;
+  height: 35px;
+}
+
+.message-body {
+  background: #E9ECEF;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: fit-content;
+  border-radius: 0px 3px 3px 3px;
+}
+
+.pad-none {
+  padding: 0px;
+}
+
+.pad-min {
+  padding-left: 0px;
+  padding-right: 7px;
+}
+
+.rigth-position {
+  text-align: right;
+}
+
+.message-text {
+  margin-bottom: 5px;
+  font-size: 14px;
+
+}
+.message-time {
+  font-size: 10px;
+  width: 100%;
+  opacity: 0.5;
+  text-align: right;
+  color: #000000DE;
+  margin: 0px;
+}
+
+.message-time::after {
+  content: '\2713';
+  font-size: 10px;
+  color: #343A40;
+
+}
+
+.message-body-me {
+  float: right;
+  background: #CED4DA;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: fit-content;
+  border-radius: 3px 0px 3px 3px;
+}
+
+.under-message {
+  margin-top: 15px;
+  padding-right: 0px;
+}
+
+.button-send {
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  font-size: 28px;
+  background: white;
+  padding: 0px;
+  color: #212529;
+}
+
+.layer-message {
+  overflow: scroll; /* Добавляем полосы прокрутки */
+  width: 100%;/* Ширина блока */
+  margin: 0px;
+}
+
+.min-height {
+  height: 100%;
+}
+
+.pos-bottom {
+  position: absolute;
+  bottom: 10px;
+  width: 98%;
+}
+
+.get_down_b {
+  color: #FFFFFF;
+  opacity: 0.9;
+  text-decoration: none;
+}
