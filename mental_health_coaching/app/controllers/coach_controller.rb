@@ -23,6 +23,7 @@ class CoachController < ApplicationController
   def library
     @coach = Current.coach
     @problems = Problem.all
+    @technigues = Technique.all
     if params[:search].present?
       search_techniques(params[:search])
     else
@@ -30,8 +31,6 @@ class CoachController < ApplicationController
         filter_status(params[:filter][:status])
         filter_problems(params[:filter][:problems])
         filter_gender(params[:filter][:gender])
-      else
-        @technigues = Technique.all
       end
     end
   end
@@ -86,6 +85,7 @@ class CoachController < ApplicationController
 
   def confirm
     @invite = Invitation.find_by_id(params[:invite_id])
+    Room.create(coach_id: @invite.coach.id, user_id: @invite.user.id)
     UserNotification.create(body: "Coach #{@invite.coach.name} agreed to become your coach", user_id: @invite.user.id, status: 1)
     CoachNotification.create(body: "You agreed to become a coach for a user #{@invite.user.name}", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
     @invite.update(status: 1)
@@ -181,7 +181,6 @@ class CoachController < ApplicationController
   end
 
   def filter_status(param)
-    @technigues = Technique.all
     param&.each do |p|
       if p == "recommend"
         @technigues, techniques_ids = [], []

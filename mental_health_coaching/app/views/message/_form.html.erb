@@ -1,0 +1,18 @@
+<%= form_with model: message, local: true, url: create_message_path(room_id) do |form| %>
+  <% session[:author_user_id] = user.id if user  %>
+  <% session[:author_coach_id] = coach.id if coach %>
+  <div class="row pos-bottom">
+    <div class="col-auto pad-none">
+      <a class="button-send rigth-position" type="submit"><i class="bi bi-link-45deg"></i></a>
+    </div>
+    <div class="col-lg-10">
+      <div class="form-group">
+        <input type="textarea" class="form-control" name="message[body]" placeholder="Enter message">
+      </div>
+    </div>
+    <div class="col-auto pad-none">
+      <%= form.submit 'SEND', class: "btn btn-primary"%>
+      <!-- <a class="button-send" type="submit"><i class="bi bi-arrow-up-circle-fill"></i></a> -->
+    </div>
+  </div>
+<% end %>

@@ -4,13 +4,14 @@
     <div class="card min-height">
       <div class="card-body">
         <div class="message-content">
-          <div class="row layer-message">
-
-              <div class="col-12 date-now">
-                <% @date = Date.today  %>
-                — <%= @date.strftime("%B").upcase%> <%= Time.zone.now.day %> —
-              </div>
-              <br>
+          <div class="row">
+            <div class="col-12 date-now">
+              <% @date = Date.today  %>
+              — <%= @date.strftime("%B").upcase%> <%= Time.zone.now.day %> —
+            </div>
+            <br>
+          </div>
+          <div class="row layer-message" id="mydiv">
               <div class="col-12 under-message">
                 <div class="row">
                   <div class="col-auto pad-min">
@@ -22,60 +23,48 @@
                   </div>
                   <div class="col-11 pad-none">
                     <div class="message-body">
-                      <p class="message-text">How do you feel?</p>
+                      <p class="message-text">Hi, <%= @invite.user.name%> </p>
                       <p class="message-time">12:35</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-12 under-message">
-                <div class="message-body-me">
-                  <p class="message-text">Better now. I began to sleep better at night.</p>
-                  <p class="message-time">12:37</p>
-                </div>
-              </div>
-              <div class="col-12 under-message">
-                <div class="row">
-                  <div class="col-auto pad-min">
-                    <% if @invite.coach.avatar.attached? %>
-                      <img src="<%= url_for(@invite.coach.avatar) %>" class= "rounded-circle chat-avatar">
-                    <% else %>
-                      <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
-                    <% end %>
-                  </div>
-                  <div class="col-11 pad-none">
-                    <div class="message-body">
-                      <p class="message-text">Vladick</p>
+              <% @messages.each do |message| %>
+                <% if message.user_id != nil && message.coach_id == nil %>
+                  <div class="col-12 under-message">
+                    <div class="message-body-me">
+                      <p class="message-text"><%= message.body %></p>
                       <p class="message-time">12:37</p>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-12 under-message">
-                <div class="message-body-me">
-                  <p class="message-text">Fucking slave</p>
-                  <p class="message-time">12:40</p>
-                </div>
-              </div>
+                <% else %>
+                  <div class="col-12 under-message">
+                    <div class="row">
+                      <div class="col-auto pad-min">
+                        <% if @invite.coach.avatar.attached? %>
+                          <img src="<%= url_for(@invite.coach.avatar) %>" class= "rounded-circle chat-avatar">
+                        <% else %>
+                          <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+                        <% end %>
+                      </div>
+                      <div class="col-11 pad-none">
+                        <div class="message-body">
+                          <p class="message-text"><%= message.body %></p>
+                          <p class="message-time">12:35</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              <% end %>
+
+
 
           </div>
 
           <br>
           <div class="row-width">
-            <div class="row pos-bottom">
-              <div class="col-auto pad-none">
-                <a class="button-send rigth-position" type="submit"><i class="bi bi-link-45deg"></i></a>
-
-              </div>
-              <div class="col-xl-11">
-                <div class="form-group">
-                  <input type="textarea" class="form-control" placeholder="Enter message">
-                </div>
-              </div>
-              <div class="col-auto pad-none">
-                <a class="button-send" type="submit"><i class="bi bi-arrow-up-circle-fill"></i></a>
-              </div>
-            </div>
+              <%= render 'message/form', message: Message.new, room_id: @room.id, user: @user, coach: nil %>
           </div>
 
         </div>
@@ -138,6 +127,10 @@
     </div>
   </div>
 </div>
+<script>
+  $("#mydiv").scrollTop($("#mydiv")[0].scrollHeight);
+
+</script>
 
 <% end %>
 <%= render template: "user/show" %>

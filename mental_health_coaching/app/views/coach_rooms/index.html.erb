@@ -1,0 +1,113 @@
+<% content_for :content do %>
+
+<div class="row">
+  <div class="col-4">
+    <div class="row-width">
+      <div class="row">
+        <div class="col-12 mt">
+          Users
+        </div>
+      </div>
+      <br>
+      <% @rooms.each do |room| %>
+        <%= link_to room, class: 'without-link' do %>
+          <% active_class = (@room == room) ? 'active-chat' : '' %>
+            <div class="row <%= active_class %> chat-block">
+              <div class="col-md-auto img-container">
+                <% if room.user.avatar_user.attached? %>
+                    <img src="<%= url_for(room.user.avatar_user) %>" class= "rounded-circle room-block-image">
+                <% else %>
+                  <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle room-block-image">
+                <% end %>
+              </div>
+              <div class="col-sm-7">
+                  <p class="room-block-name"><%= room.user.name %></p>
+                  <p class="room-block-text">Hahaha</p>
+              </div>
+              <div class="col-md-auto time-room">
+                30 min
+              </div>
+            </div>
+        <% end %>
+      <% end %>
+    </div>
+
+
+  </div>
+  <div class="col-8">
+    <div class="row-width">
+      <div class="row">
+        <div class="col-12 mt">
+          Messages
+        </div>
+      </div>
+    </div>
+    <br>
+    <% if @room.present? %>
+      <div class="card min-height">
+        <div class="card-body">
+          <div class="message-content">
+            <div class="row">
+              <div class="col-12 date-now">
+                <% @date = Date.today  %>
+                — <%= @date.strftime("%B").upcase%> <%= Time.zone.now.day %> —
+              </div>
+              <br>
+            </div>
+            <div class="row layer-message" id="mydiv">
+                <% @room.messages.each do |message| %>
+                  <% if message.user_id == nil && message.coach_id != nil %>
+                    <div class="col-12 under-message">
+                      <div class="message-body-me">
+                        <p class="message-text"><%= message.body %></p>
+                        <p class="message-time">12:37</p>
+                      </div>
+                    </div>
+                  <% else %>
+                    <div class="col-12 under-message">
+                      <div class="row">
+                        <div class="col-auto pad-min">
+                          <% if @room.user.avatar_user.attached? %>
+                            <img src="<%= url_for(@room.user.avatar_user) %>" class= "rounded-circle chat-avatar">
+                          <% else %>
+                            <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+                          <% end %>
+                        </div>
+                        <div class="col-11 pad-none">
+                          <div class="message-body">
+                            <p class="message-text"><%= message.body %></p>
+                            <p class="message-time">12:35</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                <% end %>
+
+
+
+            </div>
+
+            <br>
+            <div class="row-width">
+                <%= render 'message/form', message: Message.new, room_id: @room.id, user: nil, coach: @room.coach %>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <script>
+    $("#mydiv").scrollTop($("#mydiv")[0].scrollHeight);
+
+  </script>
+</div>
+
+
+<br>
+
+
+
+<% end %>
+<%= render template: "coach/show" %>

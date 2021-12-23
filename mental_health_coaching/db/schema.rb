@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_09_124515) do
+ActiveRecord::Schema.define(version: 2021_12_23_142222) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,18 @@ ActiveRecord::Schema.define(version: 2021_12_09_124515) do
     t.index ["user_id"], name: "index_invitations_on_user_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id"
+    t.bigint "coach_id"
+    t.bigint "room_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["coach_id"], name: "index_messages_on_coach_id"
+    t.index ["room_id"], name: "index_messages_on_room_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
   create_table "problems", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -155,6 +167,15 @@ ActiveRecord::Schema.define(version: 2021_12_09_124515) do
     t.index ["coach_id"], name: "index_recommendations_on_coach_id"
     t.index ["technique_id"], name: "index_recommendations_on_technique_id"
     t.index ["user_id"], name: "index_recommendations_on_user_id"
+  end
+
+  create_table "rooms", force: :cascade do |t|
+    t.bigint "coach_id"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["coach_id"], name: "index_rooms_on_coach_id"
+    t.index ["user_id"], name: "index_rooms_on_user_id"
   end
 
   create_table "social_networks", force: :cascade do |t|
@@ -207,19 +228,20 @@ ActiveRecord::Schema.define(version: 2021_12_09_124515) do
     t.string "password_digest"
     t.string "uid"
     t.string "provider"
-    t.bigint "coach_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["coach_id"], name: "index_users_on_coach_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "coach_notifications", "coaches"
   add_foreign_key "coach_notifications", "users"
+  add_foreign_key "messages", "coaches"
+  add_foreign_key "messages", "rooms"
+  add_foreign_key "messages", "users"
+  add_foreign_key "rooms", "coaches"
   add_foreign_key "social_networks", "coaches"
   add_foreign_key "steps", "techniques", column: "techniques_id"
   add_foreign_key "user_notifications", "coaches"
   add_foreign_key "user_notifications", "users"
-  add_foreign_key "users", "coaches"
 end

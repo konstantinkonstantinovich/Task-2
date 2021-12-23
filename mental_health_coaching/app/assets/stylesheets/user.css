@@ -505,12 +505,18 @@ padding: 10px;
   background: white;
   padding: 0px;
   color: #212529;
+
 }
+
+
+
 
 .layer-message {
   overflow: scroll; /* Добавляем полосы прокрутки */
   width: 100%;/* Ширина блока */
+  scroll-padding-bottom: 100%;
   margin: 0px;
+  height: 350px;
 }
 
 .min-height {

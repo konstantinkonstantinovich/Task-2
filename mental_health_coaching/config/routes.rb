@@ -67,7 +67,8 @@ Rails.application.routes.draw do
   post '/coach/library/:technique_id/recommendation', to: 'coach#create'
   get '/coach/user/:user_id/detail', to: 'coach#user_detail', as: 'user_detail'
 
-
+  get '/coach/rooms', to: 'coach_rooms#index', as: 'chat_rooms_coach'
+  get '/coach/rooms/:room_id', to: 'coach_rooms#show', as: 'room'
 
   # reset password contoller
   get '/reset_password/new', to: 'reset_password#new'
@@ -83,7 +84,8 @@ Rails.application.routes.draw do
   patch '/reset_password_coach/edit', to: "reset_password_coach#update"
   get '/reset_password_coach/edit/resend/', to: 'reset_password_coach#resend', as: 'resend_coach_reset'
 
-  get '/user/messages/', to: 'message#index', as: 'chat_room_user'
+  get '/user/room/', to: 'room#index', as: 'chat_room_user'
+  post 'user/room/:room_id/create', to: 'message#create', as: 'create_message'
   # api authorization user
 
   namespace :api do

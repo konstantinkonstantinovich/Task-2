@@ -1,6 +1,8 @@
 class Coach < ApplicationRecord
   include SearchCoach
 
+  has_many :messages
+  has_many :rooms
   has_many :users
   has_many :social_networks
   has_many :coach_notifications
