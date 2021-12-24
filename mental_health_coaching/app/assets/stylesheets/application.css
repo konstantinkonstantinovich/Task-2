@@ -13,4 +13,10 @@
 
  *= require_self
  *= require bootstrap
+ *= require landing
+ *= require registrations
+ *= require coach
+ *= require user
+ *= require authorization
+ *= require reset_password
  */

@@ -1,3 +1,3 @@
 class Step < ApplicationRecord
-  belongs_to :techniques, optional: true
+  belongs_to :technique, optional: true
 end

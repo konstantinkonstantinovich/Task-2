@@ -4,7 +4,7 @@ class CreateSteps < ActiveRecord::Migration[6.1]
       t.text :body
       t.string :title
       t.integer :number
-      t.references :techniques, null: false, foreign_key: true
+      t.references :technique, null: false, foreign_key: true
 
       t.timestamps
     end

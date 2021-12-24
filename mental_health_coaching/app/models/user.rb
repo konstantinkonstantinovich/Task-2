@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 
-  has_many :messages
-  has_one :room
+  has_many :messages, dependent: :delete_all
+  has_one :room, dependent: :destroy
   has_many :user_notifications
 
   has_and_belongs_to_many :problems

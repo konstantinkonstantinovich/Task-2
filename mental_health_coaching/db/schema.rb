@@ -190,10 +190,10 @@ ActiveRecord::Schema.define(version: 2021_12_23_142222) do
     t.text "body"
     t.string "title"
     t.integer "number"
-    t.bigint "techniques_id", null: false
+    t.bigint "technique_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["techniques_id"], name: "index_steps_on_techniques_id"
+    t.index ["technique_id"], name: "index_steps_on_technique_id"
   end
 
   create_table "techniques", force: :cascade do |t|
@@ -241,7 +241,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_142222) do
   add_foreign_key "messages", "users"
   add_foreign_key "rooms", "coaches"
   add_foreign_key "social_networks", "coaches"
-  add_foreign_key "steps", "techniques", column: "techniques_id"
+  add_foreign_key "steps", "techniques"
   add_foreign_key "user_notifications", "coaches"
   add_foreign_key "user_notifications", "users"
 end

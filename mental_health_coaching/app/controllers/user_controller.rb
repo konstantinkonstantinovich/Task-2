@@ -127,9 +127,10 @@ class UserController < ApplicationController
 
   def cancel_invite
     @invite = Invitation.find_by_id(params[:invite_id])
-    UserNotification.create(body: "You have canceled an invitation to coach #{@invite.coach.name}", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
-    flash[:info] = "You have ended cooperation with this coach!"
+    coach = @invite.coach
     @invite.destroy
+    UserNotification.create(body: "You have canceled an invitation to coach #{coach.name}", user_id: Current.user.id, coach_id: coach.id, status: 1)
+    flash[:info] = "You have ended cooperation with this coach!"
     redirect_to user_dashboard_page_path
   end
 
@@ -144,9 +145,13 @@ class UserController < ApplicationController
 
   def end_cooperation
     @invite = Invitation.find_by_id(params[:invite_id])
-    UserNotification.create(body: "You have ended cooperation with coach #{@invite.coach.name}", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
-    flash[:info] = "You have ended cooperation with this coach!"
+    coach = @invite.coach
+    room = Room.find_by(user_id: Current.user.id)
+    room.messages.destroy
+    room.destroy
     @invite.destroy
+    UserNotification.create(body: "You have ended cooperation with coach #{coach.name}", user_id: Current.user.id, coach_id: coach.id, status: 1)
+    flash[:info] = "You have ended cooperation with this coach!"
     redirect_to user_dashboard_page_path
   end
 
@@ -159,7 +164,7 @@ class UserController < ApplicationController
 
   def like
     @user = Current.user
-    if Rating.find_by(technique_id: params[:technique_id], user_id: @user.id) == nil
+    unless Rating.exists?(technique_id: params[:technique_id], user_id: @user.id)
         Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 1, dislike: 0)
         UserNotification.create(body: "You like your Technique", user_id: @user.id, status: 1)
     end
@@ -172,7 +177,7 @@ class UserController < ApplicationController
 
   def dislike
     @user = Current.user
-    if Rating.find_by(technique_id: params[:technique_id], user_id: @user.id) == nil
+    unless Rating.exists?(technique_id: params[:technique_id], user_id: @user.id)
         Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 0, dislike: 1)
         UserNotification.create(body: "You dislike your Technique", user_id: @user.id, status: 1)
     end

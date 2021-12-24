@@ -22,7 +22,7 @@
               </div>
               <div class="col-sm-7">
                   <p class="room-block-name"><%= room.user.name %></p>
-                  <p class="room-block-text">Hahaha</p>
+                  <p class="room-block-text"><%= room.messages.last.body if room.messages.last != nil %></p>
               </div>
               <div class="col-md-auto time-room">
                 30 min
