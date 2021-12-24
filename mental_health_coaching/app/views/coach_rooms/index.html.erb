@@ -1,5 +1,6 @@
 <% content_for :content do %>
 
+<div id="room-id" data-room-id="<%= @room.try(:id) %>"></div>
 <div class="row">
   <div class="col-4">
     <div class="row-width">
@@ -54,43 +55,14 @@
               </div>
               <br>
             </div>
-            <div class="row layer-message" id="mydiv">
-                <% @room.messages.each do |message| %>
-                  <% if message.user_id == nil && message.coach_id != nil %>
-                    <div class="col-12 under-message">
-                      <div class="message-body-me">
-                        <p class="message-text"><%= message.body %></p>
-                        <p class="message-time">12:37</p>
-                      </div>
-                    </div>
-                  <% else %>
-                    <div class="col-12 under-message">
-                      <div class="row">
-                        <div class="col-auto pad-min">
-                          <% if @room.user.avatar_user.attached? %>
-                            <img src="<%= url_for(@room.user.avatar_user) %>" class= "rounded-circle chat-avatar">
-                          <% else %>
-                            <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
-                          <% end %>
-                        </div>
-                        <div class="col-11 pad-none">
-                          <div class="message-body">
-                            <p class="message-text"><%= message.body %></p>
-                            <p class="message-time">12:35</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                <div id="messages" class="row layer-message">
+                  <% @room.messages.each do |message| %>
+                      <%= render 'message/message_coach', message: message, user: @room.user  %>
                   <% end %>
-                <% end %>
-
-
-
-            </div>
-
+                </div>
             <br>
             <div class="row-width">
-                <%= render 'message/form', message: Message.new, room_id: @room.id, user: nil, coach: @room.coach %>
+                <%= render 'message/form', message: Message.new, room: @room.id, user: nil, coach: @room.coach %>
             </div>
 
           </div>
@@ -98,15 +70,14 @@
       </div>
     <% end %>
   </div>
-  <script>
-    $("#mydiv").scrollTop($("#mydiv")[0].scrollHeight);
-
-  </script>
 </div>
 
 
 <br>
 
+<script>
+  $("#messages").scrollTop($("#messages")[0].scrollHeight);
+</script>
 
 
 <% end %>

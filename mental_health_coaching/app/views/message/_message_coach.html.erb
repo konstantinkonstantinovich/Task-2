@@ -1,15 +1,4 @@
 
-<div class="card-body">
-  <div class="message-content">
-    <div class="row">
-      <div class="col-12 date-now">
-        <% @date = Date.today  %>
-        — <%= @date.strftime("%B").upcase%> <%= Time.zone.now.day %> —
-      </div>
-      <br>
-    </div>
-    <div class="row layer-message">
-        <% messages.each do |message| %>
           <% if message.user_id == nil && message.coach_id != nil %>
             <div class="col-12 under-message">
               <div class="message-body-me">
@@ -21,8 +10,8 @@
             <div class="col-12 under-message">
               <div class="row">
                 <div class="col-auto pad-min">
-                  <% if user.avatar_user.attached? %>
-                    <img src="<%= url_for(user.avatar_user) %>" class= "rounded-circle chat-avatar">
+                  <% if message.room.user.avatar_user.attached? %>
+                    <img src="<%= url_for(message.room.user.avatar_user) %>" class= "rounded-circle chat-avatar">
                   <% else %>
                     <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
                   <% end %>
@@ -36,16 +25,3 @@
               </div>
             </div>
           <% end %>
-        <% end %>
-
-
-
-    </div>
-
-    <br>
-    <div class="row-width">
-        <%= render 'message/form', message: Message.new, room_id: room.id, user: nil, coach: coach %>
-    </div>
-
-  </div>
-</div>

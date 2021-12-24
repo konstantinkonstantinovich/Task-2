@@ -1,0 +1,27 @@
+
+      <% if message.user_id != nil && message.coach_id == nil %>
+        <div class="col-12 under-message">
+          <div class="message-body-me">
+            <p class="message-text"><%= message.body %></p>
+            <p class="message-time">12:37</p>
+          </div>
+        </div>
+      <% else %>
+        <div class="col-12 under-message">
+          <div class="row">
+            <div class="col-auto pad-min">
+              <% if coach.avatar.attached? %>
+                <img src="<%= url_for(coach.avatar) %>" class= "rounded-circle chat-avatar">
+              <% else %>
+                <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
+              <% end %>
+            </div>
+            <div class="col-11 pad-none">
+              <div class="message-body">
+                <p class="message-text"><%= message.body %></p>
+                <p class="message-time">12:35</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>

@@ -1,4 +1,5 @@
 <% content_for :content do %>
+<div id="room-id" data-room-id="<%= @room.try(:id) %>"></div>
 <div class="row">
   <div class="col-8">
     <div class="card min-height">
@@ -11,60 +12,17 @@
             </div>
             <br>
           </div>
-          <div class="row layer-message" id="mydiv">
-              <div class="col-12 under-message">
-                <div class="row">
-                  <div class="col-auto pad-min">
-                    <% if @invite.coach.avatar.attached? %>
-                      <img src="<%= url_for(@invite.coach.avatar) %>" class= "rounded-circle chat-avatar">
-                    <% else %>
-                      <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
-                    <% end %>
-                  </div>
-                  <div class="col-11 pad-none">
-                    <div class="message-body">
-                      <p class="message-text">Hi, <%= @invite.user.name%> </p>
-                      <p class="message-time">12:35</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <% @messages.each do |message| %>
-                <% if message.user_id != nil && message.coach_id == nil %>
-                  <div class="col-12 under-message">
-                    <div class="message-body-me">
-                      <p class="message-text"><%= message.body %></p>
-                      <p class="message-time">12:37</p>
-                    </div>
-                  </div>
-                <% else %>
-                  <div class="col-12 under-message">
-                    <div class="row">
-                      <div class="col-auto pad-min">
-                        <% if @invite.coach.avatar.attached? %>
-                          <img src="<%= url_for(@invite.coach.avatar) %>" class= "rounded-circle chat-avatar">
-                        <% else %>
-                          <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
-                        <% end %>
-                      </div>
-                      <div class="col-11 pad-none">
-                        <div class="message-body">
-                          <p class="message-text"><%= message.body %></p>
-                          <p class="message-time">12:35</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                <% end %>
-              <% end %>
-
-
-
+          <div id="messages" class="row layer-message">
+            <% @messages.each do |message| %>
+                <%= render 'message/message_user', message: message, coach: @invite.coach  %>
+            <% end %>
           </div>
-
+          <!-- <div id="messages">
+            <%# <%= render 'message/message_user', messages: @messages, coach: @invite.coach %> %>
+          </div> -->
           <br>
           <div class="row-width">
-              <%= render 'message/form', message: Message.new, room_id: @room.id, user: @user, coach: nil %>
+              <%= render 'message/form', message: Message.new, room: @room.id, user: @user, coach: nil %>
           </div>
 
         </div>
@@ -128,7 +86,7 @@
   </div>
 </div>
 <script>
-  $("#mydiv").scrollTop($("#mydiv")[0].scrollHeight);
+  $("#messages").scrollTop($("#messages")[0].scrollHeight);
 
 </script>
 
