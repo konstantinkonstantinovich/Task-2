@@ -14,7 +14,7 @@
           </div>
           <div id="messages" class="row layer-message">
             <% @messages.each do |message| %>
-                <%= render 'message/message_user', message: message, coach: @invite.coach  %>
+                <%= render 'messages/message_user', message: message, coach: @invite.coach  %>
             <% end %>
           </div>
           <!-- <div id="messages">
@@ -22,7 +22,7 @@
           </div> -->
           <br>
           <div class="row-width">
-              <%= render 'message/form', message: Message.new, room: @room.id, user: @user, coach: nil %>
+              <%= render 'messages/form', message: Message.new, room: @room.id, user: @user, coach: nil %>
           </div>
 
         </div>

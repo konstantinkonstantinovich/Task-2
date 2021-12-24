@@ -3,7 +3,7 @@ class SendMessageJob < ApplicationJob
 
   def perform(message)
     html = ApplicationController.render(
-      partial: 'message/message_coach',
+      partial: 'messages/message_coach',
       locals: { message: message }
     )
 

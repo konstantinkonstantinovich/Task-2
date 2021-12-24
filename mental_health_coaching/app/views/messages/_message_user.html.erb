@@ -3,7 +3,7 @@
         <div class="col-12 under-message">
           <div class="message-body-me">
             <p class="message-text"><%= message.body %></p>
-            <p class="message-time">12:37</p>
+            <p class="message-time"><%= message.created_at.strftime('%H:%M')%></p>
           </div>
         </div>
       <% else %>
@@ -19,7 +19,7 @@
             <div class="col-11 pad-none">
               <div class="message-body">
                 <p class="message-text"><%= message.body %></p>
-                <p class="message-time">12:35</p>
+                <p class="message-time"><%= message.created_at.strftime('%H:%M')%></p>
               </div>
             </div>
           </div>

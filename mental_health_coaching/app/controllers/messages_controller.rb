@@ -18,10 +18,7 @@ class MessagesController < ApplicationController
     @message.coach = Coach.find_by(id: session[:author_coach_id]) if session[:author_coach_id]
     @message.save
 
-    session[:author_user_id] = nil
-    session[:author_coach_id] = nil
     SendMessageJob.perform_later(@message)
-
   end
 
 

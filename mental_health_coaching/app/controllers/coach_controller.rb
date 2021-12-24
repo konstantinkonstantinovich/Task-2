@@ -12,7 +12,7 @@ class CoachController < ApplicationController
     techniques_ids = recommendations.pluck(:technique_id).uniq
     @techniques = []
     techniques_ids.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
-    @technique_in_used = recommendations.pluck(:technique_id).uniq.length
+    @technique_in_used = techniques_ids.length
     @total_coach_users = @coach.invitations.where(status: 1).count
     @user_data = get_techniques_in_progress(@invitation)
     @total_likes = count_likes_on_techniques(@techniques)

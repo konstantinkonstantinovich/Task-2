@@ -57,12 +57,12 @@
             </div>
                 <div id="messages" class="row layer-message">
                   <% @room.messages.each do |message| %>
-                      <%= render 'message/message_coach', message: message, user: @room.user  %>
+                      <%= render 'messages/message_coach', message: message, user: @room.user  %>
                   <% end %>
                 </div>
             <br>
             <div class="row-width">
-                <%= render 'message/form', message: Message.new, room: @room.id, user: nil, coach: @room.coach %>
+                <%= render 'messages/form', message: Message.new, room: @room.id, user: nil, coach: @room.coach %>
             </div>
 
           </div>
