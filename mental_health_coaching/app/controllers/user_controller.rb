@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  before_action :require_user_logged_in!
+  before_action :require_user_logged_in!, :set_user, :set_problems
 
   def new
     @coach = Coach.find_by(id: params[:coach_id])
@@ -18,13 +18,9 @@ class UserController < ApplicationController
   end
 
   def edit
-    @user = Current.user
-    @problems = Problem.all
   end
 
   def update
-    @user = Current.user
-    @problems = Problem.all
     if @user.update(update_params)
       params[:user][:problems]&.each do |problem|
         @problems.each do |data|
@@ -44,11 +40,9 @@ class UserController < ApplicationController
   end
 
   def password_edit
-    @user = Current.user
   end
 
   def password_update
-    @user = Current.user
     if BCrypt::Password.new(Current.user.password_digest) == params[:user][:old_password]
       if Current.user.update(password_params)
         UserNotification.create(body: "You changed your password settings", status: 1, user_id: @user.id)
@@ -64,7 +58,6 @@ class UserController < ApplicationController
   end
 
   def dashboard
-    @user = Current.user
     @problems = @user.problems
     @notifications = @user.user_notifications.order('created_at desc')
     @invite = @user.invitations.first
@@ -76,7 +69,6 @@ class UserController < ApplicationController
   end
 
   def user_technique_detail
-    @user = Current.user
     @technique = Technique.find_by_id(params[:technique_id])
     @recommendation = Recommendation.find_by(user_id: @user.id, technique_id: params[:technique_id])
     next_step = params[:step_id].to_i
@@ -90,31 +82,27 @@ class UserController < ApplicationController
   end
 
   def restart
-    @user = Current.user
     @recommendation = Recommendation.find_by(user_id: @user.id, technique_id: params[:technique_id]).update(step: 0, status: 0, started_at: Time.zone.now, ended_at: nil)
     redirect_to user_technique_detail_path(technique_id: params[:technique_id], step_id: 0)
   end
 
 
   def coaches_page
-    @user = Current.user
-    @problems = Problem.all
     @coaches = Coach.all
     @invite = Invitation.find_by(user_id: @user.id)
     if params[:search] != nil
-      search_coach(params[:search])
+      @coaches = search_coach(@coaches, params[:search])
     else
       if params[:filter].present?
-        filter_expertise(params[:filter][:problems])
-        filter_users_count(params[:filter][:users])
-        filter(params[:filter][:gender])
-        filter(params[:filter][:age])
+        @coaches = filter_expertise(@coaches, params[:filter][:problems])
+        @coaches = filter_users_count(@coaches, params[:filter][:users])
+        @coaches = filter(@coaches, params[:filter][:gender])
+        @coaches = filter(@coaches,params[:filter][:age])
       end
     end
   end
 
   def send_invintation
-    @user = Current.user
     @coach = Coach.find_by_id(params[:coach_id])
     if Invitation.find_by(user_id: @user.id) == nil
       Invitation.create(coach_id: @coach.id, user_id: @user.id, status: 0)
@@ -156,14 +144,12 @@ class UserController < ApplicationController
   end
 
   def my_techniques
-    @user = Current.user
     @invite = @user.invitations.find_by(status: 1)
     @recommendations = @user.recommendations
   end
 
 
   def like
-    @user = Current.user
     unless Rating.exists?(technique_id: params[:technique_id], user_id: @user.id)
         Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 1, dislike: 0)
         UserNotification.create(body: "You like your Technique", user_id: @user.id, status: 1)
@@ -176,7 +162,6 @@ class UserController < ApplicationController
   end
 
   def dislike
-    @user = Current.user
     unless Rating.exists?(technique_id: params[:technique_id], user_id: @user.id)
         Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 0, dislike: 1)
         UserNotification.create(body: "You dislike your Technique", user_id: @user.id, status: 1)
@@ -190,73 +175,84 @@ class UserController < ApplicationController
 
   private
 
-  def search_coach(param)
-    @coaches = Coach.search(param)
-  end
-
-  def filter_expertise(param)
-    if param.present?
-      @coaches = Problem.find_by(name: param).coaches
+    def search_coach(coaches, param)
+      coaches = Coach.search(param)
     end
-  end
 
-  def filter(param)
-    param&.each do |data|
-      @coaches = @coaches.where(data)
+    def filter_expertise(coaches, param)
+      if param.present?
+        coaches = Problem.find_by(name: param).coaches
+      end
+      coaches
     end
-  end
 
-  def filter_users_count(param)
-    if param.present?
-      temp = @coaches
-      array = []
-      temp&.each do |coach|
-        count = coach.invitations.where(status: 1).count
-        param.each do |user_total|
-          if user_total == '5' and count <= 5
-            array << coach.id
-          end
-          if user_total == '5-10' and count > 5 and count <= 10
-            array << coach.id
-          end
-          if user_total == '10-20' and count > 10 and count <= 20
-            array << coach.id
-          end
-          if user_total == '20' and count > 20
-            array << coach.id
+    def filter(coaches, param)
+      param&.each do |data|
+        coaches = coaches.where(data)
+      end
+      coaches
+    end
+
+    def filter_users_count(coaches, param)
+      if param.present?
+        temp = coaches
+        array = []
+        temp&.each do |coach|
+          count = coach.invitations.where(status: 1).count
+          param.each do |user_total|
+            if user_total == '5' and count <= 5
+              array << coach.id
+            end
+            if user_total == '5-10' and count > 5 and count <= 10
+              array << coach.id
+            end
+            if user_total == '10-20' and count > 10 and count <= 20
+              array << coach.id
+            end
+            if user_total == '20' and count > 20
+              array << coach.id
+            end
           end
         end
+        array.uniq!
+        coaches = coaches.where(id: array)
       end
-      array.uniq!
-      @coaches = @coaches.where(id: array)
+      coaches
     end
-  end
 
-  def get_total_time_for_techniques(techniques)
-    total_hours = 0
-    techniques&.each do |t|
-      if t.status == 'compeleted'
-        total_hours += (t.ended_at - t.started_at)/60/60
+    def get_total_time_for_techniques(techniques)
+      total_hours = 0
+      techniques&.each do |t|
+        if t.status == 'compeleted'
+          total_hours += (t.ended_at - t.started_at)/60/60
+        end
       end
+      total_hours = total_hours.round
     end
-    total_hours = total_hours.round
-  end
 
-  def get_current_time_for_techniques(techniques)
-    current_hours = 0
-    techniques&.each do |t|
-      if t.status == 'in_progress'
-        current_hours += (Time.zone.now - t.started_at)/60/60
+    def get_current_time_for_techniques(techniques)
+      current_hours = 0
+      techniques&.each do |t|
+        if t.status == 'in_progress'
+          current_hours += (Time.zone.now - t.started_at)/60/60
+        end
       end
+      current_hours = current_hours.round
     end
-    current_hours = current_hours.round
-  end
 
-  def update_params
-    params.require(:user).permit(:name, :email, :avatar_user, :about, :age, :gender)
-  end
+    def update_params
+      params.require(:user).permit(:name, :email, :avatar_user, :about, :age, :gender)
+    end
 
-  def password_params
-    params.require(:user).permit(:password, :password_confirmation)
-  end
+    def password_params
+      params.require(:user).permit(:password, :password_confirmation)
+    end
+
+    def set_user
+      @user = Current.user
+    end
+
+    def set_problems
+      @problems = Problem.all
+    end
 end
