@@ -7,7 +7,7 @@
 
       <% @users.each do |user|%>
           <%= f.label user.user.id, user.user.name, class: "check-box-rec-block m" do %>
-            <input name="users[]" type="checkbox" value="<%= user.user.name %>" class="m" id="<%= user.user.id %>">
+            <input name="users_ids[]" type="checkbox" value="<%= user.user.id %>" class="m" id="<%= user.user.id %>">
 
             <p class="margin-none"><%= user.user.name %></p>
           <% end %>

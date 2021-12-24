@@ -46,9 +46,9 @@ class CoachController < ApplicationController
 
   def create
     @technique = Technique.find_by_id(params[:technique_id])
-    users_names_list = params[:users]
-    users_names_list.each do |user_name|
-      user = User.find_by(name: user_name)
+    users_names_list = params[:users_ids]
+    users_names_list.each do |user_id|
+      user = User.find_by_id(user_id)
       if Recommendation.find_by(user_id: user.id, technique_id: @technique.id) == nil
         Recommendation.create(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id, status: 0, step: 0)
         UserNotification.create(body: "Coach #{@coach.name} recommended a Technique for you", user_id: user.id, coach_id: @coach.id ,status: 1)
