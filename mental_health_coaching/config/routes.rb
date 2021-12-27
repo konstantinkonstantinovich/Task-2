@@ -63,8 +63,8 @@ Rails.application.routes.draw do
   delete 'refuse/:invite_id', to: 'invitations#refuse', as: 'refuse_user_invite'
   patch 'confirm/:invite_id', to: 'invitations#confirm', as: 'confirm_user_invite'
   get '/coach/library/:technique_id', to: 'coach#technique_detail', as: 'technique_detail_page'
-  get '/coach/library/:technique_id/recommendation', to: 'coach#new', as: 'recommend_to_users_page'
-  post '/coach/library/:technique_id/recommendation', to: 'coach#create'
+  get '/coach/library/:technique_id/recommendation', to: 'recommendations#new', as: 'recommend_to_users_page'
+  post '/coach/library/:technique_id/recommendation', to: 'recommendations#create'
   get '/coach/user/:user_id/detail', to: 'coach#user_detail', as: 'user_detail'
 
   get '/coach/rooms', to: 'coach_rooms#index', as: 'chat_rooms_coach'

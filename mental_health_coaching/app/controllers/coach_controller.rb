@@ -36,29 +36,6 @@ class CoachController < ApplicationController
     @steps = Step.where(technique_id: @technique.id)
   end
 
-  def new
-    @users = @coach.invitations.where(status: 1)
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
-
-  def create
-    @technique = Technique.find_by_id(params[:technique_id])
-    users_names_list = params[:users_ids]
-    users_names_list.each do |user_id|
-      user = User.find_by_id(user_id)
-      if Recommendation.find_by(user_id: user.id, technique_id: @technique.id) == nil
-        Recommendation.create(user_id: user.id, coach_id: @coach.id, technique_id: @technique.id, status: 0, step: 0)
-        UserNotification.create(body: "Coach #{@coach.name} recommended a Technique for you", user_id: user.id, coach_id: @coach.id ,status: 1)
-      else
-        flash[:warning] = "User #{user_name} is alraedy passed this technique!"
-      end
-    end
-    redirect_to coach_users_page_path
-  end
-
   def coach_users
     @notifications = CoachNotification.where.not(user_id: nil).where(coach_id: @coach.id)
     @count = Invitation.where(coach_id: @coach.id, status: 0).count
@@ -152,15 +129,9 @@ class CoachController < ApplicationController
           techniques = []
           techniques += Technique.joins(:recommendations).where("recommendations.coach_id = ?", Current.coach.id).uniq
         else
-
           techniques = []
-          techniques += Technique
-          technigues_where_status = Technique.where("status = ?",p)
-          technigues_where_status.each do |data|
-            if data.recommendations.where(coach_id: Current.coach.id) == []
-              techniques << data
-            end
-          end
+          techniques += Technique.joins("LEFT JOIN recommendations ON techniques.id = recommendations.technique_id")
+            .where("recommendations.technique_id IS NULL AND techniques.status = ?", p)
         end
       end
       techniques
