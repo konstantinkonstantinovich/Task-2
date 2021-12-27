@@ -8,14 +8,14 @@ class CoachController < ApplicationController
     @notifications = @coach.coach_notifications.order('created_at desc')
     @invitation = @coach.invitations.where(status: 1)
     @total_user = User.all.count
-    recommendations = @coach.recommendations
-    techniques_ids = recommendations.pluck(:technique_id).uniq
-    @techniques = []
-    techniques_ids.each { |id| @techniques << Recommendation.find_by(technique_id: id, coach_id: @coach.id) }
+    temp = @coach.recommendations
+    techniques_ids = temp.pluck(:technique_id).uniq
+    @recommendations = []
+    techniques_ids.each { |id| @recommendations << temp.find_by(technique_id: id) }
     @technique_in_used = techniques_ids.length
     @total_coach_users = @coach.invitations.where(status: 1).count
     @user_data = get_techniques_in_progress(@invitation)
-    @total_likes = count_likes_on_techniques(@techniques)
+    @total_likes = count_likes_on_techniques(@recommendations)
   end
 
   def library
