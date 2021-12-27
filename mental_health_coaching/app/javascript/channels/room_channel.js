@@ -21,8 +21,10 @@ document.addEventListener('turbolinks:load', () => {
 
     received(data) {
       console.log(data)
-      let messagesContainer = document.getElementById('messages')
-      messagesContainer.innerHTML = messagesContainer.innerHTML + data.html
+      let messagesCoachContainer = document.getElementById('messages_coach')
+      let messagesUserContainer = document.getElementById('messages_user')
+      messagesCoachContainer.innerHTML = messagesCoachContainer.innerHTML + data.coach
+      messagesUserContainer.innerHTML = messagesUserContainer.innerHTML + data.user
       // window.location.reload();
       // Called when there's incoming data on the websocket for this channel
     }

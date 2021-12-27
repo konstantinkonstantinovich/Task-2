@@ -10,8 +10,8 @@
         <div class="col-12 under-message">
           <div class="row">
             <div class="col-auto pad-min">
-              <% if coach.avatar.attached? %>
-                <img src="<%= url_for(coach.avatar) %>" class= "rounded-circle chat-avatar">
+              <% if message.room.coach.avatar.attached? %>
+                <img src="<%= url_for(message.room.coach.avatar) %>" class= "rounded-circle chat-avatar">
               <% else %>
                 <img src="<%= asset_path('generic-user-icon-10.png') %>" class="rounded-circle notification-avatar">
               <% end %>

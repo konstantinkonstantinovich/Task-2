@@ -412,3 +412,7 @@ input[class="m"]:checked + p::after {
 .without-link {
   text-decoration: none;
 }
+
+.disp {
+  display: none;
+}

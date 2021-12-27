@@ -1,6 +1,10 @@
 <%= form_for message, remote: true do |form| %>
-  <% session[:author_user_id] = user.id if user  %>
-  <% session[:author_coach_id] = coach.id if coach %>
+<% if user %>
+  <%= form.hidden_field :author_user_id, value: user.id %>
+<% end %>
+<% if coach %>
+  <%= form.hidden_field :author_coach_id, value: coach.id %>
+<% end %>
   <%= form.hidden_field :room_id, value: room %>
   <div class="row pos-bottom">
     <div class="col-auto pad-none">

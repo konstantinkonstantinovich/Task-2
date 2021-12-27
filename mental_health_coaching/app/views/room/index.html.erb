@@ -12,10 +12,12 @@
             </div>
             <br>
           </div>
-          <div id="messages" class="row layer-message">
-            <% @messages.each do |message| %>
+          <div id="messages_user" class="row layer-message">
+            <% @messages.order(:created_at).each do |message| %>
                 <%= render 'messages/message_user', message: message, coach: @invite.coach  %>
             <% end %>
+          </div>
+          <div id="messages_coach" class="row layer-message disp">
           </div>
           <!-- <div id="messages">
             <%# <%= render 'message/message_user', messages: @messages, coach: @invite.coach %> %>
@@ -86,7 +88,7 @@
   </div>
 </div>
 <script>
-  $("#messages").scrollTop($("#messages")[0].scrollHeight);
+  $("#messages_user").scrollTop($("#messages_user")[0].scrollHeight);
 
 </script>
 

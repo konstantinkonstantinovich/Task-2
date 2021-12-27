@@ -14,11 +14,12 @@ class MessagesController < ApplicationController
 
   def create
     @message = Message.new(message_params)
-    @message.user = User.find_by(id: session[:author_user_id]) if session[:author_user_id]
-    @message.coach = Coach.find_by(id: session[:author_coach_id]) if session[:author_coach_id]
+    @message.user = User.find_by(id: params[:message][:author_user_id]) if params[:message][:author_user_id]
+    @message.coach = Coach.find_by(id: params[:message][:author_coach_id]) if params[:message][:author_coach_id]
     @message.save
 
     SendMessageJob.perform_later(@message)
+    render 'create.js.erb'
   end
 
 
