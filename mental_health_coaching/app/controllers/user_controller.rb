@@ -1,13 +1,6 @@
 class UserController < ApplicationController
   before_action :require_user_logged_in!, :set_user, :set_problems
 
-  def finish
-    respond_to do |format|
-      format.html
-      format.js
-    end
-  end
-
   def edit
   end
 
@@ -80,8 +73,8 @@ class UserController < ApplicationController
 
   def coaches_page
     @coaches = Coach.all
-    @invite = Invitation.find_by(user_id: @user.id)
-    if params[:search] != nil
+    @invite = @user.invitations.first
+    unless params[:search].nil?
       @coaches = search_coach(@coaches, params[:search])
     else
       if params[:filter].present?
@@ -96,31 +89,6 @@ class UserController < ApplicationController
   def my_techniques
     @invite = @user.invitations.find_by(status: 1)
     @recommendations = @user.recommendations
-  end
-
-
-  def like
-    unless Rating.exists?(technique_id: params[:technique_id], user_id: @user.id)
-        Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 1, dislike: 0)
-        UserNotification.create(body: "You like your Technique", user_id: @user.id, status: 1)
-    end
-    recommendation = Recommendation.find_by(technique_id: params[:technique_id], user_id: @user.id)
-    recommendation.update(status: 2)
-    recommendation.update(ended_at: Time.zone.now) if recommendation.ended_at == nil
-    flash[:info] = "You like Technique"
-    redirect_to user_dashboard_page_path
-  end
-
-  def dislike
-    unless Rating.exists?(technique_id: params[:technique_id], user_id: @user.id)
-        Rating.create(technique_id: params[:technique_id], user_id: @user.id, like: 0, dislike: 1)
-        UserNotification.create(body: "You dislike your Technique", user_id: @user.id, status: 1)
-    end
-    recommendation = Recommendation.find_by(technique_id: params[:technique_id], user_id: @user.id)
-    recommendation.update(status: 2)
-    recommendation.update(ended_at: Time.zone.now) if recommendation.ended_at == nil
-    flash[:info] = "You dislike Technique"
-    redirect_to user_dashboard_page_path
   end
 
   private

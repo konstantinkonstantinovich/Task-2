@@ -33,13 +33,13 @@ class CoachController < ApplicationController
 
   def technique_detail
     @technique = Technique.find_by_id(params[:technique_id])
-    @steps = Step.where(technique_id: @technique.id)
+    @steps = @technique.steps
   end
 
   def coach_users
     @notifications = CoachNotification.where.not(user_id: nil).where(coach_id: @coach.id)
-    @count = Invitation.where(coach_id: @coach.id, status: 0).count
-    @invitation = Invitation.where(coach_id: @coach.id)
+    @invitation = @coach.invitations
+    @count = @invitation.where(status: 0).count
     @user_data = get_techniques_in_progress(@invitation)
   end
 
@@ -93,7 +93,7 @@ class CoachController < ApplicationController
     @recommendations = Recommendation.where(user_id: params[:user_id])
     get_total_time_for_techniques(@recommendations)
     get_current_time_for_techniques(@recommendations)
-    @notifications = CoachNotification.where(coach_id: @coach.id, user_id: @invitation.user.id)
+    @notifications = @coach.coach_notifications.where(user_id: @invitation.user.id)
   end
 
   private
