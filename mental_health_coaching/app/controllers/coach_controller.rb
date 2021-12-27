@@ -66,25 +66,6 @@ class CoachController < ApplicationController
     @user_data = get_techniques_in_progress(@invitation)
   end
 
-  def refuse
-    @invite = Invitation.find_by_id(params[:invite_id])
-    CoachNotification.create(body: "You have rejected #{@invite.user.name} invite", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
-    UserNotification.create(body: "Coach #{@invite.coach.name} refused to become your coach", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
-    @invite.destroy
-    flash[:info] = "You refused user invite!"
-    redirect_to coach_users_page_path
-  end
-
-  def confirm
-    @invite = Invitation.find_by_id(params[:invite_id])
-    Room.create(coach_id: @invite.coach.id, user_id: @invite.user.id)
-    UserNotification.create(body: "Coach #{@invite.coach.name} agreed to become your coach", user_id: @invite.user.id, status: 1)
-    CoachNotification.create(body: "You agreed to become a coach for a user #{@invite.user.name}", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
-    @invite.update(status: 1)
-    flash[:info] = "You agreed to become a coach for a user #{@invite.user.name}!"
-    redirect_to coach_users_page_path
-  end
-
   def edit
   end
 
@@ -171,7 +152,9 @@ class CoachController < ApplicationController
           techniques = []
           techniques += Technique.joins(:recommendations).where("recommendations.coach_id = ?", Current.coach.id).uniq
         else
+
           techniques = []
+          techniques += Technique
           technigues_where_status = Technique.where("status = ?",p)
           technigues_where_status.each do |data|
             if data.recommendations.where(coach_id: Current.coach.id) == []
