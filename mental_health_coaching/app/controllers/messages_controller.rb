@@ -19,7 +19,6 @@ class MessagesController < ApplicationController
     @message.save
 
     SendMessageJob.perform_later(@message)
-    render 'create.js.erb'
   end
 
 
