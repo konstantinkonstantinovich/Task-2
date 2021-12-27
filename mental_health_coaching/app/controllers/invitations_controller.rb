@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :set_user
+  before_action :set_user, :get_invite
 
   def new
     @coach = Coach.find_by(id: params[:coach_id])
@@ -31,7 +31,6 @@ class InvitationsController < ApplicationController
   end
 
   def destroy
-    @invite = Invitation.find_by_id(params[:invite_id])
     coach = @invite.coach
     room = Room.find_by(user_id: @user.id)
     room.messages.destroy
@@ -44,7 +43,6 @@ class InvitationsController < ApplicationController
 
 
   def cancel_invite
-    @invite = Invitation.find_by_id(params[:invite_id])
     coach = @invite.coach
     @invite.destroy
     UserNotification.create(body: "You have canceled an invitation to coach #{coach.name}", user_id: Current.user.id, coach_id: coach.id, status: 1)
@@ -53,7 +51,6 @@ class InvitationsController < ApplicationController
   end
 
   def refuse
-    @invite = Invitation.find_by_id(params[:invite_id])
     CoachNotification.create(body: "You have rejected #{@invite.user.name} invite", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
     UserNotification.create(body: "Coach #{@invite.coach.name} refused to become your coach", user_id: @invite.user.id, coach_id: @invite.coach.id, status: 1)
     @invite.destroy
@@ -62,7 +59,6 @@ class InvitationsController < ApplicationController
   end
 
   def confirm
-    @invite = Invitation.find_by_id(params[:invite_id])
     Room.create(coach_id: @invite.coach.id, user_id: @invite.user.id)
     UserNotification.create(body: "Coach #{@invite.coach.name} agreed to become your coach", user_id: @invite.user.id, status: 1)
     CoachNotification.create(body: "You agreed to become a coach for a user #{@invite.user.name}", coach_id: @invite.coach.id, user_id: @invite.user.id, status: 1)
@@ -75,6 +71,10 @@ class InvitationsController < ApplicationController
 
     def set_user
       @user = Current.user
+    end
+
+    def get_invite
+      @invite = Invitation.find_by_id(params[:invite_id])
     end
 
 end
